@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Main Doctor Page</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+</head>
+
+<style>
+    *{
+        margin: 0;
+        list-style: none;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+    body{
+        background: #e1ecf2;
+    }
+
+    .sidebar{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        padding: 58px 0 0;
+        box-shadow: 0 2px 5px 0 rgba(0 0 0 / 5%), 0 2px 10px 0 rgba(0 0 0 / 5%);
+        width: 240px;
+        z-index: 600;
+    }
+
+
+    #nav1{
+        background-color: #497DBA !important;
+        padding-right: 50px;
+        padding-left: 35px;
+        height: 65px;
+    }
+
+    #doctor{
+        color: white;
+        font-size: 30px;
+        align-items: center;
+        margin-top: 3px;
+    }
+    #logout{
+        color: white;
+        font-size: 30px;
+        align-items: center;
+        margin-top: 3px;
+    }
+    #logout:hover{
+        color: grey;
+    }
+</style>
+<body>
+
+<!-- Navigation -->
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+            <ul id="collapseExample1" class="collapse show list-group list-group-flush">
+                <li class="list-group-item py-1">
+                    <a href="" class="text-reset">Link</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar fixed-top navbar-expand-sm" id="nav1">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i><span class="material-symbols-rounded">menu</span></i>
+        </button>
+        <a class="navbar-brand" href="/">Hospital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav2">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/index}">Home</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Main
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:inline="text">
+                        <span class="material-symbols-rounded" id="doctor">person</span>
+                        <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></a>
+                </li>
+                <li class="nav-item">
+                    <span class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</span>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+
+
+
+    </div>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>
