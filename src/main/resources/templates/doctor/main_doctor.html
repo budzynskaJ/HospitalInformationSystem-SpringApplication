@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
+    <link rel="icon" type="image/png" href="webapp-hospital(2).png" sizes="50x50" />
+
 </head>
 
 <style>
@@ -21,45 +23,132 @@
         background: #e1ecf2;
     }
 
-    .sidebar{
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        padding: 58px 0 0;
-        box-shadow: 0 2px 5px 0 rgba(0 0 0 / 5%), 0 2px 10px 0 rgba(0 0 0 / 5%);
-        width: 240px;
-        z-index: 600;
+
+    .navbar-brand{
+        color: white;
+        font-size: 30px;
+        font-weight: bold;
     }
 
+    .nav-item{
+        color: white;
+        font-size: 18px;
+        padding: 10px 10px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .nav-link{
+        color: white;
+    }
 
     #nav1{
         background-color: #497DBA !important;
-        padding-right: 50px;
+        padding-right: 35px;
         padding-left: 35px;
-        height: 65px;
+        height: 80px;
     }
 
     #doctor{
         color: white;
         font-size: 30px;
-        align-items: center;
-        margin-top: 3px;
+        padding: 10px 10px;
+        vertical-align: middle;
+        margin-left: 10px;
     }
     #logout{
         color: white;
         font-size: 30px;
         align-items: center;
-        margin-top: 3px;
+        margin-top: 10px;
+        padding-left: 25px;
     }
     #logout:hover{
         color: grey;
     }
+
+    .navbar {
+        padding: 0;
+    }
+
+    .sidebar{
+        position: fixed;
+        top: 80px;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background: #DAE9F1;
+        transition: all .5s ease;
+    }
+
+    .sidebar header {
+        text-align: center;
+        font-size: 20px;
+        position: relative;
+        width: 100%;
+        height: 110px;
+        padding-top: 1em;
+        display: inline-block;
+        font-weight: bold;
+        border-bottom: 1px inset;
+    }
+
+    .sidebar ul a:first-child{
+        padding-top: 18px;
+    }
+
+    .sidebar ul a{
+        display: block;
+        height: 100%;
+        width: 100%;
+        line-height: 50px;
+        font-size: 20px;
+        color: dimgrey;
+    }
+
+    #check{
+        display: none;
+    }
+    label #btn, label #close{
+        position: absolute;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+    label #btn{
+        left: 40px;
+        top: 85px;
+        font-size: 35px;
+        color: black;
+        padding: 6px 12px;
+        transition: all .5s;
+    }
+    label #close{
+        z-index: 1111;
+        left: -195px;
+        top: 85px;
+        font-size: 30px;
+        color: black;
+        padding: 4px 9px;
+        transition: all .5s ease;
+    }
+
+    #check:checked ~ .sidebar{
+        left: 0;
+    }
+    #check:checked ~ label #btn{
+        left: 250px;
+        opacity: 0;
+        pointer-events: none;
+    }
+    #check:checked ~ label #close{
+        left: 195px;
+    }
+
 </style>
 <body>
 
 <!-- Navigation -->
-<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+<!--<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
     <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
             <ul id="collapseExample1" class="collapse show list-group list-group-flush">
@@ -69,7 +158,7 @@
             </ul>
         </div>
     </div>
-</nav>
+</nav>-->
 <nav class="navbar fixed-top navbar-expand-sm" id="nav1">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
@@ -77,14 +166,16 @@
                 aria-label="Toggle navigation">
             <i><span class="material-symbols-rounded">menu</span></i>
         </button>
-        <a class="navbar-brand" href="/">Hospital</a>
+        <a class="navbar-brand" href="/">
+            <img src="webapp-hospital(2).png" alt="" style="height: 60px">Hospital</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="nav2">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
+            vertical-align: middle; display: inline-block">
 
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/index}">Home</a>
@@ -96,13 +187,18 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" >
                     <a class="nav-link" th:inline="text">
-                        <span class="material-symbols-rounded" id="doctor">person</span>
-                        <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></a>
+                        <img src="doctor.png" alt="" style="height: 30px;">
+                        <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
+                        <b style="text-transform:capitalize; padding: 10px 10px;
+            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.remoteUser}]]</b></a>
                 </li>
                 <li class="nav-item">
-                    <span class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</span>
+                    <a class="nav-link text-danger" th:href="@{/index}">
+                        <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
+                    </a>
+
                 </li>
 
             </ul>
@@ -111,19 +207,38 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="row">
+<input type="checkbox" id="check">
+<label for="check">
+    <i><span class="material-symbols-rounded" id="btn">menu</span></i>
+    <i></i><span class="material-symbols-rounded" id="close">close</span></i>
+</label>
+<div class="sidebar">
+    <header><b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></header>
+    <ul>
+        <li><a href="#">
+            <span class="material-symbols-rounded" style="font-size: 30px; padding-bottom: -10px">person_add</span>
+            Add new patient</a>
+        </li>
+        <li><a href="#">
+            <span class="material-symbols-rounded" style="font-size: 28px">assignment_add</span>
+            Create a new appointment</a>
+        </li>
+        <li><a href="#">
+            <span class="material-symbols-rounded" style="font-size: 30px">list</span>
+            History of appointments</a>
+        </li>
+    </ul>
 
-
-
-    </div>
 </div>
+
+
 
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/script.js}"></script>
+
 
 </body>
 </html>

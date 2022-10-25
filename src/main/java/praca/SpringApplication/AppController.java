@@ -21,13 +21,13 @@ public class AppController implements WebMvcConfigurer {
     }
     @Controller
     public class DashboardController {
-        @RequestMapping("/index")
+        @RequestMapping("/main")
         public String defaultAfterLogin(HttpServletRequest request) {
             if (request.isUserInRole("ADMIN")) {
-                return "redirect:admin/main_admin";
+                return "redirect:/main_admin";
             }
             else if (request.isUserInRole("DOCTOR")) {
-                return "redirect:doctor/main_doctor";
+                return "redirect:/main_doctor";
             }
             else {
                 return "redirect:/index";
