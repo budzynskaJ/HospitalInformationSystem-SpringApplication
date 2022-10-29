@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Error Page</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="webapp-hospital(2).png" sizes="50x50" />
+
+</head>
+<style>
+    * {
+        margin: 0;
+        list-style: none;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+        background: #e1ecf2;
+    }
+
+    .navbar-brand {
+        color: white;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    #nav1 {
+        background-color: rgba(24,31,151,0.93) !important;
+        padding-right: 50px;
+        padding-left: 35px;
+        height: 80px;
+    }
+
+    .page-404 {
+        padding: 40px 0;
+    }
+
+    .page-404 img {
+        height: 600px;
+        horiz-align: center;
+        background-position: center;
+    }
+
+    .page-404 h1{
+        font-weight: bolder;
+        font-size: 130px;
+        color: rgba(24,31,151,0.93);
+        padding-bottom: 20px;
+    }
+
+    #btn{
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+        background-color: rgba(24,31,151,0.93);
+        alignment: center;
+        display: inline-block;
+        cursor: pointer;
+        height: 50px;
+        width: 180px;
+        border-radius: 20px;
+        font-size: 18px;
+    }
+
+    .col-7 {
+        text-align: center;
+        margin-left: -10%;
+        margin-top: 35px;
+    }
+
+</style>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-dark justify-content-between" id="nav1">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="webapp-hospital(2).png" alt="" style="height: 60px">Hospital
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+<section class="page-404">
+    <div class="row">
+        <div class="col-5">
+            <img src="errors/404.png" alt="">
+        </div>
+        <div class="col-7">
+            <form method="post" th:action="@{/index}">
+                <div class="content-box-404">
+                    <h1>404</h1>
+                    <div><b><p style="font-size:35px; font-weight: bolder">Oops! Page not found.</p></b></div>
+                    <div><p style="font-size:24px; padding-bottom: 40px">We can't find the page you're looking for.</p></div>
+                </div>
+                <button class="btn btn-primary" type="submit" value="Sign In" id="btn">Go back home</button>
+            </form>
+        </div>
+    </div>
+</section>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
