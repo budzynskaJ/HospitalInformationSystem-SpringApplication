@@ -80,11 +80,19 @@
   .container{
     position: relative;
   }
+
+  #key, #user{
+    position: absolute;
+    transform: translate(-132px, -49%);
+    top: 49%;
+    color: #999999;
+  }
   #eye{
     position: absolute;
     transform: translate(98px, -49%);
     top: 49%;
     cursor: pointer;
+    color: #999999;
   }
   #visibility{
     display: none;
@@ -100,6 +108,7 @@
     border: 1px solid #999;
     outline: none;
   }
+
   #button{
     color: #fff;
     width: 65%;
@@ -150,15 +159,21 @@
       <h1>Sign Up</h1>
       <form method="post" th:action="@{/login}">
         <div class="container">
-          <input id="login" type="text" placeholder="Enter login" autocomplete="off" class="form-control" name="username"/>
+          <input id="login" type="text" placeholder="Enter login" autocomplete="off" class="form-control" name="username"
+          style="padding-left: 14%">
+            <span id="user" class="material-symbols-rounded">person</span>
+          </input>
         </div>
 
         <div class="container">
-          <input id="password" type="password" placeholder="Enter your password" autocomplete="off" class="form-control" name="password"/>
-          <span id="eye" onclick="show()">
-            <i id="visibility" class="material-symbols-rounded">visibility</i>
-            <i id="visibilityOff" class="material-symbols-rounded">visibility_off</i>
-          </span>
+          <input id="password" type="password" placeholder="Enter your password" autocomplete="off" class="form-control" name="password"
+          style="padding-left: 14%">
+            <span id="key" class="material-symbols-rounded">key</span>
+            <span id="eye" onclick="show()">
+              <i id="visibility" class="material-symbols-rounded">visibility</i>
+              <i id="visibilityOff" class="material-symbols-rounded">visibility_off</i>
+            </span>
+          </input>
         </div>
 
         <div th:if="${param.error}" style="color:red; margin-top:15px">
