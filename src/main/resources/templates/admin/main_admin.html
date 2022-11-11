@@ -7,9 +7,7 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.4.0/css/select.bootstrap5.min.css">
 
     <link rel="icon" type="image/png" href="webapp-hospital(2).png" sizes="50x50" />
 </head>
@@ -131,7 +129,10 @@
         text-align: center;
         margin-right: 5px;
     }
-
+    .container {
+        padding-left: 0;
+        position: relative;
+    }
     #check{
         display: none;
     }
@@ -166,17 +167,20 @@
         opacity: 0;
         pointer-events: none;
     }
+    #check:checked ~ .container {
+        padding-left: 310px;
+    }
     #check:checked ~ label #close{
         left: 250px;
     }
 
-    .table{
-        position: relative;
-        top: 100px;
-        left: 350px;
-        width: 100%;
-        border-collapse: collapse;
+    .table-container{
+        padding-top: 100px;
     }
+    #user-table {
+        border: dimgrey;
+    }
+
 
 </style>
 <body>
@@ -224,16 +228,24 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <header><b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></header>
+    <div id="first" onclick="first()">
+        <header><b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></header>
+    </div>
     <ul>
-        <li class="list">
-            <a href="#">
+        <li class="list" id="up">
+            <a class="active">
+                <span class="material-symbols-rounded" style="font-size: 30px; padding-bottom: -10px">list</span>
+                Users
+            </a>
+        </li>
+        <li class="list" id="pp">
+            <a class="active">
                 <span class="material-symbols-rounded" style="font-size: 30px; padding-bottom: -10px">list</span>
                 Patients
             </a>
         </li>
-        <li class="list">
-            <a href="#">
+        <li class="list" id="ap">
+            <a href="#" class="active">
                 <span class="material-symbols-rounded" style="font-size: 28px">assignment</span>
                 Appointments
             </a>
@@ -243,31 +255,41 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="table-container" id="patients">
-            <table class="table">
-                <thead>
+        <div class="table-container" id="users" style="display: none">
+            <table id="user-table" class="table table-striped">
+                <thead id="user-head">
                     <tr>
                         <th>ID</th>
-                        <th>Firstname</th>
-                        <th>Secondname</th>
-                        <th>Surname</th>
-                        <th>Birthdate</th>
-                        <th>PESEL</th>
-                        <th>Sex</th>
-                        <th>Phone number</th>
+                        <th>Username</th>
+                        <th>E-mail</th>
+                        <th>Role</th>
+                        <th class="text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr th:each="patient: ${patientServive}">
-                        <td th:text="${patient.id}">ID</td>
-                        <td th:text="${patient.firstname}">Firstname</td>
-                        <td th:text="${patient.secondname}">Second name</td>
-                        <td th:text="${patient.surname}">Surname</td>
-                        <td th:text="${patient.birthdate}">birthdate</td>
-                        <td th:text="${patient.pesel}">pesel</td>
-                        <td th:text="${patient.sex}">sex</td>
-                        <td th:text="${patient.phone_number}">phone</td>
-                    </tr>
+                <tbody id="usersData">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container" id="patient-page" style="display: none">
+            <table id="patient-table" class="table table-striped">
+                <thead id="patient-head">
+                <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Middle name</th>
+                    <th>Surname</th>
+                    <th>Birth date</th>
+                    <th>PESEL</th>
+                    <th>Sex</th>
+                    <th>Phone number</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="patientsData">
+
+
                 </tbody>
             </table>
         </div>
@@ -280,7 +302,10 @@
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/script.js}"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<script th:src="@{/js/patientScript.js}"></script>
+<script th:src="@{js/userScript.js}"></script>
+
+
 
 <script>
     let list = document.querySelectorAll('.list');
@@ -291,33 +316,33 @@
                 list[j++].className = 'list';
             }
             list[i].className = 'list active';
+
+            if (list[i] === document.querySelector('#up')) {
+                //document.querySelector('#first-page').style.display = "none";
+                document.querySelector('#users').style.display = "block";
+                document.querySelector('#patient-page').style.display = "none";
+                //document.querySelector('#appointment-page').style.display = "none";
+            } else if (list[i] === document.querySelector('#pp')) {
+                //document.querySelector('#first-page').style.display = "none";
+                document.querySelector('#users').style.display = "none";
+                document.querySelector('#patient-page').style.display = "block";
+                //document.querySelector("#appointment-page").style.display = "none";
+            } else if (list[i] === document.querySelector('#ap')) {
+                //document.querySelector('#first-page').style.display = "none";
+                document.querySelector('#users').style.display = "none";
+                document.querySelector('#patient-page').style.display = "none";
+                //document.querySelector('#appointment-page').style.display = "block";
+            }
         }
+    };
+
+    function first(){
+        //document.querySelector('#first-page').style.display="block";
+        document.querySelector('#users').style.display="none";
+        document.querySelector('#patient-page').style.display="none";
+        //document.querySelector('#appointment-page').style.display="none";
     }
-
 </script>
 
-<script>
-    /**var patient = "patient: ${PatientController}";
-    $(document)
-        .ready(function (){
-            $('.table')
-                .DataTable({
-                    "destroy": true,
-                    "pagination": true,
-                    "sorting": true,
-                    "aaData": patient,
-                    "columns": [
-                        {"patient": "id"},
-                        {"patient": "first_name"},
-                        {"patient": "second_name"},
-                        {"patient": "surname"},
-                        {"patient": "birth_date"},
-                        {"patient": "pesel"},
-                        {"patient": "sex"},
-                        {"patient": "phone_number"}
-                    ]
-                });
-        })*/
-</script>
 </body>
 </html>

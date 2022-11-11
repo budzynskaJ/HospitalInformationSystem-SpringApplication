@@ -1,38 +1,47 @@
-package com.example.patient.model;
+package praca.SpringApplication.patient;
 
-
+import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "patient")
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long Patient_ID;
 
+    @NotNull
     private String firstname;
 
-    private String secondname;
+    private String middlename;
 
+    @NotNull
     private String surname;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private Date birth_date;
 
     private String PESEL;
 
+    @NotNull
     private String sex;
 
+    @NotNull
     private String phone_number;
 
-    public Patient(Long id, String firstname, String secondname, String surname, Date birth_date, String PESEL, String sex, String phone_number){
+    public Patient() {
         super();
-        this.id = id;
+    }
+
+    public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL, String sex, String phone_number) {
+        Patient_ID = patient_ID;
         this.firstname = firstname;
-        this.secondname = secondname;
+        this.middlename = middlename;
         this.surname = surname;
         this.birth_date = birth_date;
         this.PESEL = PESEL;
@@ -40,11 +49,12 @@ public class Patient {
         this.phone_number = phone_number;
     }
 
-    public Long getId(){
-        return id;
+    public long getPatient_ID() {
+        return Patient_ID;
     }
-    public void setId(Long id){
-        this.id = id;
+
+    public void setPatient_ID(long patient_ID) {
+        Patient_ID = patient_ID;
     }
 
     public String getFirstname() {
@@ -55,12 +65,12 @@ public class Patient {
         this.firstname = firstname;
     }
 
-    public String getSecondname() {
-        return secondname;
+    public String getMiddlename() {
+        return middlename;
     }
 
-    public void setSecondname(String secondname) {
-        this.secondname = secondname;
+    public void setMiddlename(String middlename) {
+        this.middlename = middlename;
     }
 
     public String getSurname() {
@@ -71,11 +81,11 @@ public class Patient {
         this.surname = surname;
     }
 
-    public Date getBirthdate() {
+    public Date getBirth_date() {
         return birth_date;
     }
 
-    public void setBirthdate(Date birth_date) {
+    public void setBirth_date(Date birth_date) {
         this.birth_date = birth_date;
     }
 
@@ -106,14 +116,14 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" +
-                 "id=" + id +
+                 "Patient_ID=" + Patient_ID +
                  ", firstname='" + firstname + '\'' +
-                 ", secondname='" + secondname + '\'' +
+                 ", middledname='" + middlename + '\'' +
                  ", surname='" + surname + '\'' +
-                 ", birth_date=" + birth_date + '\'' +
-                 ", PESEL=" + PESEL + '\'' +
+                 ", birth_date=" + birth_date +
+                 ", PESEL='" + PESEL + '\'' +
                  ", sex='" + sex + '\'' +
-                 ", phone_number=" + phone_number + '\'' +
+                 ", phone_number='" + phone_number + '\'' +
                  '}';
     }
 }
