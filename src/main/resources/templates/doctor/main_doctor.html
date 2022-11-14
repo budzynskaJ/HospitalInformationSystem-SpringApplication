@@ -2,17 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main Doctor Page</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
-    <link rel="icon" type="image/png" href="webapp-hospital(2).png" sizes="50x50" />
+    <link rel="icon" type="image/png" href="Hospital Information System - mini.png" />
 
 </head>
 
 <style>
+    @media screen and(max-width: 500px) {
+        .navbar-brand {
+            float: none;
+            display: block;
+        }
+        #nav2 a {
+            float: none;
+            display: block;
+        }
+    }
     *{
         margin: 0;
         list-style: none;
@@ -24,9 +35,9 @@
     }
 
     .navbar-brand{
-        color: white;
-        font-size: 30px;
-        font-weight: bold;
+        overflow: visible;
+        padding-bottom: 0;
+        padding-top: 0;
     }
 
     .navbar-brand:hover{
@@ -49,6 +60,11 @@
         color: #CE2020;
     }
 
+    .navbar-toggler {
+        right: 0px;
+        color: white;
+        font-weight: bold;
+    }
     #nav1{
         background-color: rgba(24,31,151,0.93) !important;
         padding-right: 35px;
@@ -178,13 +194,13 @@
 <body>
 <nav class="navbar fixed-top navbar-expand-sm" id="nav1">
     <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
                 aria-label="Toggle navigation">
             <i><span class="material-symbols-rounded">menu</span></i>
         </button>
-        <a class="navbar-brand" href="/">
-            <img src="webapp-hospital(2).png" alt="" style="height: 60px">Hospital</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">

@@ -17,11 +17,11 @@ fetch("main_admin/patients").then(
                         temp += "<td>" + p.sex + "</td>";
                         temp += "<td>" + p.phone_number + "</td>"
                         temp += "<td class=\"text-right\">\n" +
-                            "                            <button type=\"button\"\n" +
+                            "                            <button type=\"button\" id='edit' \n" +
                             "                              class=\"btn btn-rounded btn-sm btn-primary\">\n" +
                             "                                Edit\n" +
                             "                            </button>\n" +
-                            "                            <button type=\"button\"\n" +
+                            "                            <button type=\"button\" id='delete' \n" +
                             "                                    class=\"btn btn-rounded btn-sm btn-danger\">\n" +
                             "                                Delete\n" +
                             "                            </button>\n" +
