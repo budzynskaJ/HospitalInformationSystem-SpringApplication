@@ -11,7 +11,7 @@ import java.util.Date;
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Patient_ID;
 
     @NotNull
@@ -66,6 +66,9 @@ public class Patient {
     }
 
     public String getMiddlename() {
+        if(middlename == null){
+            middlename = "";
+        }
         return middlename;
     }
 
@@ -118,7 +121,7 @@ public class Patient {
         return "Patient{" +
                  "Patient_ID=" + Patient_ID +
                  ", firstname='" + firstname + '\'' +
-                 ", middledname='" + middlename + '\'' +
+                 ", middledname='" + getMiddlename() + '\'' +
                  ", surname='" + surname + '\'' +
                  ", birth_date=" + birth_date +
                  ", PESEL='" + PESEL + '\'' +

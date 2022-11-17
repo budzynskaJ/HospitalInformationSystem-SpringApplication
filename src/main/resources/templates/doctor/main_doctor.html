@@ -102,7 +102,7 @@
         font-size: 20px;
         position: relative;
         width: 100%;
-        height: 110px;
+        height: 260px;
         padding-top: 1em;
         display: inline-block;
         font-weight: bolder;
@@ -210,12 +210,6 @@
             <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
             vertical-align: middle; display: inline-block">
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Main
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-
                 <li class="nav-item" >
                     <a class="nav-link" th:inline="text">
                         <img src="doctor.png" alt="" style="height: 30px;">
@@ -242,16 +236,23 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <header><b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></header>
+    <div id="first" onclick="first()">
+        <header>
+            <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
+            <br><br>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b>
+        </header>
+    </div>
+    <br>
     <ul>
-        <li class="list">
-            <a href="#">
+        <li class="list" id="assignment">
+            <a href="#" class="active">
                 <span class="material-symbols-rounded" style="font-size: 28px">assignment_add</span>
                 Create a new appointment
             </a>
         </li>
-        <li class="list">
-            <a href="#">
+        <li class="list" id="history">
+            <a href="#" class="active">
                 <span class="material-symbols-rounded" style="font-size: 30px">list</span>
                 History of appointments
             </a>
@@ -277,9 +278,26 @@
                 list[j++].className = 'list';
             }
             list[i].className = 'list active';
+
+            if(list[i] === document.querySelector('#assignment')) {
+                //document.querySelector('').style.display = "block";
+                //document.querySelector('').style.display = "none";
+            } else if (list[i] === document.querySelector('#history')) {
+                //document.querySelector('').style.display = "none";
+                //document.querySelector('').style.display = "block";
+            }
         }
+    };
+
+    function first(){
+        //document.querySelector('#first-page').style.display="block";
+        document.querySelector('#assignment').style.display="none";
+        document.querySelector('#history').style.display="none";
+        //document.querySelector('#appointment-page').style.display="none";
     }
 </script>
+
+
 
 
 </body>

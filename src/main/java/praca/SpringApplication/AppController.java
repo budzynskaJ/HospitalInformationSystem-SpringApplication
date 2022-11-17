@@ -40,13 +40,5 @@ public class AppController implements WebMvcConfigurer {
         public DashboardController() {
         }
 
-       /* @GetMapping("/main_admin")
-        public String listUsers(Model model) {
-            List<User> listUsers = userRepository.findAll();
-            model.addAttribute("listUsers", listUsers);
-
-            return "admin/main_admin";
-        }*/
-
     }
 }

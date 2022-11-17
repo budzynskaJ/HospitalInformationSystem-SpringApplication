@@ -96,11 +96,11 @@
         font-size: 20px;
         position: relative;
         width: 100%;
-        height: 110px;
+        height: 205px;
         padding-top: 1em;
         display: inline-block;
         font-weight: bolder;
-        border-bottom: 1px inset;
+        border-bottom: 2px inset;
     }
 
     .sidebar ul li a:first-child{
@@ -117,7 +117,7 @@
     }
 
     .sidebar ul li a{
-        display: flex;
+        display: block;
         align-items: center;
         font-size: 15px;
         font-weight: bold;
@@ -129,8 +129,8 @@
     }
 
     .sidebar ul li a:hover{
-        color: rgba(24,31,151,0.93);
         background-color: rgba(24,31,151,0.10);
+        color: rgba(24,31,151,0.93);
     }
 
     .sidebar ul li.active a{
@@ -212,13 +212,6 @@
         <div class="collapse navbar-collapse" id="nav2">
             <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
                 vertical-align: middle; display: inline-block">
-
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Main
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-
                 <li class="nav-item">
                     <a class="nav-link" th:inline="text">
                         <b style="text-transform:capitalize; padding: 10px 10px;
@@ -241,10 +234,21 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div id="first" onclick="first()">
-        <header><b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></header>
+    <div id="first" onclick="profile()">
+        <header>
+            <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
+            <br><br>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b>
+        </header>
     </div>
+    <br>
     <ul>
+        <li class="list" id="db">
+            <a class="active">
+                <span class="material-symbols-rounded" style="font-size: 28px; padding-bottom: -10px">dashboard</span>
+                Dashboard
+            </a>
+        </li>
         <li class="list" id="up">
             <a class="active">
                 <span class="material-symbols-rounded" style="font-size: 30px; padding-bottom: -10px">list</span>
@@ -266,8 +270,12 @@
     </ul>
 
 </div>
+
 <div class="container">
     <div class="row">
+        <div class="" id="my-page" style="display: none">
+
+        </div>
         <div class="table-container" id="users" style="display: none; width: 100%">
             <table id="user-table" class="table table-striped">
                 <thead id="user-head">
@@ -331,17 +339,26 @@
             list[i].className = 'list active';
 
             if (list[i] === document.querySelector('#up')) {
-                //document.querySelector('#first-page').style.display = "none";
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "none";
                 document.querySelector('#users').style.display = "block";
                 document.querySelector('#patient-page').style.display = "none";
                 //document.querySelector('#appointment-page').style.display = "none";
-            } else if (list[i] === document.querySelector('#pp')) {
-                //document.querySelector('#first-page').style.display = "none";
+            } else if (list[i] === document.querySelector('#db')) {
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "block";
+                document.querySelector('#users').style.display = "none";
+                document.querySelector('#patient-page').style.display = "none";
+                //document.querySelector("#appointment-page").style.display = "none";
+            }else if (list[i] === document.querySelector('#pp')) {
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "none";
                 document.querySelector('#users').style.display = "none";
                 document.querySelector('#patient-page').style.display = "block";
                 //document.querySelector("#appointment-page").style.display = "none";
             } else if (list[i] === document.querySelector('#ap')) {
-                //document.querySelector('#first-page').style.display = "none";
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "none";
                 document.querySelector('#users').style.display = "none";
                 document.querySelector('#patient-page').style.display = "none";
                 //document.querySelector('#appointment-page').style.display = "block";
@@ -349,8 +366,9 @@
         }
     };
 
-    function first(){
-        //document.querySelector('#first-page').style.display="block";
+    function profile(){
+        //document.querySelector('#dashboard').style.display = "none";
+        document.querySelector('#my-page').style.display="block";
         document.querySelector('#users').style.display="none";
         document.querySelector('#patient-page').style.display="none";
         //document.querySelector('#appointment-page').style.display="none";

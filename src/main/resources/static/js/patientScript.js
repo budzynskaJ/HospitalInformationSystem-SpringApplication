@@ -12,7 +12,7 @@ fetch("main_admin/patients").then(
                         temp += "<td>" + p.firstname + "</td>";
                         temp += "<td>" + p.middlename + "</td>";
                         temp += "<td>" + p.surname + "</td>";
-                        temp += "<td>" + p.birth_date + "</td>";
+                        temp += "<td>" + (p.birth_date).toString().split('T')[0] + "</td>";
                         temp += "<td>" + p.pesel + "</td>";
                         temp += "<td>" + p.sex + "</td>";
                         temp += "<td>" + p.phone_number + "</td>"
