@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import praca.SpringApplication.patient.PatientController;
 import praca.SpringApplication.patient.PatientRepository;
 import praca.SpringApplication.user.User;
 import praca.SpringApplication.user.UserRepository;
@@ -14,7 +15,7 @@ import praca.SpringApplication.user.UserRepository;
 import java.util.List;
 
 
-@Controller
+@RestController
 public class AppController implements WebMvcConfigurer {
 
     @Autowired
@@ -22,6 +23,7 @@ public class AppController implements WebMvcConfigurer {
 
     @Autowired
     private PatientRepository patientRepository;
+
 
     public AppController(){
 
@@ -33,6 +35,7 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/main_admin").setViewName("admin/main_admin");
         registry.addViewController("/main_doctor").setViewName("doctor/main_doctor");
+        //registry.addViewController("/main_doctor").setViewName("doctor/main_admin/patient/{Patient_id}");
     }
 
     @Controller

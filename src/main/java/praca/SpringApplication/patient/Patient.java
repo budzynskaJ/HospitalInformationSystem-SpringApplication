@@ -34,11 +34,14 @@ public class Patient {
     @NotNull
     private String phone_number;
 
+    @NotNull
+    private String uid;
+
     public Patient() {
         super();
     }
 
-    public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL, String sex, String phone_number) {
+    public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL, String sex, String phone_number, String uid) {
         Patient_ID = patient_ID;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -47,6 +50,7 @@ public class Patient {
         this.PESEL = PESEL;
         this.sex = sex;
         this.phone_number = phone_number;
+        this.uid = uid;
     }
 
     public long getPatient_ID() {
@@ -116,6 +120,14 @@ public class Patient {
         this.phone_number = phone_number;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +
@@ -127,6 +139,7 @@ public class Patient {
                  ", PESEL='" + PESEL + '\'' +
                  ", sex='" + sex + '\'' +
                  ", phone_number='" + phone_number + '\'' +
+                 ", uid='" + uid + '\'' +
                  '}';
     }
 }

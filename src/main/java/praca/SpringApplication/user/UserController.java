@@ -47,7 +47,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("main_admin/users/{id}")
+    @DeleteMapping("main_admin/user/{id}")
     public void delete(@PathVariable Long id) {
         customUserDetailsService.delete(id);
     }

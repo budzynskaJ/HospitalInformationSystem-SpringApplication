@@ -261,6 +261,16 @@
 
 </div>
 
+<div class="container">
+    <div class="row">
+        <div class="col mb-3" id="assignment-page" style="display: none">
+            <div id="data">
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
@@ -268,6 +278,8 @@
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/doctorScript.js}"></script>
+<script th:src="@{/js/userScript.js}"></script>
 
 <script>
     let list = document.querySelectorAll('.list');
@@ -280,7 +292,7 @@
             list[i].className = 'list active';
 
             if(list[i] === document.querySelector('#assignment')) {
-                //document.querySelector('').style.display = "block";
+                //document.querySelector('#assignment-page').style.display = "block";
                 //document.querySelector('').style.display = "none";
             } else if (list[i] === document.querySelector('#history')) {
                 //document.querySelector('').style.display = "none";
