@@ -132,7 +132,7 @@ public class Patient {
     public String toString() {
         return "Patient{" +
                  "Patient_ID=" + Patient_ID +
-                 ", firstname='" + firstname + '\'' +
+                 ", firstname='" + getFirstname() + '\'' +
                  ", middledname='" + getMiddlename() + '\'' +
                  ", surname='" + surname + '\'' +
                  ", birth_date=" + birth_date +

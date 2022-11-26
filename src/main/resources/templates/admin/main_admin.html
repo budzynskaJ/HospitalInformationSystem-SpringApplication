@@ -296,6 +296,40 @@
                 </tbody>
             </table>
         </div>
+        <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserLabel">Edit User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" required="required" id="idu" readonly="readonly">
+                            <label>First name</label>
+                            <input type="text" class="form-control" required="required" id="fnu">
+                            <label>Middle name</label>
+                            <input type="text" class="form-control" id="middlenameu">
+                            <label>Surname</label>
+                            <input type="text" class="form-control" required="required" id="surnameu">
+                            <label>Username</label>
+                            <input type="text" class="form-control" required="required" id="username">
+                            <label>E-mail</label>
+                            <input type="text" class="form-control" id="email">
+                            <label>Role</label>
+                            <input type="text" class="form-control" id="role" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="savebtnu">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="table-container" id="patient-page" style="display: none">
             <table id="patient-table" class="table table-striped">
@@ -328,11 +362,38 @@
                             </button>
                         </div>
                         <div class="modal-body">
-
+                            <div class="form-group">
+                                <label>ID</label>
+                                <input type="text" class="form-control" required="required" id="idp" readonly="readonly">
+                                <br>
+                                <label>First name</label>
+                                <input type="text" class="form-control" required="required" id="fn">
+                                <br>
+                                <label>Middle name</label>
+                                <input type="text" class="form-control" id="middlename">
+                                <br>
+                                <label>Surname</label>
+                                <input type="text" class="form-control" required="required" id="surname">
+                                <br>
+                                <label>Birth date</label>
+                                <input type="date" class="form-control" required="required" id="birthdate">
+                                <br>
+                                <label>PESEL</label>
+                                <input type="text" class="form-control" id="pesel">
+                                <br>
+                                <label>Sex</label>
+                                <input type="text" class="form-control" id="sex">
+                                <br>
+                                <label>Phone number</label>
+                                <input type="text" class="form-control" required="required" id="phonenumber">
+                                <br>
+                                <label>UID</label>
+                                <input type="text" class="form-control" required="required" id="uid" readonly="readonly">
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -344,12 +405,12 @@
 
 
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/script.js}"></script>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-<script th:src="@{/js/patientScript.js}"></script>
+<script th:src="@{js/patientScript.js}"></script>
 <script th:src="@{js/userScript.js}"></script>
 
 <script>
