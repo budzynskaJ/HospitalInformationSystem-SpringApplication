@@ -1,75 +1,103 @@
 let url = "main_admin/patient";
 function deleteData() {
     $('#patient-table tbody').on('click', "#delete", function () {
-        var row = $(this).parents('tr')[0].firstChild.textContent;
-        alert("Are you sure you want to delete patient with ID: " + row);
+        let row = $(this).parents('tr')[0].firstChild.textContent;
+        //alert("Are you sure you want to delete patient with ID: " + row);
         return fetch(url + '/' + row, {
             method: 'delete',
 
         }).then(() => {
-            this.fetchData();
-            //window.location.reload();
+            window.location.reload();
         })
 
     })
 
 };
-var data = {
-    firstname: document.getElementById("fn").value,
-    middlename: document.getElementById("middlename").value,
-    surname: document.getElementById("surname").value,
-    birthdate: document.getElementById("birthdate").value,
-    PESEL: document.getElementById("pesel").value,
-    sex : document.getElementById("sex").value,
-    phonenumber: document.getElementById("phonenumber").value,
-}
-function editData() {
-    $('#patient-table tbody').on('click', '#edit', function () {
-        var row = $(this).parents('tr')[0].firstChild.textContent;
-        var first = $(this).parents('tr')[0].cells[1].textContent;
-        var middle = $(this).parents('tr')[0].cells[2].textContent;
-        var sur = $(this).parents('tr')[0].cells[3].textContent;
-        var bd = $(this).parents('tr')[0].cells[4].textContent;
-        var PESEL = $(this).parents('tr')[0].cells[5].textContent;
-        var s = $(this).parents('tr')[0].cells[6].textContent;
-        var pn = $(this).parents('tr')[0].cells[7].textContent;
-        var UID = $(this).parents('tr')[0].cells[8].textContent;
+function show() {
+    jQuery($('#patient-table tbody').on('click', '#edit', function () {
 
-        $('#idp').val(row);
-        $('#fn').val(first);
-        $('#middlename').val(middle);
-        $('#surname').val(sur);
-        $('#birthdate').val(bd);
-        $('#pesel').val(PESEL);
-        $('#sex').val(s);
-        $('#phonenumber').val(pn);
-        $('#uid').val(UID);
+        $('#idp').val($(this).parents('tr')[0].firstChild.textContent);
+        $('#fn').val($(this).parents('tr')[0].cells[1].textContent);
+        $('#middlename').val($(this).parents('tr')[0].cells[2].textContent);
+        $('#surname').val($(this).parents('tr')[0].cells[3].textContent);
+        $('#birthdate').val($(this).parents('tr')[0].cells[4].textContent);
+        $('#pesel').val($(this).parents('tr')[0].cells[5].textContent);
+        $('#sex').val($(this).parents('tr')[0].cells[6].textContent);
+        $('#phonenumber').val($(this).parents('tr')[0].cells[7].textContent);
+        $('#uid').val($(this).parents('tr')[0].cells[8].textContent);
 
         jQuery.noConflict();
         jQuery('#editPatient').modal('show');
+    }))
+}
+function editData() {
+    var formData = new FormData();
 
-    })
-
-    $('#editPatient').on('click', '#savebtn', function () {
-        var row1 = document.getElementById('patient-table').parents('tr')[0].firstChild.textContent;
-        fetch("main_admin/patients/" + row1, {
-            method: 'put',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        }).then(
-            res => {
-                res.json().then(
-                    patientData => console.log(patientData)
-                ).catch(err => console.log(err))
-            }
-        )
-
-    })
+    var Patient_data = {
+       // Patient_ID: document.getElementById('idp').value,
+        firstname: document.getElementById('fn').value,
+        middlename: document.getElementById('middlename').value,
+        surname: document.getElementById('surname').value,
+        birth_date: document.getElementById('birthdate').value,
+        PESEL: document.getElementById('pesel').value,
+        sex: document.getElementById('sex').value,
+        phone_number: document.getElementById('phonenumber').value,
+        uid: document.getElementById('uid').value,
+    };
+    console.log(Patient_data);
 
 
-};
+    return fetch("main_admin/patients/" + document.getElementById('idp').value, {
+        method: 'put',
+        credentials: 'include',
+        headers:{
+            'content-type': "application/json",
+        },
+        mode: 'cors',
+        body: JSON.stringify(Patient_data),
+    }).then(response => response.json().then(() => {
+
+    }).catch(error => error));
+
+}
+
+function newData() {
+    const formNewData = new FormData();
+    var neData = {
+        Patient_ID: document.getElementById('idp').value,
+        firstname: document.getElementById('fn').value,
+        middlename: document.getElementById('middlename').value,
+        surname: document.getElementById('surname').value,
+        birth_date: document.getElementById('birthdate').value,
+        PESEL: document.getElementById('pesel').value,
+        sex: document.getElementById('sex').value,
+        phone_number: document.getElementById('phonenumber').value,
+        uid: document.getElementById('uid').value,
+    }
+
+   /** formNewData.append('Patient_ID', document.getElementById('newIDP').value);
+    formNewData.append('firstname', document.getElementById('newfn').value);
+    formNewData.append('middlename', document.getElementById('newmiddlename').value);
+    formNewData.append('surname', document.getElementById('newsurname').value);
+    formNewData.append('birth_date', document.getElementById('newbirthdate').value);
+    formNewData.append('PESEL', document.getElementById('newpesel').value);
+    formNewData.append('sex', document.getElementById('newsex').value);
+    formNewData.append('phone_number', document.getElementById('newphonenumber').value);
+    formNewData.append('uid', document.getElementById('newuid').value);**/
+
+
+    return fetch("main_admin/patients/", {
+        method: 'post',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(neData),
+    }).then(response => response.json().then(() => {
+
+    }).catch(error => error));
+}
 
 
 fetch("main_admin/patients").then(
@@ -97,7 +125,7 @@ fetch("main_admin/patients").then(
                         temp += "<td id='UID'>" + p.uid + "</td>"
                         temp += "<td class=\"text-right\">\n" +
                             "                            <button type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
-                            "                              class=\"btn btn-rounded btn-sm btn-primary\" onclick='editData()' '>\n" +
+                            "                              class=\"btn btn-rounded btn-sm btn-primary\" onclick='show()' '>\n" +
                             "                                Edit\n" +
                             "                            </button>\n" +
                             "                            <button type=\"button\" id='delete' onclick='deleteData()' \n" +
@@ -110,9 +138,22 @@ fetch("main_admin/patients").then(
                         numb = numb+1;
                     })
                     document.getElementById("patientsData").innerHTML = await temp;
-                    $(document).ready(function () {
-                        $('#patient-table').DataTable();
+                    var tableP = $(document).ready(function () {
+                        $('#patient-table').DataTable({
+                            dom: 'Bfrtip',
+                            buttons: [{
+                                text: 'Add new',
+                                action: function ( e, dt, node, config ) {
+                                    jQuery.noConflict();
+                                    jQuery('#addPatient').modal('show');
+                                }
+
+                            }
+
+                            ]
+                        });
                     });
+
                 }
 
             }

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
 
     <link rel="icon" type="image/png" href="Hospital Information System - mini.png" />
 </head>
@@ -325,7 +326,42 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="savebtnu">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserLabel">Add new user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" required="required" id="newidu" readonly="readonly">
+                            <label>First name</label>
+                            <input type="text" class="form-control" required="required" id="newfnu">
+                            <label>Middle name</label>
+                            <input type="text" class="form-control" id="newmiddlenameu">
+                            <label>Surname</label>
+                            <input type="text" class="form-control" required="required" id="newsurnameu">
+                            <label>Username</label>
+                            <input type="text" class="form-control" required="required" id="newusername">
+                            <label>E-mail</label>
+                            <input type="text" class="form-control" id="newemail">
+                            <label>Role</label>
+                            <input type="text" class="form-control" id="newrole" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
                     </div>
                 </div>
             </div>
@@ -364,7 +400,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>ID</label>
-                                <input type="text" class="form-control" required="required" id="idp" readonly="readonly">
+                                <input type="text" name="name_id" class="form-control" required="required" id="idp" readonly="readonly">
                                 <br>
                                 <label>First name</label>
                                 <input type="text" class="form-control" required="required" id="fn">
@@ -376,7 +412,7 @@
                                 <input type="text" class="form-control" required="required" id="surname">
                                 <br>
                                 <label>Birth date</label>
-                                <input type="date" class="form-control" required="required" id="birthdate">
+                                <input type="text" class="form-control" required="required" id="birthdate">
                                 <br>
                                 <label>PESEL</label>
                                 <input type="text" class="form-control" id="pesel">
@@ -399,6 +435,52 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPatientLabel">Add new Patient</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" required="required" id="newIDP" readonly="readonly">
+                            <br>
+                            <label>First name</label>
+                            <input type="text" class="form-control" required="required" id="newfn">
+                            <br>
+                            <label>Middle name</label>
+                            <input type="text" class="form-control" id="newmiddlename">
+                            <br>
+                            <label>Surname</label>
+                            <input type="text" class="form-control" required="required" id="newsurname">
+                            <br>
+                            <label>Birth date</label>
+                            <input type="text" class="form-control" required="required" id="newbirthdate">
+                            <br>
+                            <label>PESEL</label>
+                            <input type="text" class="form-control" id="newpesel">
+                            <br>
+                            <label>Sex</label>
+                            <input type="text" class="form-control" id="newsex">
+                            <br>
+                            <label>Phone number</label>
+                            <input type="text" class="form-control" required="required" id="newphonenumber">
+                            <br>
+                            <label>UID</label>
+                            <input type="text" class="form-control" required="required" id="newuid" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="newsavebtn" onclick="newData()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     </div>
 </div>
@@ -410,8 +492,10 @@
 <script th:src="@{/js/script.js}"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-<script th:src="@{js/patientScript.js}"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script th:src="@{js/userScript.js}"></script>
+<script th:src="@{js/patientScript.js}"></script>
+
 
 <script>
     let list = document.querySelectorAll('.list');
