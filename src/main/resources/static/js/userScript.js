@@ -1,19 +1,3 @@
-/* $ , document */
-/*eslint-disable no-console*/
-function deleteUser() {
-    $('#user-table tbody').on('click', "#delete", function () {
-        let row = $(this).parents('tr')[0].firstChild.textContent;
-        alert("Are you sure you want to delete user with ID: " + row);
-        return fetch('main_admin/user/' + row, {
-            method: 'delete',
-
-        }).then(() => {
-            window.location.reload();
-        })
-
-    })
-
-};
 function showUser() {
     $('#usersData').on('click', '#editU', function () {
         var rowu = $(this).parents('tr')[0].firstChild.textContent;
@@ -69,28 +53,28 @@ function editUser() {
 };
 
 function newUser() {
-    const formNewUserData = new FormData();
-    formNewUserData.append('id', document.getElementById('newidu').value);
-    formNewUserData.append('firstname', document.getElementById('newfnu').value);
-    formNewUserData.append('middlename', document.getElementById('newmiddlenameu').value);
-    formNewUserData.append('surname', document.getElementById('newsurnameu').value);
-    formNewUserData.append('username', document.getElementById('newuser').value);
-    formNewUserData.append('email', document.getElementById('newemail').value);
-    formNewUserData.append('role', document.getElementById('newrole').value);
+    let newUSerData = {
+        id: document.getElementById('newidu').value,
+        firstname: document.getElementById('newfnu').value,
+        middlename: document.getElementById('newmiddlenameu').value,
+        surname: document.getElementById('newsurnameu').value,
+        username: document.getElementById('newusername').value,
+        email: document.getElementById('newemail').value,
+        role: document.getElementById('newrole').value,
+    }
 
-    return fetch("main_admin/users/" + formNewUserData.get('id'), {
+    return fetch("main_admin/users/" + newUSerData.id, {
         method: 'post',
-        body: formNewUserData,
+        credentials: 'include',
         headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }).then(
-        res=>{
-            res.json().then(
-                usersData => console.log(usersData)
-            ).catch(err=>console.log(err))
-        }
-    )
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        body: JSON.stringify(newUSerData),
+    }).then(response => response.json().then(() => {
+
+    }).catch(error => error));
+
 };
 
     fetch("/main_admin/users").then(
@@ -119,7 +103,7 @@ function newUser() {
                             "                              class=\"btn btn-rounded btn-sm btn-primary\" onclick='showUser()' >\n" +
                             "                                Edit\n" +
                             "                            </button></a>\n" +
-                            "                            <a id='delete-post'><button type=\"button\" onclick='deleteUser()' \n" +
+                            "                            <a id='delete-post'><button type=\"button\" onclick='deleteUser()' id='deleteU' \n" +
                             "                                    class=\"btn btn-rounded btn-sm btn-danger\">\n" +
                             "                                Delete\n" +
                             "                            </button></a>\n" +
@@ -132,16 +116,26 @@ function newUser() {
                     $(document).ready(function () {
                         $('.user-table').DataTable({
                             dom: 'Bfrtip',
-                            buttons: [{
-                                text: 'Add new',
-                                action: function ( e, dt, node, config ) {
-                                    jQuery.noConflict();
-                                    jQuery('#addUser').modal('show');
+                            buttons: [
+                                {
+                                    text: 'Add new',
+                                    action: function ( e, dt, node, config ) {
+                                        jQuery.noConflict();
+                                        jQuery('#addUser').modal('show');
+                                    }
                                 }
-                            }
                             ]
                         });
+                        $('#user-table').on('click', '#deleteU', function (e) {
+                            e.preventDefault();
+                            alert("Are you sure you want to delete user with ID: " + row); //sprawdzić
+                            $(this).closest('tr').remove();
+                            fetch("main_admin/user" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                                method: 'delete',
 
+                            }).then(() => {
+                            })
+                        } );
                     });
                 }
             }

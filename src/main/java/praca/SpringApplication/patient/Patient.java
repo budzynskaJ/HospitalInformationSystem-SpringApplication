@@ -11,7 +11,7 @@ import java.util.Date;
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Patient_ID;
 
     @NotNull
@@ -29,7 +29,7 @@ public class Patient {
     private String PESEL;
 
     @NotNull
-    private String sex;
+    private char sex;
 
     @NotNull
     private String phone_number;
@@ -41,7 +41,7 @@ public class Patient {
         super();
     }
 
-    public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL, String sex, String phone_number, String uid) {
+    public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL, char sex, String phone_number, String uid) {
         Patient_ID = patient_ID;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -97,6 +97,9 @@ public class Patient {
     }
 
     public String getPESEL() {
+        if(PESEL == null){
+            PESEL = "";
+        }
         return PESEL;
     }
 
@@ -104,11 +107,11 @@ public class Patient {
         this.PESEL = PESEL;
     }
 
-    public String getSex() {
+    public char getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(char sex) {
         this.sex = sex;
     }
 
@@ -136,7 +139,7 @@ public class Patient {
                  ", middledname='" + getMiddlename() + '\'' +
                  ", surname='" + surname + '\'' +
                  ", birth_date=" + birth_date +
-                 ", PESEL='" + PESEL + '\'' +
+                 ", PESEL='" + getPESEL() + '\'' +
                  ", sex='" + sex + '\'' +
                  ", phone_number='" + phone_number + '\'' +
                  ", uid='" + uid + '\'' +

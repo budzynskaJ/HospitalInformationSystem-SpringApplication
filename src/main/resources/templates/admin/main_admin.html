@@ -321,7 +321,10 @@
                             <label>E-mail</label>
                             <input type="text" class="form-control" id="email">
                             <label>Role</label>
-                            <input type="text" class="form-control" id="role" readonly="readonly">
+                            <select name = "role" id="role" class="form-control">
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="USER">DOCTOR</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -356,7 +359,10 @@
                             <label>E-mail</label>
                             <input type="text" class="form-control" id="newemail">
                             <label>Role</label>
-                            <input type="text" class="form-control" id="newrole" readonly="readonly">
+                            <select name = "newrole" id="newrole" class="form-control">
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="USER">DOCTOR</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -400,7 +406,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>ID</label>
-                                <input type="text" name="name_id" class="form-control" required="required" id="idp" readonly="readonly">
+                                <input type="text" name="name_id" class="form-control" required="required" id="idp" readonly="readonly"></input>
                                 <br>
                                 <label>First name</label>
                                 <input type="text" class="form-control" required="required" id="fn">
@@ -412,13 +418,16 @@
                                 <input type="text" class="form-control" required="required" id="surname">
                                 <br>
                                 <label>Birth date</label>
-                                <input type="text" class="form-control" required="required" id="birthdate">
+                                <input type="date" class="form-control" required="required" id="birthdate">
                                 <br>
                                 <label>PESEL</label>
                                 <input type="text" class="form-control" id="pesel">
                                 <br>
                                 <label>Sex</label>
-                                <input type="text" class="form-control" id="sex">
+                                <select name = "sex" id="sex" class="form-control">
+                                    <option value="M">M</option>
+                                    <option value="F">F</option>
+                                </select>
                                 <br>
                                 <label>Phone number</label>
                                 <input type="text" class="form-control" required="required" id="phonenumber">
@@ -459,13 +468,16 @@
                             <input type="text" class="form-control" required="required" id="newsurname">
                             <br>
                             <label>Birth date</label>
-                            <input type="text" class="form-control" required="required" id="newbirthdate">
+                            <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate">
                             <br>
                             <label>PESEL</label>
                             <input type="text" class="form-control" id="newpesel">
                             <br>
                             <label>Sex</label>
-                            <input type="text" class="form-control" id="newsex">
+                            <select name = "sex" id="newsex" class="form-control">
+                                <option value="M">M</option>
+                                <option value="F">F</option>
+                            </select>
                             <br>
                             <label>Phone number</label>
                             <input type="text" class="form-control" required="required" id="newphonenumber">
@@ -475,7 +487,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="newsavebtn" onclick="newData()">Save</button>
+                        <button type="button" class="btn btn-primary" id="newsavebtn" onclick="newData()" data-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>

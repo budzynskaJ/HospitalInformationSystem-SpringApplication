@@ -2,6 +2,7 @@ package praca.SpringApplication.patient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class PatientController {
         patientService.save(patient);
     }
 
-    @PutMapping("/patients/{Patient_id}")
+    @RequestMapping(value = "/patients/{Patient_id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@RequestBody Patient patient, @PathVariable Long Patient_id) {
         try {
             Patient existPatient = patientService.get(Patient_id);
