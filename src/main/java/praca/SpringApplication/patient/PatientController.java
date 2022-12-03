@@ -5,10 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.parameters.P;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/main_admin")
@@ -41,6 +44,8 @@ public class PatientController {
     public ResponseEntity<?> update(@RequestBody Patient patient, @PathVariable Long Patient_id) {
         try {
             Patient existPatient = patientService.get(Patient_id);
+            patient.setPatient_ID(Patient_id);
+            patient.setUid(existPatient.getUid());
             patientService.save(patient);
 
             return new ResponseEntity<>(HttpStatus.OK);

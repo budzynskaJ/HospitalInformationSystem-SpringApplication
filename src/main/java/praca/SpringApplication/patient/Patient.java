@@ -11,7 +11,7 @@ import java.util.Date;
 public class Patient {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Patient_ID;
 
     @NotNull

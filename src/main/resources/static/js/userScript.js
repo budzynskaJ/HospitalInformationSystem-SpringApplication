@@ -99,14 +99,13 @@ function newUser() {
                         temp += "<td>" + u.email + "</td>";
                         temp += "<td>" + u.role + "</td>";
                         temp += "<td class=\"text-right\">\n" +
-                            "                            <a><button type=\"button\" data-toggle='modal' data-target='#editUser' id='editU' \n" +
-                            "                              class=\"btn btn-rounded btn-sm btn-primary\" onclick='showUser()' >\n" +
-                            "                                Edit\n" +
-                            "                            </button></a>\n" +
-                            "                            <a id='delete-post'><button type=\"button\" onclick='deleteUser()' id='deleteU' \n" +
-                            "                                    class=\"btn btn-rounded btn-sm btn-danger\">\n" +
-                            "                                Delete\n" +
-                            "                            </button></a>\n" +
+                            "                             <span type=\"button\" data-toggle='modal' data-target='#editUser' id='editU' \n" +
+                            "                               style='color: rgba(24,31,151,0.93); height: 40px; width: 40px' class=\"material-symbols-rounded\" onclick='showUser()'>\n" +
+                            "                                   edit_square\n" +
+                            "                              </span>\n" +
+                            "                             <span type=\"button\" id='deleteU' style='color: #CE2020; height: 40px; width: 40px' class=\"material-symbols-rounded\">\n" +
+                            "                                   delete\n" +
+                            "                             </span>\n" +
                             "\n" +
                             "                        </td>";
                         temp += "</tr>";

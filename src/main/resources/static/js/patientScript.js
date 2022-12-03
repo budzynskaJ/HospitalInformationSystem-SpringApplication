@@ -52,7 +52,7 @@ function editData() {
 
 function newData() {
     let newPatientData = {
-        //Patient_ID: document.getElementById('newIDP').value,
+        Patient_ID: document.getElementById("idp").value,
         firstname: document.getElementById('newfn').value,
         middlename: document.getElementById('newmiddlename').value,
         surname: document.getElementById('newsurname').value,
@@ -102,14 +102,13 @@ fetch("main_admin/patients").then(
                     temp += "<td id='pn'>" + p.phone_number + "</td>"
                     temp += "<td id='UID'>" + p.uid + "</td>"
                     temp += "<td class=\"text-right\">\n" +
-                        "                            <button type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
-                        "                              class=\"btn btn-rounded btn-sm btn-primary\" '>\n" +
-                        "                                Edit\n" +
-                        "                            </button>\n" +
-                        "                            <button type=\"button\" id='delete'  \n" +
-                        "                                    class=\"btn btn-rounded btn-sm btn-danger\">\n" +
-                        "                                Delete\n" +
-                        "                            </button>\n" +
+                        "                             <span type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
+                        "                               style='color: rgba(24,31,151,0.93); height: 35px; width: 35px' class=\"material-symbols-rounded\">\n" +
+                        "                                   edit_square\n" +
+                        "                              </span>\n" +
+                        "                             <span type=\"button\" id='delete' style='color: #CE2020; height: 35px; width: 35px' class=\"material-symbols-rounded\">\n" +
+                        "                                   delete\n" +
+                        "                             </span>\n" +
                         "\n" +
                         "                        </td>";
                     temp += "</tr>";
@@ -122,6 +121,7 @@ fetch("main_admin/patients").then(
                             dom: 'Bfrtip',
                             buttons: [
                                 {
+                                    className: 'btn btn-success btn-sm btn-rounded',
                                     text: 'Add new',
                                     action: function ( e, dt, node, config ) {
                                         jQuery.noConflict();
