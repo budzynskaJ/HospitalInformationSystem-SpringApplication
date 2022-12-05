@@ -45,6 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+
     public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
         SimpleUrlAuthenticationSuccessHandler userSuccessHandler =
           new SimpleUrlAuthenticationSuccessHandler("/main_doctor");
@@ -76,6 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
           .csrf().disable()
+          .cors().disable()
           .authorizeRequests()
           .antMatchers("/", "/login*").permitAll()
           .antMatchers("/resources/static/**").permitAll()
@@ -88,6 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           .antMatchers("/main_admin/patients").hasAnyAuthority("ADMIN")
           .antMatchers("/main_admin/patient/{Patient_id}").hasAnyAuthority("ADMIN")
           .antMatchers("/main_admin/patients/{Patient_id}").hasAnyAuthority("ADMIN")
+          .antMatchers("https://localhost:8090/rest/v1/templates/ef2cac34-d344-4365-8395-6cb639f3025e").hasAnyAuthority("USER")
           //.anyRequest().authenticated()
           //.and()
           //.httpBasic()

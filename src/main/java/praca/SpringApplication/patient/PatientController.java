@@ -40,7 +40,7 @@ public class PatientController {
         patientService.save(patient);
     }
 
-    @RequestMapping(value = "/patients/{Patient_id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping( "/patients/{Patient_id}")
     public ResponseEntity<?> update(@RequestBody Patient patient, @PathVariable Long Patient_id) {
         try {
             Patient existPatient = patientService.get(Patient_id);

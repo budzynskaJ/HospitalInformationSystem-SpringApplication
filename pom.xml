@@ -21,6 +21,9 @@
 		<lombok.version>1.18.2</lombok.version>
 		<commons-validator.version>1.6</commons-validator.version>
 	</properties>
+	<properties>
+		<spring-boot.run.jvmArguments>-Duser.timezone=UTC</spring-boot.run.jvmArguments>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

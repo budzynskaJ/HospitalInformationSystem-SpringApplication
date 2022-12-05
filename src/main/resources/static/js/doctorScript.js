@@ -1,20 +1,94 @@
+let token = "";
+$(document).ready(function (){
+    let email = "admin%40cabolabs.com";
+    let password = "admin";
+    let organization = "123456";
+    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password + "&organization=" + organization;
+  fetch(url, {
+      method: 'POST',
+      headers: {
+          'Origin': 'http://localhost:8070/main_doctor',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+      },
 
-fetch('https://localhost:8090/rest/v1/templates/3dd0bf1b-7a06-4f76-904e-3a01bc50535e', {
-    //mode: 'cors',
-    //credentials: 'include',
-    method: 'GET',
-    headers: {
-        accept: 'application/xml',
-        'Content-Type': 'application/xml',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Inp1bnp1b212b2lxaWJlcmRuZHhzbHVvZ2tiemFnZmtrZ3VudGRkeGpmb2Vjc2d1bXFtQGFwaWtleS5jb20iLCJleHRyYWRhdGEiOnsic2NvcGUiOiJzeW5jIn0sImlzc3VlZF9hdCI6IjIwMjItMTEtMjRUMTA6MDA6MjguNzY5WiIsImV4cGlyZXNfYXQiOiIyMDIyLTExLTI1VDEwOjAwOjI5LjM4NFoifQ.2UFQjuwh5t-foUEyokFAcX6qPITezUI7yKG9bry0OKI'}
+    })
+      .then(res=>{
+          res.json().then(
+              res => {
+                  token = res.token;
+                  console.log(token);
+              }
+          );
 
+    }).catch(err => err);
 })
+let gynecologist_uid = "";
+setTimeout(function () {
+    fetch('http://localhost:8090/rest/v1/templates', {
+        method: 'GET',
+        headers: {
+            'Origin': 'http://localhost:8070/main_doctor',
+            Authorization: 'Bearer ' + token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+    }).then(
+        res=> {
+            res.json().then(
+                data => {
+                    gynecologist_uid = data.templates[3].uid;
+
+                }
+            ).catch(err => console.log(err))
+        }
+    )
+
+}, 1000);
+
+setTimeout(function () {
+    fetch('http://localhost:8090/rest/v1/templates/' + gynecologist_uid, {
+        method: 'GET',
+        headers: {
+            'Origin': 'http://localhost:8070/main_doctor',
+            Authorization: 'Bearer ' + token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+    }).then(
+    res=> {
+        res.json().then(
+            data => {
+                console.log(data)
+            }
+        ).catch(err => console.log(err))
+    }
+)
+}, 1500);
+
+
+function newEHR() {
+    let format = "json";
+    let subjectUid = document.getElementById("uid").value;
+    return fetch('http://localhost:8090/rest/v1/ehrs?' + "format=" + format + "&subjectUid=" + subjectUid, {
+
+    method: 'POST',
+        headers: {
+            'Origin': 'http://localhost:8070/main_doctor',
+            Authorization: 'Bearer ' + token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+    })
         .then(
-            res=> {
+            res=>{
                 res.json().then(
-                    data=>{
+                    data => {
                         console.log(data);
                     }
-                )
+                ).catch(err=>console.log(err))
+            }
 
-        })
+
+    )
+}

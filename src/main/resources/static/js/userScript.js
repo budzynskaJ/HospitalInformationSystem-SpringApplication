@@ -27,26 +27,28 @@ function showUser() {
 }
 
 function editUser() {
-    const formUserData = new FormData();
-    formUserData.append('id', document.getElementById('idu').value);
-    formUserData.append('firstname', document.getElementById('fnu').value);
-    formUserData.append('middlename', document.getElementById('middlenameu').value);
-    formUserData.append('surname', document.getElementById('surnameu').value);
-    formUserData.append('username', document.getElementById('user').value);
-    formUserData.append('email', document.getElementById('email').value);
-    formUserData.append('role', document.getElementById('role').value);
+    var User_data = {
+        id: document.getElementById('idu').value,
+        firstname: document.getElementById('fnu').value,
+        middlename: document.getElementById('middlenameu').value,
+        surname: document.getElementById('surnameu').value,
+        username: document.getElementById('user').value,
+        email: document.getElementById('email').value,
+        role: document.getElementById('role').value,
+    }
 
-    return fetch("main_admin/users/" + formUserData.get('id'), {
+    return fetch("main_admin/users/" + User_data.id, {
             method: 'put',
             credentials: 'include',
             headers: {
-                //'Content-Type': 'multipart/form-data'
+                'content-Type': 'application/json',
             },
-            body: formUserData,
+            mode: 'cors',
+            body: JSON.stringify(User_data),
         }).then(
             res=>{
                 res.json().then(
-                    usersData => console.log(usersData)
+
                 ).catch(err=>console.log(err))
             }
         )
@@ -98,12 +100,12 @@ function newUser() {
                         temp += "<td>" + u.username + "</td>";
                         temp += "<td>" + u.email + "</td>";
                         temp += "<td>" + u.role + "</td>";
-                        temp += "<td class=\"text-right\">\n" +
+                        temp += "<td class=\"text-right\" style='vertical-align: center'>\n" +
                             "                             <span type=\"button\" data-toggle='modal' data-target='#editUser' id='editU' \n" +
-                            "                               style='color: rgba(24,31,151,0.93); height: 40px; width: 40px' class=\"material-symbols-rounded\" onclick='showUser()'>\n" +
+                            "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\" onclick='showUser()'>\n" +
                             "                                   edit_square\n" +
                             "                              </span>\n" +
-                            "                             <span type=\"button\" id='deleteU' style='color: #CE2020; height: 40px; width: 40px' class=\"material-symbols-rounded\">\n" +
+                            "                             <span type=\"button\" id='deleteU' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\">\n" +
                             "                                   delete\n" +
                             "                             </span>\n" +
                             "\n" +
@@ -127,13 +129,16 @@ function newUser() {
                         });
                         $('#user-table').on('click', '#deleteU', function (e) {
                             e.preventDefault();
-                            alert("Are you sure you want to delete user with ID: " + row); //sprawdzić
-                            $(this).closest('tr').remove();
-                            fetch("main_admin/user" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
-                                method: 'delete',
+                            var result = confirm("Are you sure you want to delete this User?");//sprawdzić
+                            if(result) {
 
-                            }).then(() => {
-                            })
+                                $(this).closest('tr').remove();
+                                fetch("main_admin/user" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                                    method: 'delete',
+
+                                }).then(() => {
+                                })
+                            }
                         } );
                     });
                 }

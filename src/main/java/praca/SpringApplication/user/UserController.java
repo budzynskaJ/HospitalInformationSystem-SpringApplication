@@ -39,6 +39,9 @@ public class UserController {
     public ResponseEntity<?> update(@RequestBody User user, @PathVariable Long id) {
         try {
             User existUser = customUserDetailsService.get(id);
+            user.setId(id);
+            user.setPassword(existUser.getPassword());
+            user.setRole(existUser.getRole());
             customUserDetailsService.save(user);
 
             return new ResponseEntity<>(HttpStatus.OK);

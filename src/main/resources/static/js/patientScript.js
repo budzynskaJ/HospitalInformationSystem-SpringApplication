@@ -60,8 +60,11 @@ function newData() {
         pesel: document.getElementById('newpesel').value,
         sex: document.getElementById('newsex').value,
         phone_number: document.getElementById('newphonenumber').value,
-        //uid: document.getElementById('newuid').value,
+        uid: document.getElementById('newuid').value,
     };
+    console.log(newPatientData.birth_date);
+    newPatientData = JSON.stringify(newPatientData);
+
 
     return fetch("main_admin/patients/", {
         method: 'post',
@@ -70,7 +73,7 @@ function newData() {
             'Content-Type': 'application/json',
         },
         mode: 'cors',
-        body: JSON.stringify(newPatientData),
+        body: newPatientData,
     }).then(response => response.json().then(() => {
 
     }).catch(error => error));
@@ -101,13 +104,13 @@ fetch("main_admin/patients").then(
                     temp += "<td id='s'>" + p.sex + "</td>";
                     temp += "<td id='pn'>" + p.phone_number + "</td>"
                     temp += "<td id='UID'>" + p.uid + "</td>"
-                    temp += "<td class=\"text-right\">\n" +
+                    temp += "<td class=\"text-right\" style='vertical-align: middle'>\n" +
                         "                             <span type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
-                        "                               style='color: rgba(24,31,151,0.93); height: 35px; width: 35px' class=\"material-symbols-rounded\">\n" +
-                        "                                   edit_square\n" +
+                        "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\">\n" +
+                        "                                   edit_square \n" +
                         "                              </span>\n" +
-                        "                             <span type=\"button\" id='delete' style='color: #CE2020; height: 35px; width: 35px' class=\"material-symbols-rounded\">\n" +
-                        "                                   delete\n" +
+                        "                             <span type=\"button\" id='delete' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\">\n" +
+                        "                                   delete \n" +
                         "                             </span>\n" +
                         "\n" +
                         "                        </td>";
@@ -116,13 +119,13 @@ fetch("main_admin/patients").then(
                 })
 
                     document.getElementById("patientsData").innerHTML = await temp;
-                    var tableP = $(document).ready(function () {
-                        $('#patient-table').DataTable({
+                    $(document).ready(function () {
+                        var tableP = $('#patient-table').DataTable({
                             dom: 'Bfrtip',
                             buttons: [
                                 {
-                                    className: 'btn btn-success btn-sm btn-rounded',
                                     text: 'Add new',
+                                    className: 'add',
                                     action: function ( e, dt, node, config ) {
                                         jQuery.noConflict();
                                         jQuery('#addPatient').modal('show');
@@ -133,13 +136,16 @@ fetch("main_admin/patients").then(
 
                         $('#patient-table').on('click', '#delete', function (e) {
                             e.preventDefault();
+                            var result = confirm("Are you sure you want to delete this Patient?");
+                            if(result) {
 
-                            $(this).closest('tr').remove();
-                            fetch("main_admin/patient" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
-                                method: 'delete',
+                                $(this).closest('tr').remove();
+                                fetch("main_admin/patient" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                                    method: 'delete',
 
-                            }).then(() => {
-                            })
+                                }).then(() => {
+                                })
+                            }
                         } );
 
                         $('#patient-table').on('click', '#edit', function (f) {
@@ -176,4 +182,5 @@ fetch("main_admin/patients").then(
             }
 
     });
+
 
