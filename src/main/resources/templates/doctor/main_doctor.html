@@ -243,7 +243,7 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div id="first" onclick="first()">
+    <div class="list" id="first" onclick="first()">
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
             <br><br>
@@ -270,6 +270,19 @@
 
 <div class="container">
     <div class="row">
+        <div class="col mb-3" id="profile-page" style="display: none">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile settings</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label class="labels">First name</label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col mb-3" id="assignment-page" style="display: none">
             <div id="data">
                 <div class="modal fade" id="whichPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
@@ -321,7 +334,7 @@
 
             if(list[i] === document.querySelector('#assignment')) {
                 document.querySelector('#assignment-page').style.display = "block";
-                //document.querySelector('').style.display = "none";
+                document.querySelector('#profile-page').style.display = "none";
             } else if (list[i] === document.querySelector('#history')) {
                 //document.querySelector('').style.display = "none";
                 //document.querySelector('').style.display = "block";
@@ -330,7 +343,7 @@
     };
 
     function first(){
-        //document.querySelector('#first-page').style.display="block";
+        document.querySelector('#profile-page').style.display="block";
         document.querySelector('#assignment').style.display="none";
         document.querySelector('#history').style.display="none";
         //document.querySelector('#appointment-page').style.display="none";

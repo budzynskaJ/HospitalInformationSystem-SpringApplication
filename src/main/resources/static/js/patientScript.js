@@ -62,9 +62,8 @@ function newData() {
         phone_number: document.getElementById('newphonenumber').value,
         uid: document.getElementById('newuid').value,
     };
-    console.log(newPatientData.birth_date);
-    newPatientData = JSON.stringify(newPatientData);
 
+    newPatientData = JSON.stringify(newPatientData);
 
     return fetch("main_admin/patients/", {
         method: 'post',

@@ -198,6 +198,9 @@
         padding-top: 100px;
     }
 
+    .invalid input:required:invalid {
+        background: #BE4C54;
+    }
 
 
 
@@ -311,26 +314,33 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" required="required" id="idu" readonly="readonly">
-                            <label>First name</label>
-                            <input type="text" class="form-control" required="required" id="fnu">
-                            <label>Middle name</label>
-                            <input type="text" class="form-control" id="middlenameu">
-                            <label>Surname</label>
-                            <input type="text" class="form-control" required="required" id="surnameu">
-                            <label>Username</label>
-                            <input type="text" class="form-control" required="required" id="username">
-                            <label>E-mail</label>
-                            <input type="text" class="form-control" id="email">
-                            <label>Role</label>
-                            <input type="text" class="form-control" id="role" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
+                        <form class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label>ID</label>
+                                <input type="text" class="form-control" required="required" id="idu" readonly="readonly">
+                                <label for="fnu">First name</label>
+                                <input type="text" class="form-control" required="required" id="fnu">
+                                <div class="invalid-feedback">
+                                    First name is required.
+                                </div>
+                                <label>Middle name</label>
+                                <input type="text" class="form-control" id="middlenameu">
+                                <label for="surnameu">Surname</label>
+                                <input type="text" class="form-control" required="required" id="surnameu">
+                                <div class="invalid-feedback">
+                                    Surname is required.
+                                </div>
+                                <label>Username</label>
+                                <input type="text" class="form-control" required="required" id="username">
+                                <label>E-mail</label>
+                                <input type="email" class="form-control" required="required" id="email">
+                                <label>Role</label>
+                                <input type="text" class="form-control" id="role" readonly="readonly">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -346,29 +356,42 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" required="required" id="newidu" readonly="readonly">
-                            <label>First name</label>
-                            <input type="text" class="form-control" required="required" id="newfnu">
-                            <label>Middle name</label>
-                            <input type="text" class="form-control" id="newmiddlenameu">
-                            <label>Surname</label>
-                            <input type="text" class="form-control" required="required" id="newsurnameu">
-                            <label>Username</label>
-                            <input type="text" class="form-control" required="required" id="newusername">
-                            <label>E-mail</label>
-                            <input type="text" class="form-control" id="newemail">
-                            <label>Role</label>
-                            <select name = "newrole" id="newrole" class="form-control">
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="USER">USER</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
+                        <form class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label>ID</label>
+                                <input type="text" class="form-control" required="required" id="newidu" readonly="readonly">
+                                <label for="newfnu">First name</label>
+                                <input type="text" class="form-control" required="required" id="newfnu">
+                                <div class="invalid-feedback">
+                                    First name is required.
+                                </div>
+                                <label>Middle name</label>
+                                <input type="text" class="form-control" id="newmiddlenameu">
+                                <label for="newsurnameu">Surname</label>
+                                <input type="text" class="form-control" required="required" id="newsurnameu">
+                                <div class="invalid-feedback">
+                                    Surname is required.
+                                </div>
+                                <label for="newusername">Username</label>
+                                <input type="text" class="form-control" required="required" id="newusername">
+                                <div class="invalid-feedback">
+                                    Username is required
+                                </div>
+                                <label for="newemail">E-mail</label>
+                                <input type="email" class="form-control" id="newemail">
+                                <div class="invalid-feedback">
+                                    E-mail is required.
+                                </div>
+                                <label>Role</label>
+                                <select name = "newrole" id="newrole" class="form-control">
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="USER">USER</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -405,41 +428,54 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label>ID</label>
-                                <input type="text" name="name_id" class="form-control" id="idp" readonly="readonly">
-                                <br>
-                                <label>First name</label>
-                                <input type="text" class="form-control" required="required" id="fn">
-                                <br>
-                                <label>Middle name</label>
-                                <input type="text" class="form-control" id="middlename">
-                                <br>
-                                <label>Surname</label>
-                                <input type="text" class="form-control" required="required" id="surname">
-                                <br>
-                                <label>Birth date</label>
-                                <input type="date" class="form-control" required="required" id="birthdate">
-                                <br>
-                                <label>PESEL</label>
-                                <input type="text" class="form-control" id="pesel">
-                                <br>
-                                <label>Sex</label>
-                                <select name = "sex" id="sex" class="form-control">
-                                    <option value="M">M</option>
-                                    <option value="F">F</option>
-                                </select>
-                                <br>
-                                <label>Phone number</label>
-                                <input type="text" class="form-control" required="required" id="phonenumber">
-                                <br>
-                                <label>UID</label>
-                                <input type="text" class="form-control" id="uid" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
+                            <form class="needs-validation" novalidate>
+                                <div class="form-group">
+                                    <label>ID</label>
+                                    <input type="text" name="name_id" class="form-control" id="idp" readonly="readonly">
+                                    <br>
+                                    <label for="fn">First name</label>
+                                    <input type="text" class="form-control" required="required" id="fn">
+                                    <div class="invalid-feedback">
+                                        First name is required.
+                                    </div>
+                                    <br>
+                                    <label>Middle name</label>
+                                    <input type="text" class="form-control" id="middlename">
+                                    <br>
+                                    <label for="surname">Surname</label>
+                                    <input type="text" class="form-control" required="required" id="surname">
+                                    <div class="invalid-feedback">
+                                        Surname is required.
+                                    </div>
+                                    <br>
+                                    <label for="birthdate">Birth date</label>
+                                    <input type="date" class="form-control" required="required" id="birthdate">
+                                    <div class="invalid-feedback">
+                                        Birth date is required.
+                                    </div>
+                                    <br>
+                                    <label>PESEL</label>
+                                    <input type="text" class="form-control" id="pesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
+                                    <br>
+                                    <label>Sex</label>
+                                    <select name = "sex" id="sex" class="form-control">
+                                        <option value="M">M</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                    <br>
+                                    <label for="phonenumber">Phone number</label>
+                                    <input type="text" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                                    <div class="invalid-feedback">
+                                        Phone number is required.
+                                    </div>
+                                    <br>
+                                    <label>UID</label>
+                                    <input type="text" class="form-control" id="uid" readonly="readonly">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -455,40 +491,54 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" required="required" id="newIDP" readonly="readonly">
-                            <br>
-                            <label>First name</label>
-                            <input type="text" class="form-control" required="required" id="newfn">
-                            <br>
-                            <label>Middle name</label>
-                            <input type="text" class="form-control" id="newmiddlename">
-                            <br>
-                            <label>Surname</label>
-                            <input type="text" class="form-control" required="required" id="newsurname">
-                            <br>
-                            <label>Birth date</label>
-                            <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate">
-                            <br>
-                            <label>PESEL</label>
-                            <input type="text" class="form-control" id="newpesel">
-                            <br>
-                            <label>Sex</label>
-                            <select name = "sex" id="newsex" class="form-control">
-                                <option value="M">M</option>
-                                <option value="F">F</option>
-                            </select>
-                            <br>
-                            <label>Phone number</label>
-                            <input type="text" class="form-control" required="required" id="newphonenumber">
-                            <br>
-                            <label>UID</label>
-                            <input type="text" class="form-control" required="required" id="newuid" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="newsavebtn" onclick="newData()" data-dismiss="modal">Save</button>
+                        <form class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label>ID</label>
+                                <input type="text" class="form-control" required="required" id="newIDP" readonly="readonly">
+                                <br>
+                                <label for="newfn">First name</label>
+                                <input type="text" class="form-control" required="required" id="newfn">
+                                <div class="invalid-feedback">
+                                    First name is required.
+                                </div>
+                                <br>
+                                <label>Middle name</label>
+                                <input type="text" class="form-control" id="newmiddlename">
+                                <br>
+                                <label for="newsurname">Surname</label>
+                                <input type="text" class="form-control" required="required" id="newsurname">
+                                <div class="invalid-feedback">
+                                    Surname is required.
+                                </div>
+                                <br>
+                                <label for="newbirthdate">Birth date</label>
+                                <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate">
+                                <div class="invalid-feedback">
+                                    Birth date is required.
+                                </div>
+                                <br>
+                                <label>PESEL</label>
+                                <input type="text" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
+                                <br>
+                                <label>Sex</label>
+                                <select name = "sex" id="newsex" class="form-control">
+                                    <option value="M">M</option>
+                                    <option value="F">F</option>
+                                </select>
+                                <br>
+                                <label for="newphonenumber">Phone number</label>
+                                <input type="text" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                                <div class="invalid-feedback">
+                                    Phone number is required.
+                                </div>
+                                <br>
+                                <label>UID</label>
+                                <input type="text" class="form-control" required="required" id="newuid" readonly="readonly">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="newsavebtn" onclick="newData()" data-dismiss="modal">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -557,6 +607,27 @@
         //document.querySelector('#appointment-page').style.display="none";
     }
 </script>
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+
 
 
 

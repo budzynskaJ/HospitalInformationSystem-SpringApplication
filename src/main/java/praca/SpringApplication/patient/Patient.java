@@ -1,5 +1,6 @@
 package praca.SpringApplication.patient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,7 +23,7 @@ public class Patient {
     @NotNull
     private String surname;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="Europe/Zagreb")
     @NotNull
     private Date birth_date;
 
