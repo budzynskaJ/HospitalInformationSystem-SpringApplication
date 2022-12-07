@@ -203,6 +203,23 @@
     .invalid input:required:invalid {
         background: #BE4C54;
     }
+    .card {
+        border-radius: 18px;
+        box-shadow: 1px 1px 8px 0 grey;
+        height: auto;
+        width: 850px;
+    }
+    .card table {
+        border: none;
+        font-size: 16px;
+        height: 170px;
+        width: 80%;
+    }
+    #editprofile {
+        position: absolute;
+        color: #e7e7e8;
+        right: 7%;
+    }
 
 
 
@@ -244,7 +261,7 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div id="first" onclick="profile()">
+    <div id="first" onclick="profile()" title="Check your profile">
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
@@ -284,8 +301,41 @@
 <div class="container">
     <div class="row">
         <div class="col mb-3" id="my-page" style="display: none">
+            <div class="prof" style="padding-top: 110px; padding-left: 150px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right">Profile settings</h3>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <span id="editprofile" class="material-symbols-rounded">edit</span>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>First name: </td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
+                            </tr>
+                            <tr>
+                                <td>Middle name:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
+                            </tr>
+                            <tr>
+                                <td>Surname:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
+                            </tr>
+                            <tr>
+                                <td>Username:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
+                            </tr>
+                            <tr>
+                                <td>E-mail:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.email}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
 
-
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="table-container" id="users" style="display: none; width: 100%">
             <table class="table table-striped user-table" style="border-spacing: 0">

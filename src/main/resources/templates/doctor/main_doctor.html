@@ -150,6 +150,10 @@
         text-align: center;
         margin-right: 5px;
     }
+    .container {
+        padding-left: 0;
+        position: relative;
+    }
 
     #check{
         display: none;
@@ -196,6 +200,28 @@
         width: 350px;
 
     }
+    .invalid input:required:invalid {
+        background: #BE4C54;
+    }
+
+    .card {
+        border-radius: 18px;
+        box-shadow: 1px 1px 8px 0 grey;
+        height: auto;
+        width: 850px;
+    }
+    .card table {
+        border: none;
+        font-size: 16px;
+        height: 170px;
+        width: 80%;
+    }
+    #editprofile {
+        position: absolute;
+        color: #e7e7e8;
+        right: 7%;
+    }
+
 
 </style>
 <body>
@@ -243,7 +269,7 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div class="list" id="first" onclick="first()">
+    <div id="first" onclick="first()" title="Check your profile">
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
             <br><br>
@@ -271,13 +297,37 @@
 <div class="container">
     <div class="row">
         <div class="col mb-3" id="profile-page" style="display: none">
-            <div class="p-3 py-5">
+            <div class="prof" style="padding-top: 110px; padding-left: 150px;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile settings</h4>
+                    <h3 class="text-right">Profile settings</h3>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <label class="labels">First name</label>
+                <div class="card">
+                    <div class="card-body">
+                        <span id="editprofile" class="material-symbols-rounded">edit</span>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>First name: </td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
+                            </tr>
+                            <tr>
+                                <td>Middle name:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
+                            </tr>
+                            <tr>
+                                <td>Surname:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
+                            </tr>
+                            <tr>
+                                <td>Username:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
+                            </tr>
+                            <tr>
+                                <td>E-mail:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.email}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
@@ -295,13 +345,18 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Give patient's uid: </label>
-                                    <input type="text" class="form-controll" required="required" id="uid">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn" id="select" onclick="newEHR()" data-dismiss="modal">Select</button>
+                                <form class="needs-validation" novalidate>
+                                    <div class="form-group">
+                                        <label>Give patient's uid: </label>
+                                        <input type="text" class="form-controll" required="required" id="uid">
+                                        <div class="invalid-feedback">
+                                            Patient's uid is required.
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn" style="background-color: #228B22; font-weight: bold" id="select" onclick="newEHR()" data-dismiss="modal">Select</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -344,8 +399,8 @@
 
     function first(){
         document.querySelector('#profile-page').style.display="block";
-        document.querySelector('#assignment').style.display="none";
-        document.querySelector('#history').style.display="none";
+        document.querySelector('#assignment-page').style.display="none";
+        //document.querySelector('#history').style.display="none";
         //document.querySelector('#appointment-page').style.display="none";
     }
 </script>
@@ -355,6 +410,25 @@
         jQuery.noConflict();
         jQuery('#whichPatient').modal('show');
     }
+</script>
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 </script>
 
 

@@ -23,7 +23,7 @@ $(document).ready(function (){
 
     }).catch(err => err);
 })
-let gynecologist_uid = "";
+var gynecologist_uid = "";
 setTimeout(function () {
     fetch('http://localhost:8090/rest/v1/templates', {
         method: 'GET',
@@ -37,7 +37,7 @@ setTimeout(function () {
         res=> {
             res.json().then(
                 data => {
-                    gynecologist_uid = data.templates[3].uid;
+                    gynecologist_uid = data.templates[3].uid
 
                 }
             ).catch(err => console.log(err))
@@ -92,3 +92,4 @@ function newEHR() {
 
     )
 }
+
