@@ -102,10 +102,10 @@ function newUser() {
                         temp += "<td>" + u.role + "</td>";
                         temp += "<td class=\"text-right\" style='vertical-align: center'>\n" +
                             "                             <span type=\"button\" data-toggle='modal' data-target='#editUser' id='editU' \n" +
-                            "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\" onclick='showUser()'>\n" +
+                            "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\" onclick='showUser()' title='Edit user'>\n" +
                             "                                   edit_square\n" +
                             "                              </span>\n" +
-                            "                             <span type=\"button\" id='deleteU' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\">\n" +
+                            "                             <span type=\"button\" id='deleteU' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\" title='Delete user'>\n" +
                             "                                   delete\n" +
                             "                             </span>\n" +
                             "\n" +
@@ -119,7 +119,9 @@ function newUser() {
                             dom: 'Bfrtip',
                             buttons: [
                                 {
-                                    text: 'Add new',
+                                    text: '<i class="fas fa-plus fa-2x" style="color: #228B22;"></i>',
+                                    className: 'bg-transparent border-0',
+                                    titleAttr: 'Add new user',
                                     action: function ( e, dt, node, config ) {
                                         jQuery.noConflict();
                                         jQuery('#addUser').modal('show');

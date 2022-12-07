@@ -105,13 +105,12 @@ fetch("main_admin/patients").then(
                     temp += "<td id='UID'>" + p.uid + "</td>"
                     temp += "<td class=\"text-right\" style='vertical-align: middle'>\n" +
                         "                             <span type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
-                        "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\">\n" +
+                        "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Edit patient'>\n" +
                         "                                   edit_square \n" +
                         "                              </span>\n" +
-                        "                             <span type=\"button\" id='delete' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\">\n" +
+                        "                             <span type=\"button\" id='delete' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\"; title='Delete patient'>\n" +
                         "                                   delete \n" +
                         "                             </span>\n" +
-                        "\n" +
                         "                        </td>";
                     temp += "</tr>";
                     numb = numb + 1;
@@ -119,19 +118,22 @@ fetch("main_admin/patients").then(
 
                     document.getElementById("patientsData").innerHTML = await temp;
                     $(document).ready(function () {
-                        var tableP = $('#patient-table').DataTable({
+                        let tableP = $('#patient-table').DataTable({
                             dom: 'Bfrtip',
                             buttons: [
                                 {
-                                    text: 'Add new',
-                                    className: 'add',
+                                    text: '<i class="fas fa-plus fa-2x" style="color: #228B22;"></i>',
+                                    className: 'bg-transparent border-0',
+                                    titleAttr: 'Add new patient',
                                     action: function ( e, dt, node, config ) {
                                         jQuery.noConflict();
                                         jQuery('#addPatient').modal('show');
                                     }
                                 },
-                            ]
+                            ],
+
                         });
+
 
                         $('#patient-table').on('click', '#delete', function (e) {
                             e.preventDefault();
@@ -145,7 +147,8 @@ fetch("main_admin/patients").then(
                                 }).then(() => {
                                 })
                             }
-                        } );
+                        });
+
 
                         $('#patient-table').on('click', '#edit', function (f) {
                             f.preventDefault();
