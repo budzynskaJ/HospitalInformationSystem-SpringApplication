@@ -203,24 +203,61 @@
     .invalid input:required:invalid {
         background: #BE4C54;
     }
-    .card {
-        border-radius: 18px;
-        box-shadow: 1px 1px 8px 0 grey;
-        height: auto;
-        width: 850px;
+    .prof:link {
+        color: black;
     }
-    .card table {
-        border: none;
-        font-size: 16px;
-        height: 170px;
-        width: 80%;
+    .prof:visited {
+        color: black;
     }
-    #editprofile {
-        position: absolute;
-        color: #e7e7e8;
-        right: 7%;
+    .i-name {
+        color: #444a53;
+        padding: 30px 30px 0 30px;
+        font-size: 24px;
+        font-weight: 700;
     }
-
+    .values {
+        padding: 30px 30px 0 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .values .val-box {
+        background: #fff;
+        width: 250px;
+        padding: 16px 20px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .values .val-box i {
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        margin-right: 15px;
+    }
+    .values .val-box:nth-child(1) i {
+        background: #7B74EC;
+    }
+    .values .val-box:nth-child(2) i {
+        background: #5C8AF0;
+    }
+    .values .val-box:nth-child(3) i {
+        background: #74daec;
+    }
+    .values .val-box h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .values .val-box span {
+        font-size: 15px;
+        color: #828997;
+    }
 
 
 </style>
@@ -261,13 +298,13 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div id="first" onclick="profile()" title="Check your profile">
+    <a class="prof" title="Check your profile" th:href="@{/admin_profile}">
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
             <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b>
         </header>
-    </div>
+    </a>
     <br>
     <ul>
         <li class="list" id="db">
@@ -300,42 +337,30 @@
 
 <div class="container">
     <div class="row">
-        <div class="col mb-3" id="my-page" style="display: none">
-            <div class="prof" style="padding-top: 110px; padding-left: 150px;">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="text-right">Profile settings</h3>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <span id="editprofile" class="material-symbols-rounded">edit</span>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>First name: </td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
-                            </tr>
-                            <tr>
-                                <td>Middle name:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
-                            </tr>
-                            <tr>
-                                <td>Surname:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
-                            </tr>
-                            <tr>
-                                <td>Username:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
-                            </tr>
-                            <tr>
-                                <td>E-mail:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.email}]]</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
+        <div id="dashboard" style="display: block; width: 100%; padding-top: 80px">
+            <h3 class="i-name">Dashboard</h3>
+            <div class="values">
+                <div class="val-box">
+                    <i class="fa fa-group"></i>
+                    <div>
+                        <h3 id="numberOfU"></h3>
+                        <span>Users</span>
                     </div>
                 </div>
-            </div>
+                <div class="val-box">
+                    <i class="fa fa-user-md"></i>
+                    <div>
+                        <h3 id="numberOfD"></h3>
+                        <span>Doctors</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fa fa-users"></i>
+                    <div>
+                        <h3 id="numberOfP"></h3>
+                        <span>Patients</span>
+                    </div>
+                </div>
         </div>
         <div class="table-container" id="users" style="display: none; width: 100%">
             <table class="table table-striped user-table" style="border-spacing: 0">
@@ -625,26 +650,26 @@
             list[i].className = 'list active';
 
             if (list[i] === document.querySelector('#up')) {
-                document.querySelector('#my-page').style.display = "none";
-                //document.querySelector('#dashboard').style.display = "none";
+                //document.querySelector('#my-page').style.display = "none";
+                document.querySelector('#dashboard').style.display = "none";
                 document.querySelector('#users').style.display = "block";
                 document.querySelector('#patient-page').style.display = "none";
                 //document.querySelector('#appointment-page').style.display = "none";
             } else if (list[i] === document.querySelector('#db')) {
-                document.querySelector('#my-page').style.display = "none";
-                //document.querySelector('#dashboard').style.display = "block";
+                //document.querySelector('#my-page').style.display = "none";
+                document.querySelector('#dashboard').style.display = "block";
                 document.querySelector('#users').style.display = "none";
                 document.querySelector('#patient-page').style.display = "none";
                 //document.querySelector("#appointment-page").style.display = "none";
             }else if (list[i] === document.querySelector('#pp')) {
-                document.querySelector('#my-page').style.display = "none";
-                //document.querySelector('#dashboard').style.display = "none";
+                //document.querySelector('#my-page').style.display = "none";
+                document.querySelector('#dashboard').style.display = "none";
                 document.querySelector('#users').style.display = "none";
                 document.querySelector('#patient-page').style.display = "block";
                 //document.querySelector("#appointment-page").style.display = "none";
             } else if (list[i] === document.querySelector('#ap')) {
-                document.querySelector('#my-page').style.display = "none";
-                //document.querySelector('#dashboard').style.display = "none";
+                //document.querySelector('#my-page').style.display = "none";
+                document.querySelector('#dashboard').style.display = "none";
                 document.querySelector('#users').style.display = "none";
                 document.querySelector('#patient-page').style.display = "none";
                 //document.querySelector('#appointment-page').style.display = "block";
@@ -653,8 +678,8 @@
     };
 
     function profile(){
-        //document.querySelector('#dashboard').style.display = "none";
-        document.querySelector('#my-page').style.display="block";
+        document.querySelector('#dashboard').style.display = "none";
+        //document.querySelector('#my-page').style.display="block";
         document.querySelector('#users').style.display="none";
         document.querySelector('#patient-page').style.display="none";
         //document.querySelector('#appointment-page').style.display="none";

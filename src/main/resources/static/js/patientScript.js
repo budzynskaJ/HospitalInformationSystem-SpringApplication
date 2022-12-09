@@ -79,6 +79,20 @@ function newData() {
 
 };
 
+function getNumberOfPatients() {
+
+    let number;
+    fetch("/main_admin/patients").then(
+        res => {
+            res.json().then(
+                patientsData => {
+                    number = patientsData.length.toString();
+                    document.getElementById("numberOfP").innerText = number;
+                })
+        })
+
+}
+getNumberOfPatients();
 
 fetch("main_admin/patients").then(
     res=>{

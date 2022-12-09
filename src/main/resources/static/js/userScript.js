@@ -79,6 +79,28 @@ function newUser() {
 
 };
 
+function getNumberOfUsers() {
+
+    let number;
+    let numberD = 0;
+    fetch("/main_admin/users").then(
+        res => {
+            res.json().then(
+                usersData => {
+                    number = usersData.length.toString();
+                    for(let i=0; i<usersData.length; i++){
+                        if(usersData[i].role==="USER") {
+                            numberD = numberD + 1;
+                        }
+                    }
+                    document.getElementById("numberOfU").innerText = number;
+                    document.getElementById("numberOfD").innerText = numberD;
+                })
+        })
+
+}
+getNumberOfUsers();
+
     fetch("/main_admin/users").then(
         res => {
             res.json().then(

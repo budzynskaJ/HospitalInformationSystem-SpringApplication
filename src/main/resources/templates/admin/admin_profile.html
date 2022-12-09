@@ -1,18 +1,16 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main Doctor Page</title>
+    <title>Admin's Profile Page</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="Hospital Information System - mini.png" />
-
 </head>
-
 <style>
     @media screen and(max-width: 500px) {
         .navbar-brand {
@@ -33,13 +31,11 @@
     body{
         background: #e1ecf2;
     }
-
     .navbar-brand{
         overflow: visible;
-        padding-bottom: 0;
         padding-top: 0;
+        padding-bottom: 0;
     }
-
     .navbar-brand:hover{
         color: #CE2020;
     }
@@ -51,24 +47,25 @@
         vertical-align: middle;
         display: inline-block;
     }
+
     .nav-link{
         color: white;
     }
-
     .nav-link:hover{
         color: #CE2020;
     }
 
-    .navbar-toggler {
-        right: 0px;
-        color: white;
-        font-weight: bold;
-    }
     #nav1{
         background-color: rgba(24,31,151,0.93) !important;
         padding-right: 35px;
         padding-left: 35px;
         height: 80px;
+    }
+
+    .navbar-toggler {
+        padding-right: 3px;
+        color: white;
+        font-weight: bold;
     }
 
     #logout{
@@ -78,12 +75,9 @@
         margin-top: 10px;
         padding-left: 25px;
     }
-    #logout:hover{
-        color: #CE2020;
-    }
 
-    .navbar {
-        padding: 0;
+    #logout:hover{
+        color: grey;
     }
 
     .sidebar{
@@ -101,11 +95,11 @@
         font-size: 20px;
         position: relative;
         width: 100%;
-        height: 260px;
+        height: 205px;
         padding-top: 1em;
         display: inline-block;
         font-weight: bolder;
-        border-bottom: 1px inset;
+        border-bottom: 2px inset;
     }
 
     .sidebar ul li a:first-child{
@@ -134,8 +128,8 @@
     }
 
     .sidebar ul li a:hover{
-        color: rgba(24,31,151,0.93);
         background-color: rgba(24,31,151,0.10);
+        color: rgba(24,31,151,0.93);
     }
 
     .sidebar ul li.active a{
@@ -154,7 +148,6 @@
         padding-left: 0;
         position: relative;
     }
-
     #check{
         display: none;
     }
@@ -189,94 +182,100 @@
         opacity: 0;
         pointer-events: none;
     }
+
     #check:checked ~ label #close{
         left: 250px;
     }
-    .prof:link {
-        color: black;
-    }
-    .prof:visited {
-        color: black;
-    }
 
-    #select {
-        background-color: rgba(24,31,151,0.30);
+    .card {
+        border-radius: 18px;
+        box-shadow: 1px 1px 8px 0 grey;
+        height: auto;
+        width: 850px;
+        background-color: #f2f5f9;
     }
-    #uid {
-        width: 350px;
-
+    .card table {
+        margin-left: 15px;
+        border: none;
+        font-size: 20px;
+        height: 170px;
+        width: 80%;
     }
-    .invalid input:required:invalid {
-        background: #BE4C54;
+    #editprofile {
+        position: absolute;
+        color: #bdcee3;
+        right: 4%;
     }
-
-
-
+    .title {
+        font-weight: bold;
+    }
 </style>
 <body>
-<nav class="navbar fixed-top navbar-expand-sm" id="nav1">
+<nav class="navbar navbar-expand-sm fixed-top" id="nav1">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/main_doctor}">
+        <a class="navbar-brand" href="/">
             <img src="Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
                 aria-label="Toggle navigation">
             <i><span class="material-symbols-rounded">menu</span></i>
         </button>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="nav2">
             <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
-            vertical-align: middle; display: inline-block">
-
-                <li class="nav-item" >
-                    <a class="nav-link" th:inline="text">
-                        <img src="doctor.png" alt="" style="height: 30px;">
-                        <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
-                        <b style="text-transform:capitalize; padding: 10px 10px;
-            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.remoteUser}]]</b></a>
-                </li>
+                vertical-align: middle; display: inline-block">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">
+                    <a class="nav-link" th:inline="text">
+                        <b style="text-transform:capitalize; padding: 10px 10px;
+                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.remoteUser}]]</b></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-danger" th:href="@{/login}">
                         <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
                     </a>
-
                 </li>
 
             </ul>
         </div>
-
     </div>
 </nav>
-
 <input type="checkbox" id="check">
 <label for="check">
     <i><span class="material-symbols-rounded" id="btn">menu</span></i>
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <a class="prof" title="Check your profile" th:href="@{/doctor_profile}">
+    <div id="first" onclick="profile()" title="Check your profile">
         <header>
-            <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
+            <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
             <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b>
         </header>
-    </a>
+    </div>
     <br>
     <ul>
-        <li class="list" id="assignment">
-            <a href="#" class="active" data-toggle='modal' data-target="#whichPatient" onclick="show()">
-                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >assignment_add</span>
-                Create a new appointment
+        <li class="list" id="db">
+            <a class="active">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important;">dashboard</span>
+                Dashboard
             </a>
         </li>
-        <li class="list" id="history">
-            <a href="#" class="active">
+        <li class="list" id="up">
+            <a class="active">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
+                Users
+            </a>
+        </li>
+        <li class="list" id="pp">
+            <a class="active">
                 <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
-                History of appointments
+                Patients
+            </a>
+        </li>
+        <li class="list" id="ap">
+            <a href="#" class="active">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important;">assignment</span>
+                Appointments
             </a>
         </li>
     </ul>
@@ -285,50 +284,50 @@
 
 <div class="container">
     <div class="row">
+        <div class="col mb-3" id="my-page">
+            <div class="prof" style="padding-top: 110px">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right" style="font-weight: bold; padding-left: 150px">Profile settings</h3>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <span id="editprofile" class="material-symbols-rounded">edit</span>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td class="title">First name: </td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
+                            </tr>
+                            <tr>
+                                <td class="title">Middle name:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
+                            </tr>
+                            <tr>
+                                <td class="title">Surname:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
+                            </tr>
+                            <tr>
+                                <td class="title">Username:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
+                            </tr>
+                            <tr>
+                                <td class="title">E-mail:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.email}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
 
-        <div class="col mb-3" id="assignment-page" style="display: none">
-            <div id="data">
-                <div class="modal fade" id="whichPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="selectPatientLabel">Select patient</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="needs-validation" novalidate>
-                                    <div class="form-group">
-                                        <label>Give patient's uid: </label>
-                                        <input type="text" class="form-controll" required="required" id="uid">
-                                        <div class="invalid-feedback">
-                                            Patient's uid is required.
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn" style="background-color: #228B22; font-weight: bold" id="select" onclick="newEHR()" data-dismiss="modal">Select</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
-
-
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/script.js}"></script>
-<script th:src="@{/js/doctorScript.js}"></script>
-
 
 <script>
     let list = document.querySelectorAll('.list');
@@ -340,50 +339,42 @@
             }
             list[i].className = 'list active';
 
-            if(list[i] === document.querySelector('#assignment')) {
-                document.querySelector('#assignment-page').style.display = "block";
-                document.querySelector('#profile-page').style.display = "none";
-            } else if (list[i] === document.querySelector('#history')) {
-                //document.querySelector('').style.display = "none";
-                //document.querySelector('').style.display = "block";
+            if (list[i] === document.querySelector('#up')) {
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "none";
+                document.querySelector('#users').style.display = "block";
+                document.querySelector('#patient-page').style.display = "none";
+                //document.querySelector('#appointment-page').style.display = "none";
+            } else if (list[i] === document.querySelector('#db')) {
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "block";
+                document.querySelector('#users').style.display = "none";
+                document.querySelector('#patient-page').style.display = "none";
+                //document.querySelector("#appointment-page").style.display = "none";
+            }else if (list[i] === document.querySelector('#pp')) {
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "none";
+                document.querySelector('#users').style.display = "none";
+                document.querySelector('#patient-page').style.display = "block";
+                //document.querySelector("#appointment-page").style.display = "none";
+            } else if (list[i] === document.querySelector('#ap')) {
+                document.querySelector('#my-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "none";
+                document.querySelector('#users').style.display = "none";
+                document.querySelector('#patient-page').style.display = "none";
+                //document.querySelector('#appointment-page').style.display = "block";
             }
         }
     };
 
-    function first(){
-        document.querySelector('#profile-page').style.display="block";
-        document.querySelector('#assignment-page').style.display="none";
-        //document.querySelector('#history').style.display="none";
+    function profile(){
+        //document.querySelector('#dashboard').style.display = "none";
+        document.querySelector('#my-page').style.display="block";
+        document.querySelector('#users').style.display="none";
+        document.querySelector('#patient-page').style.display="none";
         //document.querySelector('#appointment-page').style.display="none";
     }
 </script>
-
-<script>
-    function show() {
-        jQuery.noConflict();
-        jQuery('#whichPatient').modal('show');
-    }
-</script>
-<script>
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-
-            var forms = document.getElementsByClassName('needs-validation');
-
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
-
 
 </body>
 </html>
