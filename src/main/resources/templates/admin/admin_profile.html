@@ -198,7 +198,7 @@
         margin-left: 15px;
         border: none;
         font-size: 20px;
-        height: 170px;
+
         width: 80%;
     }
     #editprofile {
@@ -208,6 +208,10 @@
     }
     .title {
         font-weight: bold;
+    }
+    .label-pass {
+        font-size: 20px;
+        font-weight: 600;
     }
 </style>
 <body>
@@ -318,6 +322,46 @@
                         </table>
 
                     </div>
+                </div>
+
+                <br>
+                <br>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right" style="font-weight: bold">Password change</h3>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="height: 330px !important;">
+                        <form class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <tbody>
+                                <tr>
+                                    <td class="label-pass">Enter your current password:</td>
+                                    <td><input id="pass" type="password" class="form-control" required="required"></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td class="label-pass">Enter your new password:</td>
+                                    <td><input id="newpass" type="password" class="form-control" required="required"></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td class="label-pass">Reenter your new password:</td>
+                                    <td><input id="newpass2" type="password" class="form-control" required="required"></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" id="savebtn" onclick="password()"
+                                        style="position: absolute; right: 30px">
+                                            Save</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </div>
+                        </form>
+
+                    </div>
+
                 </div>
             </div>
         </div>

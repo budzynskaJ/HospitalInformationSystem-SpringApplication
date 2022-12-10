@@ -1,4 +1,3 @@
-
 function password() {
     let nP1 = document.getElementById("newpass").value;
     let nP2 = document.getElementById("newpass2").value;
@@ -24,5 +23,5 @@ function password() {
                     ).catch(err=>console.log(err))
                 }
             )
-        }
+    }
 }

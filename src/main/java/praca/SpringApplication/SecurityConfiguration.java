@@ -45,6 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() throws Exception {
+        return new BCryptPasswordEncoder();
+    }
 
     public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
         SimpleUrlAuthenticationSuccessHandler userSuccessHandler =
@@ -83,16 +87,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           .antMatchers("/resources/static/**").permitAll()
           .antMatchers("/main").authenticated()
           .antMatchers("/main_doctor").hasAnyAuthority("USER")
-          .antMatchers("/doctor_profile").hasAnyAuthority("USER")
+          .antMatchers("/doctor_profile**").hasAnyAuthority("USER")
           .antMatchers("/main_admin").hasAnyAuthority("ADMIN")
-          .antMatchers("/admin_profile").hasAnyAuthority("ADMIN")
-          .antMatchers("/main_admin/users").hasAnyAuthority("ADMIN")
+          .antMatchers("/admin_profile**").hasAnyAuthority("ADMIN")
+          .antMatchers("/main_admin/users**").hasAnyAuthority("ADMIN")
+          .antMatchers("/main_admin/adduser").hasAnyAuthority("ADMIN")
           .antMatchers("/main_admin/users/{id}").hasAnyAuthority("ADMIN")
           .antMatchers("/main_admin/user/{id}").hasAnyAuthority("ADMIN")
           .antMatchers("/main_admin/patients").hasAnyAuthority("ADMIN")
           .antMatchers("/main_admin/patient/{Patient_id}").hasAnyAuthority("ADMIN")
           .antMatchers("/main_admin/patients/{Patient_id}").hasAnyAuthority("ADMIN")
-          .antMatchers("https://localhost:8090/rest/v1/templates/ef2cac34-d344-4365-8395-6cb639f3025e").hasAnyAuthority("USER")
+          //.antMatchers("https://localhost:8090/rest/v1/templates/ef2cac34-d344-4365-8395-6cb639f3025e").hasAnyAuthority("USER")
+          .antMatchers("/updatePassword**").hasAnyAuthority("ADMIN", "USER")
           //.anyRequest().authenticated()
           //.and()
           //.httpBasic()

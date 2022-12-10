@@ -1,19 +1,33 @@
 package praca.SpringApplication.user;
 
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import praca.SpringApplication.patient.Patient;
 
+import javax.persistence.criteria.Path;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
 
 @RestController
 public class UserController {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/main_admin/users")
     public List<User> list() {
@@ -30,9 +44,11 @@ public class UserController {
         }
     }
 
-    @PostMapping("/main_admin/users")
+    @RequestMapping(method = RequestMethod.POST, path = "/main_admin/adduser")
+    //@PostMapping("/users")
     public void add(@RequestBody User user) {
         customUserDetailsService.save(user);
+
     }
 
     @PutMapping("/main_admin/users/{id}")
@@ -49,6 +65,19 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/updatePassword")
+    public String changeUserPassword(@RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass, Principal principal) {
+        String username = principal.getName();
+        User currentUser = (User) customUserDetailsService.loadUserByUsername(username);
+
+        if(bCryptPasswordEncoder.matches(oldPass, currentUser.getPassword())) {
+            currentUser.setPassword(bCryptPasswordEncoder.encode(newPass));
+            customUserDetailsService.save(currentUser);
+        }
+        return "redirect:/";
+    }
+
 
     @DeleteMapping("main_admin/user/{id}")
     public void delete(@PathVariable Long id) {

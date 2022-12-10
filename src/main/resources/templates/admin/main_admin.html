@@ -307,7 +307,7 @@
     </a>
     <br>
     <ul>
-        <li class="list" id="db">
+        <li class="list" id="db" onclick="first()">
             <a class="active">
                 <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important;">dashboard</span>
                 Dashboard
@@ -361,6 +361,7 @@
                         <span>Patients</span>
                     </div>
                 </div>
+            </div>
         </div>
         <div class="table-container" id="users" style="display: none; width: 100%">
             <table class="table table-striped user-table" style="border-spacing: 0">
@@ -413,9 +414,10 @@
                                 <input type="email" class="form-control" required="required" id="email">
                                 <label>Role</label>
                                 <input type="text" class="form-control" id="role" readonly="readonly">
+
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
+                                <button type="button" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
                             </div>
                         </form>
                     </div>
@@ -464,9 +466,14 @@
                                     <option value="ADMIN">ADMIN</option>
                                     <option value="USER">USER</option>
                                 </select>
+                                <label for="password">Password</label>
+                                <input type="text" class="form-control" required="required" id="password">
+                                <div class="invalid-feedback">
+                                    Password is required.
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
+                                <button type="button" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
                             </div>
                         </form>
                     </div>
@@ -550,7 +557,7 @@
                                     <input type="text" class="form-control" id="uid" readonly="readonly">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
+                                    <button type="button" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
                                 </div>
                             </form>
                         </div>
@@ -622,8 +629,8 @@
         </div>
     </div>
 
-    </div>
 </div>
+
 
 
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -635,8 +642,8 @@
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
-<script th:src="@{js/userScript.js}"></script>
-<script th:src="@{js/patientScript.js}"></script>
+<script th:src="@{/js/userScript.js}"></script>
+<script th:src="@{/js/patientScript.js}"></script>
 
 
 <script>
@@ -669,16 +676,16 @@
                 //document.querySelector("#appointment-page").style.display = "none";
             } else if (list[i] === document.querySelector('#ap')) {
                 //document.querySelector('#my-page').style.display = "none";
-                document.querySelector('#dashboard').style.display = "none";
-                document.querySelector('#users').style.display = "none";
-                document.querySelector('#patient-page').style.display = "none";
+                //document.querySelector('#dashboard').style.display = "none";
+                //document.querySelector('#users').style.display = "none";
+                //document.querySelector('#patient-page').style.display = "none";
                 //document.querySelector('#appointment-page').style.display = "block";
             }
         }
     };
 
-    function profile(){
-        document.querySelector('#dashboard').style.display = "none";
+    function first(){
+        document.querySelector('#dashboard').style.display = "block";
         //document.querySelector('#my-page').style.display="block";
         document.querySelector('#users').style.display="none";
         document.querySelector('#patient-page').style.display="none";
