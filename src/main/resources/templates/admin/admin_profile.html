@@ -56,7 +56,7 @@
     }
 
     #nav1{
-        background-color: rgba(24,31,151,0.93) !important;
+        background-color: rgba(24,31,151) !important;
         padding-right: 35px;
         padding-left: 35px;
         height: 80px;
@@ -95,11 +95,11 @@
         font-size: 20px;
         position: relative;
         width: 100%;
-        height: 205px;
+        height: 260px;
         padding-top: 1em;
         display: inline-block;
         font-weight: bolder;
-        border-bottom: 2px inset;
+        border-bottom: 1px inset;
     }
 
     .sidebar ul li a:first-child{
@@ -152,7 +152,7 @@
         display: none;
     }
     label #btn, label #close{
-        position: absolute;
+        position: fixed;
         cursor: pointer;
         border-radius: 3px;
     }
@@ -186,6 +186,9 @@
     #check:checked ~ label #close{
         left: 250px;
     }
+    .invalid input:required:invalid {
+        background: #BE4C54;
+    }
 
     .card {
         border-radius: 18px;
@@ -198,7 +201,6 @@
         margin-left: 15px;
         border: none;
         font-size: 20px;
-
         width: 80%;
     }
     #editprofile {
@@ -211,13 +213,17 @@
     }
     .label-pass {
         font-size: 20px;
-        font-weight: 600;
+        font-weight: 700;
+    }
+    .form-control {
+
+
     }
 </style>
 <body>
 <nav class="navbar navbar-expand-sm fixed-top" id="nav1">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" th:href="@{/main_admin}">
             <img src="Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
@@ -253,7 +259,7 @@
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
-            <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </div>
     <br>
@@ -289,9 +295,9 @@
 <div class="container">
     <div class="row">
         <div class="col mb-3" id="my-page">
-            <div class="prof" style="padding-top: 110px">
+            <div class="prof" style="padding-top: 110px; padding-left: 150px">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="text-right" style="font-weight: bold; padding-left: 150px">Profile settings</h3>
+                    <h3 class="text-right" style="font-weight: bold">Profile settings</h3>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -338,16 +344,25 @@
                                     <td class="label-pass">Enter your current password:</td>
                                     <td><input id="pass" type="password" class="form-control" required="required"></td>
                                 </tr>
+                                <div class="invalid-feedback">
+                                    Please fill in this field.
+                                </div>
                                 <br>
                                 <tr>
                                     <td class="label-pass">Enter your new password:</td>
                                     <td><input id="newpass" type="password" class="form-control" required="required"></td>
                                 </tr>
+                                <div class="invalid-feedback">
+                                    Please fill in this field.
+                                </div>
                                 <br>
                                 <tr>
                                     <td class="label-pass">Reenter your new password:</td>
                                     <td><input id="newpass2" type="password" class="form-control" required="required"></td>
                                 </tr>
+                                <div class="invalid-feedback">
+                                    Please fill in this field.
+                                </div>
                                 <br>
                                 <tr>
                                     <td>
@@ -419,6 +434,26 @@
         //document.querySelector('#appointment-page').style.display="none";
     }
 </script>
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
 
 </body>
 </html>

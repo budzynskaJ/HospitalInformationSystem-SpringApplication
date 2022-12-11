@@ -62,7 +62,7 @@
     }
 
     #nav1{
-        background-color: rgba(24,31,151,0.93) !important;
+        background-color: rgba(24,31,151) !important;
         padding-right: 35px;
         padding-left: 35px;
         height: 80px;
@@ -158,7 +158,7 @@
         display: none;
     }
     label #btn, label #close{
-        position: absolute;
+        position: fixed;
         cursor: pointer;
         border-radius: 3px;
     }
@@ -190,7 +190,7 @@
         pointer-events: none;
     }
     #check:checked ~ .container {
-        padding-left: 310px;
+        padding-left: 150px;
     }
     #check:checked ~ label #close{
         left: 250px;
@@ -258,6 +258,9 @@
         font-size: 15px;
         color: #828997;
     }
+    #patient-head tr th, #user-head tr th {
+        text-align: center;
+    }
 
 
 </style>
@@ -302,7 +305,7 @@
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
-            <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </a>
     <br>

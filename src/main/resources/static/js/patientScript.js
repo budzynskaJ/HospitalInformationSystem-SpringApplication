@@ -36,7 +36,7 @@ function editData() {
     console.log(Patient_data);
 
 
-    return fetch("main_admin/patients/" + document.getElementById('idp').value, {
+    return fetch("/patients/" + document.getElementById('idp').value, {
         method: 'put',
         credentials: 'include',
         headers:{
@@ -65,7 +65,7 @@ function newData() {
 
     newPatientData = JSON.stringify(newPatientData);
 
-    return fetch("main_admin/patients/", {
+    return fetch("/patients/", {
         method: 'post',
         credentials: 'include',
         headers: {
@@ -82,7 +82,7 @@ function newData() {
 function getNumberOfPatients() {
 
     let number;
-    fetch("/main_admin/patients").then(
+    fetch("/patients").then(
         res => {
             res.json().then(
                 patientsData => {
@@ -94,7 +94,7 @@ function getNumberOfPatients() {
 }
 getNumberOfPatients();
 
-fetch("main_admin/patients").then(
+fetch("/patients").then(
     res=>{
         res.json().then(
             patientsData=> {
@@ -155,7 +155,7 @@ fetch("main_admin/patients").then(
                             if(result) {
 
                                 $(this).closest('tr').remove();
-                                fetch("main_admin/patient" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                                fetch("/patient" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
                                     method: 'delete',
 
                                 }).then(() => {

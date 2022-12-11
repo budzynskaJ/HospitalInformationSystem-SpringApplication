@@ -6,8 +6,14 @@
     <title>Main Doctor Page</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
 
     <link rel="icon" type="image/png" href="Hospital Information System - mini.png" />
 
@@ -60,12 +66,12 @@
     }
 
     .navbar-toggler {
-        right: 0px;
+        padding-right: 3px;
         color: white;
         font-weight: bold;
     }
     #nav1{
-        background-color: rgba(24,31,151,0.93) !important;
+        background-color: rgba(24,31,151) !important;
         padding-right: 35px;
         padding-left: 35px;
         height: 80px;
@@ -101,11 +107,11 @@
         font-size: 20px;
         position: relative;
         width: 100%;
-        height: 260px;
+        height: 205px;
         padding-top: 1em;
         display: inline-block;
         font-weight: bolder;
-        border-bottom: 1px inset;
+        border-bottom: 2px inset;
     }
 
     .sidebar ul li a:first-child{
@@ -122,7 +128,7 @@
     }
 
     .sidebar ul li a{
-        display: flex;
+        display: block;
         align-items: center;
         font-size: 15px;
         font-weight: bold;
@@ -154,12 +160,15 @@
         padding-left: 0;
         position: relative;
     }
+    .table-container{
+        padding-top: 100px;
+    }
 
     #check{
         display: none;
     }
     label #btn, label #close{
-        position: absolute;
+        position: fixed;
         cursor: pointer;
         border-radius: 3px;
     }
@@ -208,6 +217,9 @@
     }
     .invalid input:required:invalid {
         background: #BE4C54;
+    }
+    #patient-head tr th {
+        text-align: center;
     }
 
 
@@ -262,11 +274,17 @@
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
             <br><br>
-            <b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b>
+            <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </a>
     <br>
     <ul>
+        <li class="list" id="patient-list">
+            <a href="#" class="active">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >list</span>
+                Patient list
+            </a>
+        </li>
         <li class="list" id="assignment">
             <a href="#" class="active" data-toggle='modal' data-target="#whichPatient" onclick="show()">
                 <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >assignment_add</span>
@@ -285,6 +303,26 @@
 
 <div class="container">
     <div class="row">
+        <div class="table-container" id="patient-page" style="padding-left: 150px; display: none">
+            <table id="patient-table" class="table table-striped">
+                <thead id="patient-head">
+                <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Middle name</th>
+                    <th>Surname</th>
+                    <th>Birth date</th>
+                    <th>PESEL</th>
+                    <th>Sex</th>
+                    <th>uid</th>
+                    <th class="text-right" style="width: 102%">Query data</th>
+                </tr>
+                </thead>
+                <tbody id="patientsData">
+
+                </tbody>
+            </table>
+        </div>
 
         <div class="col mb-3" id="assignment-page" style="display: none">
             <div id="data">
@@ -307,7 +345,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn" style="background-color: #228B22; font-weight: bold" id="select" onclick="newEHR()" data-dismiss="modal">Select</button>
+                                        <button type="button" class="btn btn-promary" style="font-weight: bold" id="select" onclick="newEHR()" data-dismiss="modal">Select</button>
                                     </div>
                                 </form>
                             </div>
@@ -327,6 +365,11 @@
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/script.js}"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
 <script th:src="@{/js/doctorScript.js}"></script>
 
 
@@ -340,7 +383,12 @@
             }
             list[i].className = 'list active';
 
-            if(list[i] === document.querySelector('#assignment')) {
+            if(list[i] === document.querySelector('#patient-list')) {
+                document.querySelector('#patient-page').style.display = "block";
+                document.querySelector('#assignment-page').style.display = "none";
+                document.querySelector('#profile-page').style.display = "none";
+            }else if(list[i] === document.querySelector('#assignment')) {
+                document.querySelector('#patient-page').style.display = "none";
                 document.querySelector('#assignment-page').style.display = "block";
                 document.querySelector('#profile-page').style.display = "none";
             } else if (list[i] === document.querySelector('#history')) {
