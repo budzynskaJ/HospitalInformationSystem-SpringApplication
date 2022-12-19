@@ -274,7 +274,7 @@
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
             <br><br>
-            <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+            <b id="doctorsData" style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </a>
     <br>
@@ -322,6 +322,95 @@
 
                 </tbody>
             </table>
+        </div>
+        <div class="modal fade" id="queryData" tabindex="-1" role="dialog" aria-labelledby="Query data" aria-hidden="true" style="max-height: 100vh">
+            <div class="modal-dialog modal-lg modal-80p" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserLabel">Gynecology appointment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <p class="lead">Body mass index</p>
+                                        <label for="bmi">Body mass index</label>
+                                        <input type="number" class="form-control" required="required" id="bmi">
+                                        <div class="invalid-feedback">
+                                            BMI is required.
+                                        </div>
+                                        <p class="lead">Last menstrual period</p>
+                                        <label for="lastUpdated">Date when the last menstrual period was updated</label>
+                                        <input type="datetime-local" class="form-control" required="required" id="lastUpdated">
+                                        <div class="invalid-feedback">
+                                            Date when the last menstrual period was updated is required.
+                                        </div>
+                                        <label for="lmp">Date of onset</label>
+                                        <input type="date" class="form-control" required="required" id="lmp">
+                                        <div class="invalid-feedback">
+                                            Date of onset is required.
+                                        </div>
+                                        <label>Description</label>
+                                        <textarea class="form-control" id="description" rows="5" cols="60"></textarea>
+
+                                        <p class="lead">Summary and persistent information about use of the methods to prevent pregnancy</p>
+                                        <label for="contraception">Statement about regular use of any type of contraception</label>
+                                        <select id="contraception" name="contraception">
+                                            <option value="current user">Current user</option>
+                                            <option value="not current user">Not current user</option>
+                                            <option value="never used">Never used</option>
+                                        </select>
+                                        <label>The type of contraception used by patient</label>
+                                        <select id="contraceptionType" name="contraceptionType">
+                                            <option value="combination pill">Combination pill</option>
+                                            <option value="progestrogen-only pill">Progestrogen-only pill</option>
+                                            <option value="combination skin patch">Combination skin patch</option>
+                                            <option value="depot progesstrogen">Depot progestrogen</option>
+                                            <option value="hormone implant">Hormone implant</option>
+                                            <option value="vaginal ring">Vaginal ring</option>
+                                            <option value="IUD with hormone">IUD with hormone</option>
+                                            <option value="IUD without hormone">IUD without hormone</option>
+                                            <option value="female sterilisation">Female sterilisation</option>
+                                            <option value="male sterilisation">Male sterilisation</option>
+                                            <option value="diaphragm">Diaphragm</option>
+                                            <option value="vaginal douching">Vaginal douching</option>
+                                            <option value="female condom">Female condom</option>
+                                            <option value="male condom">Male condom</option>
+                                            <option value="withdrawal">Withdrawal</option>
+                                            <option value="fertilty awereness method">Fertilty awereness method</option>
+                                            <option value="abstinence">Abstinence</option>
+                                        </select>
+                                        <label>Statement about current use of specified type of contraception</label>
+                                        <select name="status" id="status">
+                                            <option value="current user">Current user</option>
+                                            <option value="not current user">Not current user</option>
+                                            <option value="never used">Never used</option>
+                                        </select>
+                                        <label for="dateContraception">Date of first use of the specified type of contraception</label>
+                                        <input type="datetime-local" class="form-control" required="required" id="dateContraception">
+                                        <div class="invalid-feedback">
+                                            Date is required.
+                                        </div>
+                                        <label for="dateLast">Date when patient last used the specified type of contraception</label>
+                                        <input type="datetime-local" class="form-control" required="required" id="dateLast">
+                                        <div class="invalid-feedback">
+                                            Date is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="savebtnu" onclick="queryData()">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col mb-3" id="assignment-page" style="display: none">
