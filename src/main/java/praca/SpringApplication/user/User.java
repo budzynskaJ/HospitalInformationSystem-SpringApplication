@@ -1,12 +1,13 @@
 package praca.SpringApplication.user;
 import com.sun.istack.NotNull;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import praca.SpringApplication.address.Address;
 
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -30,12 +31,15 @@ public class User {
     @NotNull
     private String role;
 
+    @ManyToOne()
+    @JoinColumn(name = "address_ID")
+    private Address address;
 
     public User() {
         super();
     }
 
-    public User(long id, String firstname, String middlename, String surname, String username, String email, String password, String role) {
+    public User(long id, String firstname, String middlename, String surname, String username, String email, String password, String role, Address address) {
         this.id = id;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -44,7 +48,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
-
+        this.address = address;
     }
 
     public long getId() {
@@ -118,17 +122,27 @@ public class User {
         this.role = role;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+
     @Override
     public String toString() {
         return "User{" +
                  "id=" + id +
-                 ", firstname='" + getFirstname() + '\'' +
-                 ", middlename='" + getMiddlename() + '\'' +
+                 ", firstname='" + firstname + '\'' +
+                 ", middlename='" + middlename + '\'' +
                  ", surname='" + surname + '\'' +
                  ", username='" + username + '\'' +
                  ", email='" + email + '\'' +
                  ", password='" + password + '\'' +
                  ", role='" + role + '\'' +
+                 ", address=" + getAddress() +
                  '}';
     }
 

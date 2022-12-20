@@ -21,6 +21,32 @@
            jQuery('#editPatient').modal('show');
 
 }**/
+let token = "";
+$(document).ready(function (){
+    let email = "admin%40cabolabs.com";
+    let password = "admin";
+    let organization = "123456";
+    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password + "&organization=" + organization;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Origin': 'http://localhost:8070/main_admin',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+
+    })
+        .then(res=>{
+            res.json().then(
+                res => {
+                    token = res.token;
+                    console.log(token);
+                }
+            );
+
+        }).catch(err => err);
+})
+
 function editData() {
     var Patient_data = {
         Patient_ID: document.getElementById('idp').value,
@@ -50,6 +76,46 @@ function editData() {
 
 };
 
+function uuid() {
+    let uid = document.getElementById("newuid");
+    var time = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var random = (time + Math.random()*16)%16|0;
+        time = Math.floor(time/16);
+        return(c=='x' ? random:(random&0x3|0x8)).toString(16);
+    });
+    uid.setAttribute("value", uuid);
+    console.log(uid);
+    return uid;
+}
+
+function createehruid() {
+    let format = "json";
+    let subjectUid = document.getElementById("newuid").value;
+    var checkbox = document.getElementById("checkUID");
+    if(checkbox.checked == true) {
+        fetch('http://localhost:8090/rest/v1/ehrs?' + "format=" + format + "&subjectUid=" + subjectUid, {
+            method: 'POST',
+            headers: {
+                'Origin': 'http://localhost:8070/main_admin',
+                Authorization: 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then(
+                res => {
+                    res.json().then(
+                        data => {
+                            console.log(data);
+                        }
+                    ).catch(err => console.log(err))
+                }
+            )
+    }
+}
+
+
 function newData() {
     let newPatientData = {
         Patient_ID: document.getElementById("idp").value,
@@ -60,9 +126,9 @@ function newData() {
         pesel: document.getElementById('newpesel').value,
         sex: document.getElementById('newsex').value,
         phone_number: document.getElementById('newphonenumber').value,
-        uid: document.getElementById('newuid').value,
+        uid: document.getElementById("newuid").value,
     };
-
+    console.log(newPatientData.uid);
     newPatientData = JSON.stringify(newPatientData);
 
     return fetch("/patients/", {
@@ -115,8 +181,10 @@ fetch("/patients").then(
                     temp += "<td id='bd'>" + (p.birth_date).toString().split('T')[0]+ "</td>";
                     temp += "<td id='PESEL'>" + p.pesel + "</td>";
                     temp += "<td id='s'>" + p.sex + "</td>";
-                    temp += "<td id='pn'>" + p.phone_number + "</td>"
-                    temp += "<td id='UID'>" + p.uid + "</td>"
+                    temp += "<td id='pn'>" + p.phone_number + "</td>";
+                    temp += "<td>" + Object.values(p.address)[1] + " " + Object.values(p.address)[2] + "/" + Object.values(p.address)[3] + "\n" + Object.values(p.address)[4] + " " +
+                        Object.values(p.address)[5] + ", " + Object.values(p.address)[6] + "</td>";
+                    temp += "<td id='UID'>" + p.uid + "</td>";
                     temp += "<td class=\"text-right\" style='vertical-align: middle'>\n" +
                         "                             <span type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
                         "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Edit patient'>\n" +
@@ -142,6 +210,8 @@ fetch("/patients").then(
                                     action: function ( e, dt, node, config ) {
                                         jQuery.noConflict();
                                         jQuery('#addPatient').modal('show');
+                                        uuid();
+
                                     }
                                 },
                             ],
@@ -175,7 +245,7 @@ fetch("/patients").then(
                                 var pesel = row[0].cells[5].textContent;
                                 var sex = row[0].cells[6].textContent;
                                 var phonenumber = row[0].cells[7].textContent;
-                                var uid = row[0].cells[8].textContent;
+                                var uid = row[0].cells[9].textContent;
 
                             $('#idp').val(id);
                             $('#fn').val(firstname);

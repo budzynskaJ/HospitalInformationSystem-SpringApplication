@@ -335,28 +335,42 @@
                     <div class="modal-body">
                         <form class="needs-validation" novalidate>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-11">
                                     <div class="form-group">
                                         <p class="lead">Body mass index</p>
                                         <label for="bmi">Body mass index</label>
-                                        <input type="number" class="form-control" required="required" id="bmi">
-                                        <div class="invalid-feedback">
-                                            BMI is required.
+                                        <div class="input-group" style="width: 200px">
+                                            <input type="number" class="form-control" required="required" id="bmi" min="0" max="1000" step="0.1">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">kg/m<sup>2</sup></span>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                BMI is required.
+                                            </div>
                                         </div>
+                                        <br>
+                                        <br>
+                                        <br>
                                         <p class="lead">Last menstrual period</p>
                                         <label for="lastUpdated">Date when the last menstrual period was updated</label>
-                                        <input type="datetime-local" class="form-control" required="required" id="lastUpdated">
+                                        <input type="datetime-local" class="form-control" required="required" id="lastUpdated" style="width: 200px">
                                         <div class="invalid-feedback">
                                             Date when the last menstrual period was updated is required.
                                         </div>
+                                        <br>
                                         <label for="lmp">Date of onset</label>
-                                        <input type="date" class="form-control" required="required" id="lmp">
+                                        <input type="date" class="form-control" required="required" id="lmp" style="width: 180px;">
                                         <div class="invalid-feedback">
                                             Date of onset is required.
                                         </div>
+                                        <br>
+                                        <br>
                                         <label>Description</label>
                                         <textarea class="form-control" id="description" rows="5" cols="60"></textarea>
 
+                                        <br>
+                                        <br>
+                                        <br>
                                         <p class="lead">Summary and persistent information about use of the methods to prevent pregnancy</p>
                                         <label for="contraception">Statement about regular use of any type of contraception</label>
                                         <select id="contraception" name="contraception">
@@ -364,6 +378,8 @@
                                             <option value="not current user">Not current user</option>
                                             <option value="never used">Never used</option>
                                         </select>
+                                        <br>
+                                        <br>
                                         <label>The type of contraception used by patient</label>
                                         <select id="contraceptionType" name="contraceptionType">
                                             <option value="combination pill">Combination pill</option>
@@ -384,19 +400,24 @@
                                             <option value="fertilty awereness method">Fertilty awereness method</option>
                                             <option value="abstinence">Abstinence</option>
                                         </select>
+                                        <br>
+                                        <br>
                                         <label>Statement about current use of specified type of contraception</label>
                                         <select name="status" id="status">
                                             <option value="current user">Current user</option>
                                             <option value="not current user">Not current user</option>
                                             <option value="never used">Never used</option>
                                         </select>
+                                        <br>
+                                        <br>
                                         <label for="dateContraception">Date of first use of the specified type of contraception</label>
-                                        <input type="datetime-local" class="form-control" required="required" id="dateContraception">
+                                        <input type="datetime-local" class="form-control" required="required" id="dateContraception" style="width: 200px;">
                                         <div class="invalid-feedback">
                                             Date is required.
                                         </div>
+                                        <br>
                                         <label for="dateLast">Date when patient last used the specified type of contraception</label>
-                                        <input type="datetime-local" class="form-control" required="required" id="dateLast">
+                                        <input type="datetime-local" class="form-control" required="required" id="dateLast" style="width: 200px">
                                         <div class="invalid-feedback">
                                             Date is required.
                                         </div>

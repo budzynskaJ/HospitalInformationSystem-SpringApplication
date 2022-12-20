@@ -23,7 +23,7 @@ $(document).ready(function (){
 
     }).catch(err => err);
 })
-var gynecologist_uid = "";
+/**var gynecologist_uid = "";
 setTimeout(function () {
     fetch('http://localhost:8090/rest/v1/templates', {
         method: 'GET',
@@ -64,7 +64,7 @@ setTimeout(function () {
         ).catch(err => console.log(err))
     }
 )
-}, 2000);
+}, 2000);**/
 
 let uid = "";
 function newEHR() {
@@ -95,7 +95,7 @@ function newEHR() {
     )
 }
 let subjectUid = "";
-function getEHR() {
+setTimeout(function getEHR() {
     fetch("http://localhost:8090/rest/v1/ehrs", {
         method: 'GET',
         headers: {
@@ -113,7 +113,7 @@ function getEHR() {
         )
     })
     return subjectUid;
-}
+}, 1500)
 
 
 fetch("/patients").then(
@@ -158,8 +158,8 @@ fetch("/patients").then(
 
 function getEHRBySubjectID() {
 
-
-    fetch('http://localhost:8090/rest/v1/ehrs/subjectUid/' + $subjectUid, {
+    subjectUid = document.getElementById("uid").value;
+    fetch('http://localhost:8090/rest/v1/ehrs/subjectUid/' + subjectUid, {
         method: 'GET',
         headers: {
             'Origin': 'http://localhost:8070/main_doctor',
@@ -181,14 +181,23 @@ function getEHRBySubjectID() {
 
     return uid;
 }
+function uuid() {
+    var time = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var random = (tima + Math.random()*16)%16|0;
+        tima = Math.floor(time/16);
+        return(c=='x' ? random:(random&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
 
 function queryData() {
+    getEHRBySubjectID();
 
         let format = "json";
 
         let current_doctor = document.getElementById("doctorsData").value;
         let time_commited = new Date().toISOString().slice(0, 10)+"T"+ new Date().toLocaleTimeString();
-        console.log(time_commited);
         let bmi = document.getElementById("bmi").value;
         let lmp = document.getElementById("lmp").value;
         let lastUpdated = document.getElementById("lastUpdated").value;
@@ -248,7 +257,7 @@ function queryData() {
                             },
                             "uid": {
                                 "@xsi:type": "HIER_OBJECT_ID",
-                                "value": uuidv4
+                                "value": uuid()
                             },
                             "archetype_details": {
                                 "archetype_id": {

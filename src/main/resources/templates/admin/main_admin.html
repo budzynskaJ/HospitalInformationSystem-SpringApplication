@@ -83,7 +83,7 @@
     }
 
     #logout:hover{
-        color: grey;
+        color: #CE2020;
     }
 
     .sidebar{
@@ -242,13 +242,13 @@
         margin-right: 15px;
     }
     .values .val-box:nth-child(1) i {
-        background: #7B74EC;
+        background: #b24242;
     }
     .values .val-box:nth-child(2) i {
-        background: #5C8AF0;
+        background: #c66262;
     }
     .values .val-box:nth-child(3) i {
-        background: #74daec;
+        background: #da7a7a;
     }
     .values .val-box h3 {
         font-size: 20px;
@@ -260,6 +260,10 @@
     }
     #patient-head tr th, #user-head tr th {
         text-align: center;
+    }
+
+    .modal-80p {
+        width:80%; /* 80% of page to provide space for labels */
     }
 
 
@@ -286,7 +290,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link text-danger" th:href="@{/login}">
+                    <a class="nav-link" th:href="@{/login}">
                         <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
                     </a>
                 </li>
@@ -377,6 +381,7 @@
                         <th>Username</th>
                         <th>E-mail</th>
                         <th>Role</th>
+                        <th>Address</th>
                         <th class="text-right" >Actions</th>
                     </tr>
                 </thead>
@@ -385,8 +390,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" style="max-height: 100vh">
+            <div class="modal-dialog modal-lg modal-80p" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editUserLabel">Edit User</h5>
@@ -396,40 +401,85 @@
                     </div>
                     <div class="modal-body">
                         <form class="needs-validation" novalidate>
-                            <div class="form-group">
-                                <label>ID</label>
-                                <input type="text" class="form-control" required="required" id="idu" readonly="readonly">
-                                <label for="fnu">First name</label>
-                                <input type="text" class="form-control" required="required" id="fnu">
-                                <div class="invalid-feedback">
-                                    First name is required.
-                                </div>
-                                <label>Middle name</label>
-                                <input type="text" class="form-control" id="middlenameu">
-                                <label for="surnameu">Surname</label>
-                                <input type="text" class="form-control" required="required" id="surnameu">
-                                <div class="invalid-feedback">
-                                    Surname is required.
-                                </div>
-                                <label>Username</label>
-                                <input type="text" class="form-control" required="required" id="username">
-                                <label>E-mail</label>
-                                <input type="email" class="form-control" required="required" id="email">
-                                <label>Role</label>
-                                <input type="text" class="form-control" id="role" readonly="readonly">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="lead">Basic information</p>
+                                            <label>ID</label>
+                                            <input type="text" class="form-control" required="required" id="idu" readonly="readonly">
 
+                                            <label for="fnu">First name</label>
+                                            <input type="text" class="form-control" required="required" id="fnu">
+                                            <div class="invalid-feedback">
+                                                First name is required.
+                                            </div>
+                                            <label>Middle name</label>
+                                            <input type="text" class="form-control" id="middlenameu">
+                                            <label for="surnameu">Surname</label>
+                                            <input type="text" class="form-control" required="required" id="surnameu">
+                                            <div class="invalid-feedback">
+                                                Surname is required.
+                                            </div>
+
+
+                                            <label>Username</label>
+                                            <input type="text" class="form-control" required="required" id="username">
+                                            <label>E-mail</label>
+                                            <input type="email" class="form-control" required="required" id="email">
+                                            <label>Role</label>
+                                            <input type="text" class="form-control" id="role" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="lead">Address</p>
+                                            <label for="streetu">Street</label>
+                                            <input type="text" class="form-control" required="required" id="streetu">
+                                            <div class="invalid-feedback">
+                                                Street is required.
+                                            </div>
+                                            <label for="housenumberu">House number</label>
+                                            <input type="text" class="form-control" required="required" id="housenumberu">
+                                            <div class="invalid-feedback">
+                                                House number is required.
+                                            </div>
+                                            <label for="apartmentnumberu">Apartment number</label>
+                                            <input type="text" class="form-control" id="apartmentnumberu">
+                                            <label for="postcodeu">Postcode</label>
+                                            <input type="text" class="form-control" required="required" id="postcodeu">
+                                            <div class="invalid-feedback">
+                                                Postcode is required.
+                                            </div>
+                                            <label for="cityu">City</label>
+                                            <input type="text" class="form-control" required="required" id="cityu">
+                                            <div class="invalid-feedback">
+                                                City is required.
+                                            </div>
+                                            <label for="countryu">Country</label>
+                                            <input type="text" class="form-control" required="required" id="countryu">
+                                            <div class="invalid-feedback">
+                                                Country is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-80p" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addUserLabel">Add new user</h5>
@@ -439,41 +489,85 @@
                     </div>
                     <div class="modal-body">
                         <form class="needs-validation" novalidate>
-                            <div class="form-group">
-                                <label>ID</label>
-                                <input type="text" class="form-control" required="required" id="newidu" readonly="readonly">
-                                <label for="newfnu">First name</label>
-                                <input type="text" class="form-control" required="required" id="newfnu">
-                                <div class="invalid-feedback">
-                                    First name is required.
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <label>ID</label>
+                                            <input type="text" class="form-control" required="required" id="newidu" readonly="readonly">
+                                            <label for="newfnu">First name</label>
+                                            <input type="text" class="form-control" required="required" id="newfnu">
+                                            <div class="invalid-feedback">
+                                                First name is required.
+                                            </div>
+                                            <label>Middle name</label>
+                                            <input type="text" class="form-control" id="newmiddlenameu">
+                                            <label for="newsurnameu">Surname</label>
+                                            <input type="text" class="form-control" required="required" id="newsurnameu">
+                                            <div class="invalid-feedback">
+                                                Surname is required.
+                                            </div>
+                                            <label for="newusername">Username</label>
+                                            <input type="text" class="form-control" required="required" id="newusername">
+                                            <div class="invalid-feedback">
+                                                Username is required
+                                            </div>
+                                            <label for="newemail">E-mail</label>
+                                            <input type="email" class="form-control" id="newemail">
+                                            <div class="invalid-feedback">
+                                                E-mail is required.
+                                            </div>
+                                            <label>Role</label>
+                                            <select name = "newrole" id="newrole" class="form-control">
+                                                <option value="ADMIN">ADMIN</option>
+                                                <option value="USER">USER</option>
+                                            </select>
+                                            <label for="password">Password</label>
+                                            <input type="text" class="form-control" required="required" id="password">
+                                            <div class="invalid-feedback">
+                                                Password is required.
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <label>Middle name</label>
-                                <input type="text" class="form-control" id="newmiddlenameu">
-                                <label for="newsurnameu">Surname</label>
-                                <input type="text" class="form-control" required="required" id="newsurnameu">
-                                <div class="invalid-feedback">
-                                    Surname is required.
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="lead">Address</p>
+                                            <label>ID</label>
+                                            <input type="text" class="form-control" required="required" id="newaddressidu" readonly="readonly">
+                                            <label for="newstreetu">Street</label>
+                                            <input type="text" class="form-control" required="required" id="newstreetu">
+                                            <div class="invalid-feedback">
+                                                Street is required.
+                                            </div>
+                                            <label for="newhousenumberu">House number</label>
+                                            <input type="text" class="form-control" required="required" id="newhousenumberu">
+                                            <div class="invalid-feedback">
+                                                House number is required.
+                                            </div>
+                                            <label for="newapartmentnumberu">Apartment number</label>
+                                            <input type="text" class="form-control" id="newapartmentnumberu">
+                                            <label for="newpostcodeu">Postcode</label>
+                                            <input type="text" class="form-control" required="required" id="newpostcodeu">
+                                            <div class="invalid-feedback">
+                                                Postcode is required.
+                                            </div>
+                                            <label for="newcityu">City</label>
+                                            <input type="text" class="form-control" required="required" id="newcityu">
+                                            <div class="invalid-feedback">
+                                                City is required.
+                                            </div>
+                                            <label for="newcountryu">Country</label>
+                                            <input type="text" class="form-control" required="required" id="newcountryu">
+                                            <div class="invalid-feedback">
+                                                Country is required.
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <label for="newusername">Username</label>
-                                <input type="text" class="form-control" required="required" id="newusername">
-                                <div class="invalid-feedback">
-                                    Username is required
-                                </div>
-                                <label for="newemail">E-mail</label>
-                                <input type="email" class="form-control" id="newemail">
-                                <div class="invalid-feedback">
-                                    E-mail is required.
-                                </div>
-                                <label>Role</label>
-                                <select name = "newrole" id="newrole" class="form-control">
-                                    <option value="ADMIN">ADMIN</option>
-                                    <option value="USER">USER</option>
-                                </select>
-                                <label for="password">Password</label>
-                                <input type="text" class="form-control" required="required" id="password">
-                                <div class="invalid-feedback">
-                                    Password is required.
-                                </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
@@ -496,6 +590,7 @@
                     <th>PESEL</th>
                     <th>Sex</th>
                     <th>Phone number</th>
+                    <th>Address</th>
                     <th>uid</th>
                     <th class="text-right" style="width: 102%">Actions</th>
                 </tr>
@@ -546,8 +641,8 @@
                                     <br>
                                     <label>Sex</label>
                                     <select name = "sex" id="sex" class="form-control">
-                                        <option value="M">M</option>
                                         <option value="F">F</option>
+                                        <option value="M">M</option>
                                     </select>
                                     <br>
                                     <label for="phonenumber">Phone number</label>
@@ -557,7 +652,7 @@
                                     </div>
                                     <br>
                                     <label>UID</label>
-                                    <input type="text" class="form-control" id="uid" readonly="readonly">
+                                    <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
@@ -568,11 +663,11 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+        <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="New" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addPatientLabel">Add new Patient</h5>
+                        <h5 class="modal-title" id="addPatientLabel">Add new patient</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -599,7 +694,7 @@
                                 </div>
                                 <br>
                                 <label for="newbirthdate">Birth date</label>
-                                <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate">
+                                <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
                                 <div class="invalid-feedback">
                                     Birth date is required.
                                 </div>
@@ -608,9 +703,9 @@
                                 <input type="text" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
                                 <br>
                                 <label>Sex</label>
-                                <select name = "sex" id="newsex" class="form-control">
-                                    <option value="M">M</option>
+                                <select name = "sex" id="newsex" class="form-control" style="width: 60px">
                                     <option value="F">F</option>
+                                    <option value="M">M</option>
                                 </select>
                                 <br>
                                 <label for="newphonenumber">Phone number</label>
@@ -619,8 +714,11 @@
                                     Phone number is required.
                                 </div>
                                 <br>
-                                <label>UID</label>
-                                <input type="text" class="form-control" required="required" id="newuid" readonly="readonly">
+                                <label for="newuid">UID</label>
+                                <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
+                                <br>
+                                <input type="checkbox" id="checkUID" onclick="createehruid()">
+                                <label for="checkUID">Create an ehr UID for this patient</label>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary" id="newsavebtn" onclick="newData()" data-dismiss="modal">Save</button>
