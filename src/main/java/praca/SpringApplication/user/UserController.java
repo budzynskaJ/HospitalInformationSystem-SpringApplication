@@ -1,23 +1,16 @@
 package praca.SpringApplication.user;
 
-import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import praca.SpringApplication.patient.Patient;
+import praca.SpringApplication.address.Address;
+import praca.SpringApplication.address.AddressRepository;
 
-import javax.persistence.criteria.Path;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
-import java.util.Locale;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 
 @RestController
@@ -27,14 +20,17 @@ public class UserController {
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/main_admin/users")
+    @GetMapping("admin/admin_users/users")
     public List<User> list() {
         return customUserDetailsService.listAll();
     }
 
-    @GetMapping("/main_admin/users/{id}")
+    @GetMapping("admin/admin_users/users/{id}")
     public ResponseEntity<User> get(@PathVariable Long id) {
         try {
             User user = customUserDetailsService.get(id);
@@ -44,14 +40,14 @@ public class UserController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/main_admin/adduser")
+    @RequestMapping(method = RequestMethod.POST, path = "/admin/admin_users/adduser")
     //@PostMapping("/users")
-    public void add(@RequestBody User user) {
+    public void add(@RequestBody User user ) {
         customUserDetailsService.save(user);
 
     }
 
-    @PutMapping("/main_admin/users/{id}")
+    @PutMapping("/admin/admin_users/users/{id}")
     public ResponseEntity<?> update(@RequestBody User user, @PathVariable Long id) {
         try {
             User existUser = customUserDetailsService.get(id);
@@ -79,7 +75,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping("main_admin/user/{id}")
+    @DeleteMapping("admin/admin_users/user/{id}")
     public void delete(@PathVariable Long id) {
         customUserDetailsService.delete(id);
     }

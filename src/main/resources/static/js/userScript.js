@@ -1,6 +1,6 @@
 
 function showUser() {
-    $('#usersData').on('click', '#editU', function () {
+    $('.user-table').on('click', '#editU', function () {
         var rowu = $(this).parents('tr')[0].firstChild.textContent;
 
         var firstu = $(this).parents('tr')[0].cells[1].textContent;
@@ -20,6 +20,7 @@ function showUser() {
         $('#email').val(email);
         $('#role').val(role);
 
+
         jQuery.noConflict();
         jQuery('#editUser').modal('show');
 
@@ -36,12 +37,21 @@ async function editUser() {
         username: document.getElementById('username').value,
         email: document.getElementById('email').value,
         role: document.getElementById('role').value,
+        address: {
+            id: document.getElementById("addressidu").value,
+            street: document.getElementById("streetu").value,
+            house_number: document.getElementById("housenumberu").value,
+            apartment_number: document.getElementById("apartmentnumberu").value,
+            postcode: document.getElementById("postcodeu").value,
+            city: document.getElementById("cityu").value,
+            country: document.getElementById("countryu").value,
+        }
     }
 
 
     User_data = JSON.stringify(User_data);
 
-    const f = await fetch("main_admin/users/" + document.getElementById('idu').value, {
+    const f = await fetch("/admin/admin_users/users/" + document.getElementById('idu').value, {
         method: 'put',
         credentials: 'include',
         headers: {
@@ -68,10 +78,19 @@ function newUser() {
         email: document.getElementById('newemail').value,
         password: document.getElementById('password').value,
         role: document.getElementById('newrole').value,
+        address: {
+            address_ID: document.getElementById('newaddressidu').value,
+            street: document.getElementById("newstreetu").value,
+            house_number: document.getElementById("newhousenumberu").value,
+            apartment_number: document.getElementById("newapartmentnumberu").value,
+            postcode: document.getElementById("newpostcodeu").value,
+            city: document.getElementById("newcityu").value,
+            country: document.getElementById("newcountryu").value,
+        }
     }
 
     console.log(newUSerData);
-    return fetch("main_admin/adduser", {
+    return fetch("/admin/admin_users/adduser", {
         method: 'post',
         credentials: 'include',
         headers: {
@@ -89,7 +108,7 @@ function getNumberOfUsers() {
 
     let number;
     let numberD = 0;
-    fetch("/main_admin/users").then(
+    fetch("/admin/admin_users/users").then(
         res => {
             res.json().then(
                 usersData => {
@@ -107,7 +126,7 @@ function getNumberOfUsers() {
 }
 getNumberOfUsers();
 
-fetch("/main_admin/users").then(
+fetch("/admin/admin_users/users").then(
     res => {
         res.json().then(
             usersData => {
@@ -128,6 +147,8 @@ fetch("/main_admin/users").then(
                     temp += "<td>" + u.username + "</td>";
                     temp += "<td>" + u.email + "</td>";
                     temp += "<td>" + u.role + "</td>";
+                    temp += "<td>" + Object.values(u.address)[1] + " " + Object.values(u.address)[2] + "/" + Object.values(u.address)[3] + "\n" + Object.values(u.address)[4] + " " +
+                        Object.values(u.address)[5] + ", " + Object.values(u.address)[6] + "</td>";
                     temp += "<td class=\"text-right\" style='vertical-align: center'>\n" +
                         "                             <span type=\"button\" data-toggle='modal' data-target='#editUser' id='editU' \n" +
                         "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\" onclick='showUser()' title='Edit user'>\n" +
@@ -163,7 +184,7 @@ fetch("/main_admin/users").then(
                         if(result) {
 
                             $(this).closest('tr').remove();
-                            fetch("main_admin/user" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                            fetch("/admin/admin_users/user" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
                                 method: 'delete',
 
                             }).then(() => {

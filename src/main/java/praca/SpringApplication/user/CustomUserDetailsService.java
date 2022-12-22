@@ -31,6 +31,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public void save(User user) {
+        User userexists = userRepository.findByUsername(user.getUsername());
+        if(userexists != null) throw new RuntimeException("this user already exists");
         userRepository.save(user);
     }
 
