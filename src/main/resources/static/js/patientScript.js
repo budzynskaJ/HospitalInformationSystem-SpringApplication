@@ -117,8 +117,9 @@ function createehruid() {
 
 
 function newData() {
+
     let newPatientData = {
-        Patient_ID: document.getElementById("idp").value,
+        Patient_ID: document.getElementById('newIDP').value,
         firstname: document.getElementById('newfn').value,
         middlename: document.getElementById('newmiddlename').value,
         surname: document.getElementById('newsurname').value,
@@ -128,7 +129,7 @@ function newData() {
         phone_number: document.getElementById('newphonenumber').value,
         uid: document.getElementById("newuid").value,
     };
-    console.log(newPatientData.uid);
+
     newPatientData = JSON.stringify(newPatientData);
 
     return fetch("/patients/", {
@@ -140,7 +141,7 @@ function newData() {
         mode: 'cors',
         body: newPatientData,
     }).then(response => response.json().then(() => {
-
+        console.log(response);
     }).catch(error => error));
 
 };
@@ -174,7 +175,7 @@ fetch("/patients").then(
                 let numb = 1;
                 patientsData.forEach((p) => {
                     temp += "<tr id=" + numb + " class='tabrow editing'>";
-                    temp += "<td id = 'patient'>" + p.patient_ID + "</td>";
+                    temp += "<td id = 'patient'>" + p.Patient_ID + "</td>";
                     temp += "<td id='first'>" + p.firstname + "</td>";
                     temp += "<td id='middle'>" + p.middlename + "</td>";
                     temp += "<td id='sur'>" + p.surname + "</td>";

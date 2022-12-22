@@ -3,12 +3,13 @@ package praca.SpringApplication.patient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
+import praca.SpringApplication.address.Address;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "patient")
+@Table(name = "patients")
 public class Patient {
 
     @Id
@@ -38,11 +39,17 @@ public class Patient {
     @NotNull
     private String uid;
 
+    @ManyToOne()
+    @JoinColumn(name = "address_ID")
+    private Address address;
+
+
     public Patient() {
         super();
     }
 
-    public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL, char sex, String phone_number, String uid) {
+    public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL,
+                   char sex, String phone_number, String uid, Address address) {
         Patient_ID = patient_ID;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -52,6 +59,7 @@ public class Patient {
         this.sex = sex;
         this.phone_number = phone_number;
         this.uid = uid;
+        this.address = address;
     }
 
     public long getPatient_ID() {
@@ -132,6 +140,14 @@ public class Patient {
         this.uid = uid;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +
@@ -144,6 +160,7 @@ public class Patient {
                  ", sex='" + sex + '\'' +
                  ", phone_number='" + phone_number + '\'' +
                  ", uid='" + uid + '\'' +
+                 ", address='" + address + '\'' +
                  '}';
     }
 }

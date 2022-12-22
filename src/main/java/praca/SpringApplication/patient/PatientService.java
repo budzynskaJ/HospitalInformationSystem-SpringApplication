@@ -18,6 +18,17 @@ public class PatientService {
     }
 
     public void save(Patient patient) {
+        List<Patient> patients = patientRepository.findAll();
+        for(int i = 0; i<patients.size(); i++) {
+            if(patients.get(i).getPESEL().equals(patient.getPESEL())){
+                throw new RuntimeException("this patient already exists");
+            }else if(patients.get(i).getFirstname().equals(patient.getFirstname()) &&
+            patients.get(i).getSurname().equals(patient.getSurname()) &&
+            patients.get(i).getBirth_date().equals(patient.getBirth_date()) &&
+            patients.get(i).getPhone_number().equals(patient.getPhone_number())) {
+                throw new RuntimeException("this patient already exists");
+            }
+        }
         patientRepository.save(patient);
     }
 
@@ -28,5 +39,7 @@ public class PatientService {
     public void delete(Long Patient_id) {
         patientRepository.deleteById(Patient_id);
     }
+
+
 
 }

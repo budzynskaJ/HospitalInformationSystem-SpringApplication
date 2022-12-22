@@ -249,7 +249,7 @@
                         <img src="doctor.png" alt="" style="height: 30px;">
                         <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
                         <b style="text-transform:capitalize; padding: 10px 10px;
-            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.remoteUser}]]</b></a>
+            vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/login}">
