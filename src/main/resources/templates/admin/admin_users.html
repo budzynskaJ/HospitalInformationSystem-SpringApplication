@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link rel="icon" type="image/png" href="../Hospital Information System - mini.png" />
+</head>
+<style>
+    @media screen and(max-width: 500px) {
+        .navbar-brand {
+            float: none;
+            display: block;
+        }
+        #nav2 a {
+            float: none;
+            display: block;
+        }
+    }
+    *{
+        margin: 0;
+        list-style: none;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+    body{
+        background: #e1ecf2;
+    }
+    .navbar-brand{
+        overflow: visible;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .navbar-brand:hover{
+        color: #CE2020;
+    }
+
+    .nav-item{
+        color: white;
+        font-size: 18px;
+        padding: 10px 10px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .nav-link{
+        color: white;
+    }
+    .nav-link:hover{
+        color: #CE2020;
+    }
+
+    #nav1{
+        background-color: rgba(24,31,151) !important;
+        padding-right: 35px;
+        padding-left: 35px;
+        height: 80px;
+    }
+
+    .navbar-toggler {
+        padding-right: 3px;
+        color: white;
+        font-weight: bold;
+    }
+
+    #logout{
+        color: white;
+        font-size: 30px;
+        align-items: center;
+        margin-top: 10px;
+        padding-left: 25px;
+    }
+
+    #logout:hover{
+        color: #CE2020;
+    }
+
+    .sidebar{
+        position: fixed;
+        top: 80px;
+        left: -300px;
+        width: 300px;
+        height: 100%;
+        background: #DAE9F1;
+        transition: all .5s ease;
+    }
+
+    .sidebar header {
+        text-align: center;
+        font-size: 20px;
+        position: relative;
+        width: 100%;
+        height: 205px;
+        padding-top: 1em;
+        display: inline-block;
+        font-weight: bolder;
+        border-bottom: 2px inset;
+    }
+
+    .sidebar ul li a:first-child{
+        padding: 6px 0 6px;
+    }
+
+    .sidebar ul li{
+        padding: 7px 0 7px;
+        position: relative;
+        border-radius: 23px;
+        width: 100%;
+        margin: 0 5px 0 -20px;
+        list-style: none;
+    }
+
+    .sidebar ul li a{
+        display: block;
+        align-items: center;
+        font-size: 15px;
+        font-weight: bold;
+        text-decoration: none;
+        color: dimgrey;
+        transition: all 0.4s ease;
+        border-radius: 23px;
+        line-height: 40px;
+    }
+
+    .sidebar ul li a:hover{
+        background-color: rgba(24,31,151,0.10);
+        color: rgba(24,31,151,0.93);
+    }
+
+    #first{
+        background-color: rgba(24,31,151,0.10);
+        color: rgba(24,31,151,0.93);
+    }
+
+    .sidebar ul li a span{
+        height: 35px;
+        min-width: 35px;
+        border-radius: 15px;
+        text-align: center;
+        margin-right: 5px;
+    }
+    .container {
+        padding-left: 0;
+        position: relative;
+    }
+    #check{
+        display: none;
+    }
+    label #btn, label #close{
+        position: fixed;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+    label #btn{
+        left: 40px;
+        top: 85px;
+        font-size: 35px;
+        color: rgba(24,31,151,0.93);
+        padding: 6px 12px;
+        transition: all .5s;
+    }
+    label #close{
+        z-index: 1111;
+        position: fixed;
+        left: -250px;
+        top: 85px;
+        font-size: 30px;
+        color: rgba(24,31,151,0.93);
+        padding: 4px 9px;
+        transition: all .5s ease;
+    }
+
+    #check:checked ~ .sidebar{
+        left: 0;
+    }
+    #check:checked ~ label #btn{
+        left: 300px;
+        opacity: 0;
+        pointer-events: none;
+    }
+    #check:checked ~ .container {
+        padding-left: 150px;
+    }
+    #check:checked ~ label #close{
+        left: 250px;
+    }
+
+    .table-container{
+        padding-top: 100px;
+    }
+
+    .invalid input:required:invalid {
+        background: #BE4C54;
+    }
+
+    .values .val-box i {
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        margin-right: 15px;
+    }
+    .values .val-box:nth-child(1) i {
+        background: #b24242;
+    }
+    .values .val-box:nth-child(2) i {
+        background: #c66262;
+    }
+    .values .val-box:nth-child(3) i {
+        background: #da7a7a;
+    }
+    .values .val-box h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .values .val-box span {
+        font-size: 15px;
+        color: #828997;
+    }
+    #patient-head tr th, #user-head tr th {
+        text-align: center;
+    }
+
+    .modal-80p {
+        width:80%; /* 80% of page to provide space for labels */
+    }
+
+
+</style>
+<body>
+<nav class="navbar navbar-expand-sm fixed-top" id="nav1">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/main_admin}">
+            <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i><span class="material-symbols-rounded">menu</span></i>
+        </button>
+        <div class="collapse navbar-collapse" id="nav2">
+            <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
+                vertical-align: middle; display: inline-block">
+                <li class="nav-item">
+                    <a class="nav-link" th:inline="text">
+                        <b style="text-transform:capitalize; padding: 10px 10px;
+                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-danger" th:href="@{/login}">
+                        <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<input type="checkbox" id="check">
+<label for="check">
+    <i><span class="material-symbols-rounded" id="btn">menu</span></i>
+    <i></i><span class="material-symbols-rounded" id="close">close</span></i>
+</label>
+<div class="sidebar">
+    <div id="mp" class="active" title="Check your profile" th:href="@{/admin/admin_profile}">
+        <header>
+            <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
+            <br><br>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+        </header>
+    </div>
+    <br>
+    <ul>
+        <li class="list" id="db">
+            <a class="active">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important;">dashboard</span>
+                Dashboard
+            </a>
+        </li>
+        <li class="list">
+            <a class="active" id="first">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
+                Users
+            </a>
+        </li>
+        <li class="list" id="pp">
+            <a class="active">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
+                Patients
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<div class="container">
+    <div class="table-container" id="users" style="display: block; width: 100%">
+        <table class="table table-striped user-table" style="border-spacing: 0">
+            <thead id="user-head">
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Middle name</th>
+                <th>Surname</th>
+                <th>Username</th>
+                <th>E-mail</th>
+                <th>Role</th>
+                <th>Address</th>
+                <th class="text-right" >Actions</th>
+            </tr>
+            </thead>
+            <tbody id="usersData">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" style="max-height: 100vh">
+        <div class="modal-dialog modal-lg modal-80p" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserLabel">Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">Basic information</p>
+                                        <label for="idu">ID</label>
+                                        <input type="text" class="form-control" required="required" id="idu" readonly="readonly">
+
+                                        <label for="fnu">First name</label>
+                                        <input type="text" class="form-control" required="required" id="fnu">
+                                        <div class="invalid-feedback">
+                                            First name is required.
+                                        </div>
+                                        <label>Middle name</label>
+                                        <input type="text" class="form-control" id="middlenameu">
+                                        <label for="surnameu">Surname</label>
+                                        <input type="text" class="form-control" required="required" id="surnameu">
+                                        <div class="invalid-feedback">
+                                            Surname is required.
+                                        </div>
+
+
+                                        <label>Username</label>
+                                        <input type="text" class="form-control" required="required" id="username">
+                                        <label>E-mail</label>
+                                        <input type="email" class="form-control" required="required" id="email">
+                                        <label>Role</label>
+                                        <input type="text" class="form-control" id="role" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">Address</p>
+                                        <label for="addressidu">ID</label>
+                                        <input type="text" class="form-control" required="required" id="addressidu">
+                                        <label for="streetu">Street</label>
+                                        <input type="text" class="form-control" required="required" id="streetu">
+                                        <div class="invalid-feedback">
+                                            Street is required.
+                                        </div>
+                                        <label for="housenumberu">House number</label>
+                                        <input type="text" class="form-control" required="required" id="housenumberu">
+                                        <div class="invalid-feedback">
+                                            House number is required.
+                                        </div>
+                                        <label for="apartmentnumberu">Apartment number</label>
+                                        <input type="text" class="form-control" id="apartmentnumberu">
+                                        <label for="postcodeu">Postcode</label>
+                                        <input type="text" class="form-control" required="required" id="postcodeu">
+                                        <div class="invalid-feedback">
+                                            Postcode is required.
+                                        </div>
+                                        <label for="cityu">City</label>
+                                        <input type="text" class="form-control" required="required" id="cityu">
+                                        <div class="invalid-feedback">
+                                            City is required.
+                                        </div>
+                                        <label for="countryu">Country</label>
+                                        <input type="text" class="form-control" required="required" id="countryu">
+                                        <div class="invalid-feedback">
+                                            Country is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-80p" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserLabel">Add new user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label>ID</label>
+                                        <input type="text" class="form-control" required="required" id="newidu" readonly="readonly">
+                                        <label for="newfnu">First name</label>
+                                        <input type="text" class="form-control" required="required" id="newfnu">
+                                        <div class="invalid-feedback">
+                                            First name is required.
+                                        </div>
+                                        <label>Middle name</label>
+                                        <input type="text" class="form-control" id="newmiddlenameu">
+                                        <label for="newsurnameu">Surname</label>
+                                        <input type="text" class="form-control" required="required" id="newsurnameu">
+                                        <div class="invalid-feedback">
+                                            Surname is required.
+                                        </div>
+                                        <label for="newusername">Username</label>
+                                        <input type="text" class="form-control" required="required" id="newusername">
+                                        <div class="invalid-feedback">
+                                            Username is required
+                                        </div>
+                                        <label for="newemail">E-mail</label>
+                                        <input type="email" class="form-control" id="newemail">
+                                        <div class="invalid-feedback">
+                                            E-mail is required.
+                                        </div>
+                                        <label>Role</label>
+                                        <select name = "newrole" id="newrole" class="form-control">
+                                            <option value="ADMIN">ADMIN</option>
+                                            <option value="USER">USER</option>
+                                        </select>
+                                        <label for="password">Password</label>
+                                        <input type="text" class="form-control" required="required" id="password">
+                                        <div class="invalid-feedback">
+                                            Password is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">Address</p>
+                                        <label>ID</label>
+                                        <input type="text" class="form-control" required="required" id="newaddressidu">
+                                        <label for="newstreetu">Street</label>
+                                        <input type="text" class="form-control" required="required" id="newstreetu">
+                                        <div class="invalid-feedback">
+                                            Street is required.
+                                        </div>
+                                        <label for="newhousenumberu">House number</label>
+                                        <input type="text" class="form-control" required="required" id="newhousenumberu">
+                                        <div class="invalid-feedback">
+                                            House number is required.
+                                        </div>
+                                        <label for="newapartmentnumberu">Apartment number</label>
+                                        <input type="text" class="form-control" id="newapartmentnumberu">
+                                        <label for="newpostcodeu">Postcode</label>
+                                        <input type="text" class="form-control" required="required" id="newpostcodeu">
+                                        <div class="invalid-feedback">
+                                            Postcode is required.
+                                        </div>
+                                        <label for="newcityu">City</label>
+                                        <input type="text" class="form-control" required="required" id="newcityu">
+                                        <div class="invalid-feedback">
+                                            City is required.
+                                        </div>
+                                        <label for="newcountryu">Country</label>
+                                        <input type="text" class="form-control" required="required" id="newcountryu">
+                                        <div class="invalid-feedback">
+                                            Country is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script th:src="@{/js/userScript.js}"></script>
+
+
+<script>
+    let list = document.querySelectorAll('.list');
+    for(let i = 0; i<list.length; i++){
+        list[i].onclick = function (){
+            let j = 0;
+            while(j<list.length){
+                list[j++].className = 'list';
+            }
+            list[i].className = 'list active';
+
+
+        }
+    };
+
+
+</script>
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+
+</body>
+</html>

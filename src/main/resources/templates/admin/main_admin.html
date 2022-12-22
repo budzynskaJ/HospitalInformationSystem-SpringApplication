@@ -286,7 +286,7 @@
                 <li class="nav-item">
                     <a class="nav-link" th:inline="text">
                         <b style="text-transform:capitalize; padding: 10px 10px;
-                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.remoteUser}]]</b></a>
+                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
 
                 <li class="nav-item">
@@ -305,7 +305,7 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <a class="prof" title="Check your profile" th:href="@{/admin_profile}">
+    <a class="prof" title="Check your profile" th:href="@{/admin/admin_profile}">
         <header>
             <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
@@ -321,7 +321,7 @@
             </a>
         </li>
         <li class="list" id="up">
-            <a class="active">
+            <a class="active" th:href="@{/admin/admin_users}">
                 <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
                 Users
             </a>
@@ -332,10 +332,10 @@
                 Patients
             </a>
         </li>
-        <li class="list" id="ap">
-            <a href="#" class="active">
-                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important;">assignment</span>
-                Appointments
+        <li class="list" id="ad">
+            <a class="active" th:href="@{/admin/admin_addresses}">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
+                Addresses
             </a>
         </li>
     </ul>
@@ -370,214 +370,6 @@
                 </div>
             </div>
         </div>
-        <div class="table-container" id="users" style="display: none; width: 100%">
-            <table class="table table-striped user-table" style="border-spacing: 0">
-                <thead id="user-head">
-                    <tr>
-                        <th>ID</th>
-                        <th>First name</th>
-                        <th>Middle name</th>
-                        <th>Surname</th>
-                        <th>Username</th>
-                        <th>E-mail</th>
-                        <th>Role</th>
-                        <th>Address</th>
-                        <th class="text-right" >Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="usersData">
-
-                </tbody>
-            </table>
-        </div>
-        <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" style="max-height: 100vh">
-            <div class="modal-dialog modal-lg modal-80p" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editUserLabel">Edit User</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="needs-validation" novalidate>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <p class="lead">Basic information</p>
-                                            <label>ID</label>
-                                            <input type="text" class="form-control" required="required" id="idu" readonly="readonly">
-
-                                            <label for="fnu">First name</label>
-                                            <input type="text" class="form-control" required="required" id="fnu">
-                                            <div class="invalid-feedback">
-                                                First name is required.
-                                            </div>
-                                            <label>Middle name</label>
-                                            <input type="text" class="form-control" id="middlenameu">
-                                            <label for="surnameu">Surname</label>
-                                            <input type="text" class="form-control" required="required" id="surnameu">
-                                            <div class="invalid-feedback">
-                                                Surname is required.
-                                            </div>
-
-
-                                            <label>Username</label>
-                                            <input type="text" class="form-control" required="required" id="username">
-                                            <label>E-mail</label>
-                                            <input type="email" class="form-control" required="required" id="email">
-                                            <label>Role</label>
-                                            <input type="text" class="form-control" id="role" readonly="readonly">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <p class="lead">Address</p>
-                                            <label for="streetu">Street</label>
-                                            <input type="text" class="form-control" required="required" id="streetu">
-                                            <div class="invalid-feedback">
-                                                Street is required.
-                                            </div>
-                                            <label for="housenumberu">House number</label>
-                                            <input type="text" class="form-control" required="required" id="housenumberu">
-                                            <div class="invalid-feedback">
-                                                House number is required.
-                                            </div>
-                                            <label for="apartmentnumberu">Apartment number</label>
-                                            <input type="text" class="form-control" id="apartmentnumberu">
-                                            <label for="postcodeu">Postcode</label>
-                                            <input type="text" class="form-control" required="required" id="postcodeu">
-                                            <div class="invalid-feedback">
-                                                Postcode is required.
-                                            </div>
-                                            <label for="cityu">City</label>
-                                            <input type="text" class="form-control" required="required" id="cityu">
-                                            <div class="invalid-feedback">
-                                                City is required.
-                                            </div>
-                                            <label for="countryu">Country</label>
-                                            <input type="text" class="form-control" required="required" id="countryu">
-                                            <div class="invalid-feedback">
-                                                Country is required.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-80p" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addUserLabel">Add new user</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="needs-validation" novalidate>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label>ID</label>
-                                            <input type="text" class="form-control" required="required" id="newidu" readonly="readonly">
-                                            <label for="newfnu">First name</label>
-                                            <input type="text" class="form-control" required="required" id="newfnu">
-                                            <div class="invalid-feedback">
-                                                First name is required.
-                                            </div>
-                                            <label>Middle name</label>
-                                            <input type="text" class="form-control" id="newmiddlenameu">
-                                            <label for="newsurnameu">Surname</label>
-                                            <input type="text" class="form-control" required="required" id="newsurnameu">
-                                            <div class="invalid-feedback">
-                                                Surname is required.
-                                            </div>
-                                            <label for="newusername">Username</label>
-                                            <input type="text" class="form-control" required="required" id="newusername">
-                                            <div class="invalid-feedback">
-                                                Username is required
-                                            </div>
-                                            <label for="newemail">E-mail</label>
-                                            <input type="email" class="form-control" id="newemail">
-                                            <div class="invalid-feedback">
-                                                E-mail is required.
-                                            </div>
-                                            <label>Role</label>
-                                            <select name = "newrole" id="newrole" class="form-control">
-                                                <option value="ADMIN">ADMIN</option>
-                                                <option value="USER">USER</option>
-                                            </select>
-                                            <label for="password">Password</label>
-                                            <input type="text" class="form-control" required="required" id="password">
-                                            <div class="invalid-feedback">
-                                                Password is required.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <p class="lead">Address</p>
-                                            <label>ID</label>
-                                            <input type="text" class="form-control" required="required" id="newaddressidu" readonly="readonly">
-                                            <label for="newstreetu">Street</label>
-                                            <input type="text" class="form-control" required="required" id="newstreetu">
-                                            <div class="invalid-feedback">
-                                                Street is required.
-                                            </div>
-                                            <label for="newhousenumberu">House number</label>
-                                            <input type="text" class="form-control" required="required" id="newhousenumberu">
-                                            <div class="invalid-feedback">
-                                                House number is required.
-                                            </div>
-                                            <label for="newapartmentnumberu">Apartment number</label>
-                                            <input type="text" class="form-control" id="newapartmentnumberu">
-                                            <label for="newpostcodeu">Postcode</label>
-                                            <input type="text" class="form-control" required="required" id="newpostcodeu">
-                                            <div class="invalid-feedback">
-                                                Postcode is required.
-                                            </div>
-                                            <label for="newcityu">City</label>
-                                            <input type="text" class="form-control" required="required" id="newcityu">
-                                            <div class="invalid-feedback">
-                                                City is required.
-                                            </div>
-                                            <label for="newcountryu">Country</label>
-                                            <input type="text" class="form-control" required="required" id="newcountryu">
-                                            <div class="invalid-feedback">
-                                                Country is required.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="table-container" id="patient-page" style="display: none">
             <table id="patient-table" class="table table-striped">
                 <thead id="patient-head">
@@ -762,25 +554,16 @@
                 document.querySelector('#dashboard').style.display = "none";
                 document.querySelector('#users').style.display = "block";
                 document.querySelector('#patient-page').style.display = "none";
-                //document.querySelector('#appointment-page').style.display = "none";
             } else if (list[i] === document.querySelector('#db')) {
                 //document.querySelector('#my-page').style.display = "none";
                 document.querySelector('#dashboard').style.display = "block";
-                document.querySelector('#users').style.display = "none";
+                //document.querySelector('#users').style.display = "none";
                 document.querySelector('#patient-page').style.display = "none";
-                //document.querySelector("#appointment-page").style.display = "none";
             }else if (list[i] === document.querySelector('#pp')) {
                 //document.querySelector('#my-page').style.display = "none";
                 document.querySelector('#dashboard').style.display = "none";
-                document.querySelector('#users').style.display = "none";
-                document.querySelector('#patient-page').style.display = "block";
-                //document.querySelector("#appointment-page").style.display = "none";
-            } else if (list[i] === document.querySelector('#ap')) {
-                //document.querySelector('#my-page').style.display = "none";
-                //document.querySelector('#dashboard').style.display = "none";
                 //document.querySelector('#users').style.display = "none";
-                //document.querySelector('#patient-page').style.display = "none";
-                //document.querySelector('#appointment-page').style.display = "block";
+                document.querySelector('#patient-page').style.display = "block";
             }
         }
     };
@@ -788,9 +571,9 @@
     function first(){
         document.querySelector('#dashboard').style.display = "block";
         //document.querySelector('#my-page').style.display="block";
-        document.querySelector('#users').style.display="none";
+        //document.querySelector('#users').style.display="none";
         document.querySelector('#patient-page').style.display="none";
-        //document.querySelector('#appointment-page').style.display="none";
+
     }
 </script>
 <script>

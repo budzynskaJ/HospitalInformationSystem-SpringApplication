@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin's Profile Page</title>
+    <title>Addresses</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
@@ -82,7 +82,7 @@
     }
 
     #logout:hover{
-        color: grey;
+        color: #CE2020;
     }
 
     .sidebar{
@@ -104,7 +104,7 @@
         padding-top: 1em;
         display: inline-block;
         font-weight: bolder;
-        border-bottom: 1px inset;
+        border-bottom: 2px inset;
     }
 
     .sidebar ul li a:first-child{
@@ -121,7 +121,7 @@
     }
 
     .sidebar ul li a{
-        display: flex;
+        display: block;
         align-items: center;
         font-size: 15px;
         font-weight: bold;
@@ -138,6 +138,7 @@
     }
 
     #first{
+        background-color: rgba(24,31,151,0.10);
         color: rgba(24,31,151,0.93);
     }
 
@@ -170,6 +171,7 @@
     }
     label #close{
         z-index: 1111;
+        position: fixed;
         left: -250px;
         top: 85px;
         font-size: 30px;
@@ -186,43 +188,57 @@
         opacity: 0;
         pointer-events: none;
     }
-
+    #check:checked ~ .container {
+        padding-left: 150px;
+    }
     #check:checked ~ label #close{
         left: 250px;
     }
+
+    .addresses-container{
+        padding-top: 100px;
+    }
+
     .invalid input:required:invalid {
         background: #BE4C54;
     }
 
-    .card {
-        border-radius: 18px;
-        box-shadow: 1px 1px 8px 0 grey;
-        height: auto;
-        width: 850px;
-        background-color: #f2f5f9;
+    .values .val-box i {
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        margin-right: 15px;
     }
-    .card table {
-        margin-left: 15px;
-        border: none;
+    .values .val-box:nth-child(1) i {
+        background: #b24242;
+    }
+    .values .val-box:nth-child(2) i {
+        background: #c66262;
+    }
+    .values .val-box:nth-child(3) i {
+        background: #da7a7a;
+    }
+    .values .val-box h3 {
         font-size: 20px;
-        width: 80%;
+        font-weight: 600;
     }
-    #editprofile {
-        position: absolute;
-        color: #bdcee3;
-        right: 4%;
+    .values .val-box span {
+        font-size: 15px;
+        color: #828997;
     }
-    .title {
-        font-weight: bold;
+    #address-head tr th {
+        text-align: center;
     }
-    .label-pass {
-        font-size: 20px;
-        font-weight: 700;
+
+    .modal-80p {
+        width:80%; /* 80% of page to provide space for labels */
     }
-    .form-control {
 
 
-    }
 </style>
 <body>
 <nav class="navbar navbar-expand-sm fixed-top" id="nav1">
@@ -259,11 +275,11 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div title="Check your profile">
+    <div id="mp" class="active" title="Check your profile" th:href="@{/admin/admin_profile}">
         <header>
             <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
-            <b id="first" style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </div>
     <br>
@@ -274,7 +290,7 @@
                 Dashboard
             </a>
         </li>
-        <li class="list" id="up">
+        <li class="list">
             <a class="active" th:href="@{/admin/admin_users}">
                 <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
                 Users
@@ -286,100 +302,156 @@
                 Patients
             </a>
         </li>
+        <li class="list">
+            <a class="active" id="first">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
+                Addresses
+            </a>
+        </li>
     </ul>
 
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col mb-3" id="my-page">
-            <div class="prof" style="padding-top: 110px; padding-left: 150px">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="text-right" style="font-weight: bold">Profile settings</h3>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <span id="editprofile" class="material-symbols-rounded" onclick="editMe()">edit</span>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td class="title">First name: </td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
-                            </tr>
-                            <tr>
-                                <td class="title">Middle name:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
-                            </tr>
-                            <tr>
-                                <td class="title">Surname:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
-                            </tr>
-                            <tr>
-                                <td class="title">Username:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
-                            </tr>
-                            <tr>
-                                <td class="title">E-mail:</td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.email}]]</td>
-                            </tr>
-                            </tbody>
-                        </table>
+    <div class="addresses-container" id="address" style="display: block; width: 100%">
+        <table class="table table-striped address-table" style="border-spacing: 0">
+            <thead id="address-head">
+            <tr>
+                <th>ID</th>
+                <th>Street</th>
+                <th>House number</th>
+                <th>Apartment number</th>
+                <th>Postcode</th>
+                <th>City</th>
+                <th>Country</th>
+                <th class="text-right" >Actions</th>
+            </tr>
+            </thead>
+            <tbody id="addressesData">
 
-                    </div>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="editAddress" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" style="max-height: 100vh">
+        <div class="modal-dialog modal-lg modal-80p" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAddressLabel">Edit Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-
-                <br>
-                <br>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="text-right" style="font-weight: bold">Password change</h3>
-                </div>
-                <div class="card">
-                    <div class="card-body" style="height: 330px !important;">
-                        <form class="needs-validation" novalidate>
-                            <div class="form-group">
-                                <tbody>
-                                <tr>
-                                    <td class="label-pass">Enter your current password:</td>
-                                    <td><input id="pass" type="password" class="form-control" required="required"></td>
-                                </tr>
-                                <div class="invalid-feedback">
-                                    Please fill in this field.
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">Address</p>
+                                        <label for="addressidu">ID</label>
+                                        <input type="text" class="form-control" required="required" id="addressidu">
+                                        <label for="streetu">Street</label>
+                                        <input type="text" class="form-control" required="required" id="streetu">
+                                        <div class="invalid-feedback">
+                                            Street is required.
+                                        </div>
+                                        <label for="housenumberu">House number</label>
+                                        <input type="text" class="form-control" required="required" id="housenumberu">
+                                        <div class="invalid-feedback">
+                                            House number is required.
+                                        </div>
+                                        <label for="apartmentnumberu">Apartment number</label>
+                                        <input type="text" class="form-control" id="apartmentnumberu">
+                                        <label for="postcodeu">Postcode</label>
+                                        <input type="text" class="form-control" required="required" id="postcodeu">
+                                        <div class="invalid-feedback">
+                                            Postcode is required.
+                                        </div>
+                                        <label for="cityu">City</label>
+                                        <input type="text" class="form-control" required="required" id="cityu">
+                                        <div class="invalid-feedback">
+                                            City is required.
+                                        </div>
+                                        <label for="countryu">Country</label>
+                                        <input type="text" class="form-control" required="required" id="countryu">
+                                        <div class="invalid-feedback">
+                                            Country is required.
+                                        </div>
+                                    </div>
                                 </div>
-                                <br>
-                                <tr>
-                                    <td class="label-pass">Enter your new password:</td>
-                                    <td><input id="newpass" type="password" class="form-control" required="required"></td>
-                                </tr>
-                                <div class="invalid-feedback">
-                                    Please fill in this field.
-                                </div>
-                                <br>
-                                <tr>
-                                    <td class="label-pass">Reenter your new password:</td>
-                                    <td><input id="newpass2" type="password" class="form-control" required="required"></td>
-                                </tr>
-                                <div class="invalid-feedback">
-                                    Please fill in this field.
-                                </div>
-                                <br>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" id="savebtn" onclick="password()"
-                                        style="position: absolute; right: 30px">
-                                            Save</button>
-                                    </td>
-                                </tr>
-                                </tbody>
                             </div>
-                        </form>
-
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="savebtna" onclick="editAddress()">Save changes</button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-80p" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAddressLabel">Add new address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">Address</p>
+                                        <label>ID</label>
+                                        <input type="text" class="form-control" required="required" id="newaddressidu">
+                                        <label for="newstreetu">Street</label>
+                                        <input type="text" class="form-control" required="required" id="newstreetu">
+                                        <div class="invalid-feedback">
+                                            Street is required.
+                                        </div>
+                                        <label for="newhousenumberu">House number</label>
+                                        <input type="text" class="form-control" required="required" id="newhousenumberu">
+                                        <div class="invalid-feedback">
+                                            House number is required.
+                                        </div>
+                                        <label for="newapartmentnumberu">Apartment number</label>
+                                        <input type="text" class="form-control" id="newapartmentnumberu">
+                                        <label for="newpostcodeu">Postcode</label>
+                                        <input type="text" class="form-control" required="required" id="newpostcodeu">
+                                        <div class="invalid-feedback">
+                                            Postcode is required.
+                                        </div>
+                                        <label for="newcityu">City</label>
+                                        <input type="text" class="form-control" required="required" id="newcityu">
+                                        <div class="invalid-feedback">
+                                            City is required.
+                                        </div>
+                                        <label for="newcountryu">Country</label>
+                                        <input type="text" class="form-control" required="required" id="newcountryu">
+                                        <div class="invalid-feedback">
+                                            Country is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="newsavebtna" onclick="newAddress()">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -390,6 +462,7 @@
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script th:src="@{/js/addressScript.js}"></script>
 
 
 <script>
@@ -401,6 +474,7 @@
                 list[j++].className = 'list';
             }
             list[i].className = 'list active';
+
 
         }
     };
