@@ -82,7 +82,7 @@
     }
 
     #logout:hover{
-        color: grey;
+        color: #CE2020;
     }
 
     .sidebar{
@@ -239,6 +239,7 @@
                 vertical-align: middle; display: inline-block">
                 <li class="nav-item">
                     <a class="nav-link" th:inline="text">
+                        <span class="material-symbols-rounded">admin_panel_settings</span>
                         <b style="text-transform:capitalize; padding: 10px 10px;
                             vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
@@ -268,12 +269,6 @@
     </div>
     <br>
     <ul>
-        <li class="list" id="db">
-            <a class="active">
-                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important;">dashboard</span>
-                Dashboard
-            </a>
-        </li>
         <li class="list" id="up">
             <a class="active" th:href="@{/admin/admin_users}">
                 <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
@@ -281,9 +276,15 @@
             </a>
         </li>
         <li class="list" id="pp">
-            <a class="active">
+            <a class="active" th:href="@{/admin/admin_patients}">
                 <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
                 Patients
+            </a>
+        </li>
+        <li class="list" id="ad">
+            <a class="active" th:href="@{/admin/admin_addresses}">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
+                Addresses
             </a>
         </li>
     </ul>

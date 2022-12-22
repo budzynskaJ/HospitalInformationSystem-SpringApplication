@@ -175,7 +175,7 @@ fetch("/patients").then(
                 let numb = 1;
                 patientsData.forEach((p) => {
                     temp += "<tr id=" + numb + " class='tabrow editing'>";
-                    temp += "<td id = 'patient'>" + p.Patient_ID + "</td>";
+                    temp += "<td id = 'patient'>" + p.patient_ID + "</td>";
                     temp += "<td id='first'>" + p.firstname + "</td>";
                     temp += "<td id='middle'>" + p.middlename + "</td>";
                     temp += "<td id='sur'>" + p.surname + "</td>";
@@ -201,7 +201,7 @@ fetch("/patients").then(
 
                     document.getElementById("patientsData").innerHTML = await temp;
                     $(document).ready(function () {
-                        let tableP = $('#patient-table').DataTable({
+                        let tableP = $('.patient-table').DataTable({
                             dom: 'Bfrtip',
                             buttons: [
                                 {
@@ -220,7 +220,7 @@ fetch("/patients").then(
                         });
 
 
-                        $('#patient-table').on('click', '#delete', function (e) {
+                        $('.patient-table').on('click', '#delete', function (e) {
                             e.preventDefault();
                             var result = confirm("Are you sure you want to delete this Patient?");
                             if(result) {
@@ -235,7 +235,7 @@ fetch("/patients").then(
                         });
 
 
-                        $('#patient-table').on('click', '#edit', function (f) {
+                        $('.patient-table').on('click', '#edit', function (f) {
                             f.preventDefault();
                             var row = $(this).closest('tr');
                                 var id = row[0].firstChild.textContent;

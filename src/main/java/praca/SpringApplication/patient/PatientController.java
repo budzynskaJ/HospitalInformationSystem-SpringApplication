@@ -49,7 +49,7 @@ public class PatientController {
             Patient existPatient = patientService.get(Patient_id);
             patient.setPatient_ID(Patient_id);
             patient.setUid(existPatient.getUid());
-            patientService.save(patient);
+            patientService.update(patient);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {

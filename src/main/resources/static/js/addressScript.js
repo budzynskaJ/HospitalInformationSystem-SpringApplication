@@ -54,7 +54,7 @@ async function editAddress() {
         res=>{
             res.json().then(
 
-            ).catch(err=>console.log(err))
+            ).catch(error=>console.log(error))
         }
     )
 };
@@ -81,7 +81,7 @@ function newAddress() {
         body: JSON.stringify(newAddressData),
     }).then(response => response.json().then(() => {
 
-    }).catch(error => error));
+    }).catch(error => setError()));
 
 };
 

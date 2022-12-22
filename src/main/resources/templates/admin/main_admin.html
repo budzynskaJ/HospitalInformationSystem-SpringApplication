@@ -285,6 +285,7 @@
                 vertical-align: middle; display: inline-block">
                 <li class="nav-item">
                     <a class="nav-link" th:inline="text">
+                        <span class="material-symbols-rounded">admin_panel_settings</span>
                         <b style="text-transform:capitalize; padding: 10px 10px;
                             vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
@@ -314,12 +315,6 @@
     </a>
     <br>
     <ul>
-        <li class="list" id="db" onclick="first()">
-            <a class="active">
-                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important;">dashboard</span>
-                Dashboard
-            </a>
-        </li>
         <li class="list" id="up">
             <a class="active" th:href="@{/admin/admin_users}">
                 <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
@@ -327,7 +322,7 @@
             </a>
         </li>
         <li class="list" id="pp">
-            <a class="active">
+            <a class="active" th:href="@{/admin/admin_patients}">
                 <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
                 Patients
             </a>
@@ -370,156 +365,6 @@
                 </div>
             </div>
         </div>
-        <div class="table-container" id="patient-page" style="display: none">
-            <table id="patient-table" class="table table-striped">
-                <thead id="patient-head">
-                <tr>
-                    <th>ID</th>
-                    <th>First name</th>
-                    <th>Middle name</th>
-                    <th>Surname</th>
-                    <th>Birth date</th>
-                    <th>PESEL</th>
-                    <th>Sex</th>
-                    <th>Phone number</th>
-                    <th>Address</th>
-                    <th>uid</th>
-                    <th class="text-right" style="width: 102%">Actions</th>
-                </tr>
-                </thead>
-                <tbody id="patientsData">
-
-                </tbody>
-            </table>
-
-            <div class="modal fade" id="editPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editPatientLabel">Edit Patient</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="needs-validation" novalidate>
-                                <div class="form-group">
-                                    <label>ID</label>
-                                    <input type="text" name="name_id" class="form-control" id="idp" readonly="readonly">
-                                    <br>
-                                    <label for="fn">First name</label>
-                                    <input type="text" class="form-control" required="required" id="fn">
-                                    <div class="invalid-feedback">
-                                        First name is required.
-                                    </div>
-                                    <br>
-                                    <label>Middle name</label>
-                                    <input type="text" class="form-control" id="middlename">
-                                    <br>
-                                    <label for="surname">Surname</label>
-                                    <input type="text" class="form-control" required="required" id="surname">
-                                    <div class="invalid-feedback">
-                                        Surname is required.
-                                    </div>
-                                    <br>
-                                    <label for="birthdate">Birth date</label>
-                                    <input type="date" class="form-control" required="required" id="birthdate">
-                                    <div class="invalid-feedback">
-                                        Birth date is required.
-                                    </div>
-                                    <br>
-                                    <label>PESEL</label>
-                                    <input type="text" class="form-control" id="pesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
-                                    <br>
-                                    <label>Sex</label>
-                                    <select name = "sex" id="sex" class="form-control">
-                                        <option value="F">F</option>
-                                        <option value="M">M</option>
-                                    </select>
-                                    <br>
-                                    <label for="phonenumber">Phone number</label>
-                                    <input type="text" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
-                                    <div class="invalid-feedback">
-                                        Phone number is required.
-                                    </div>
-                                    <br>
-                                    <label>UID</label>
-                                    <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="New" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addPatientLabel">Add new patient</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="needs-validation" novalidate>
-                            <div class="form-group">
-                                <label>ID</label>
-                                <input type="text" class="form-control" required="required" id="newIDP" readonly="readonly">
-                                <br>
-                                <label for="newfn">First name</label>
-                                <input type="text" class="form-control" required="required" id="newfn">
-                                <div class="invalid-feedback">
-                                    First name is required.
-                                </div>
-                                <br>
-                                <label>Middle name</label>
-                                <input type="text" class="form-control" id="newmiddlename">
-                                <br>
-                                <label for="newsurname">Surname</label>
-                                <input type="text" class="form-control" required="required" id="newsurname">
-                                <div class="invalid-feedback">
-                                    Surname is required.
-                                </div>
-                                <br>
-                                <label for="newbirthdate">Birth date</label>
-                                <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
-                                <div class="invalid-feedback">
-                                    Birth date is required.
-                                </div>
-                                <br>
-                                <label>PESEL</label>
-                                <input type="text" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
-                                <br>
-                                <label>Sex</label>
-                                <select name = "sex" id="newsex" class="form-control" style="width: 60px">
-                                    <option value="F">F</option>
-                                    <option value="M">M</option>
-                                </select>
-                                <br>
-                                <label for="newphonenumber">Phone number</label>
-                                <input type="text" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}" title="incorrect phone number length">
-                                <div class="invalid-feedback">
-                                    Phone number is required.
-                                </div>
-                                <br>
-                                <label for="newuid">UID</label>
-                                <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
-                                <br>
-                                <input type="checkbox" id="checkUID" onclick="createehruid()">
-                                <label for="checkUID">Create an ehr UID for this patient</label>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" id="newsavebtn" onclick="newData()" data-dismiss="modal">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>
@@ -549,32 +394,9 @@
             }
             list[i].className = 'list active';
 
-            if (list[i] === document.querySelector('#up')) {
-                //document.querySelector('#my-page').style.display = "none";
-                document.querySelector('#dashboard').style.display = "none";
-                document.querySelector('#users').style.display = "block";
-                document.querySelector('#patient-page').style.display = "none";
-            } else if (list[i] === document.querySelector('#db')) {
-                //document.querySelector('#my-page').style.display = "none";
-                document.querySelector('#dashboard').style.display = "block";
-                //document.querySelector('#users').style.display = "none";
-                document.querySelector('#patient-page').style.display = "none";
-            }else if (list[i] === document.querySelector('#pp')) {
-                //document.querySelector('#my-page').style.display = "none";
-                document.querySelector('#dashboard').style.display = "none";
-                //document.querySelector('#users').style.display = "none";
-                document.querySelector('#patient-page').style.display = "block";
-            }
         }
     };
 
-    function first(){
-        document.querySelector('#dashboard').style.display = "block";
-        //document.querySelector('#my-page').style.display="block";
-        //document.querySelector('#users').style.display="none";
-        document.querySelector('#patient-page').style.display="none";
-
-    }
 </script>
 <script>
     (function() {

@@ -149,7 +149,7 @@ fetch("/patients").then(
                 })
                 document.getElementById("patientsData").innerHTML = await temp;
                 $(document).ready(function () {
-                    $('#patient-table').DataTable();
+                    $('.patient-table').DataTable();
                 });
 
             }

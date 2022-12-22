@@ -31,6 +31,9 @@ public class PatientService {
         }
         patientRepository.save(patient);
     }
+    public void update(Patient patient) {
+        patientRepository.save(patient);
+    }
 
     public Patient get(Long Patient_id) {
         return patientRepository.findById(Patient_id).get();

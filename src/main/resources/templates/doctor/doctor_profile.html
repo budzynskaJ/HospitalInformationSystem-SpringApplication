@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
-    <link rel="icon" type="image/png" href="Hospital Information System - mini.png" />
+    <link rel="icon" type="image/png" href="../Hospital Information System - mini.png" />
 
 </head>
 <style>
@@ -227,7 +227,7 @@
 <nav class="navbar fixed-top navbar-expand-sm" id="nav1">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/main_doctor}">
-            <img src="Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+            <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -244,7 +244,7 @@
 
                 <li class="nav-item" >
                     <a class="nav-link" th:inline="text">
-                        <img src="doctor.png" alt="" style="height: 30px;">
+                        <img src="../doctor.png" alt="" style="height: 30px;">
                         <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
                         <b style="text-transform:capitalize; padding: 10px 10px;
             vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
@@ -269,20 +269,23 @@
 <div class="sidebar">
     <div title="Check your profile">
         <header>
-            <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
+            <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
             <br><br>
             <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </div>
     <br>
     <ul>
-        <li class="list" id="assignment">
-
+        <li class="list" id="patient-list">
+            <a class="active" id="pl" th:href="@{/doctor/doctor_patients}">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >list</span>
+                Patient list
+            </a>
         </li>
-        <li class="list" id="history">
-            <a href="#" class="active">
-                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
-                History of appointments
+        <li class="list" id="assignment">
+            <a href="#" class="active" data-toggle='modal' data-target="#whichPatient" onclick="show()">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >assignment_add</span>
+                Create a new appointment
             </a>
         </li>
     </ul>

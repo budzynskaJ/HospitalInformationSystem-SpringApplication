@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Addresses</title>
+    <title>Patients</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
@@ -137,7 +137,7 @@
         color: rgba(24,31,151,0.93);
     }
 
-    #first{
+    #pl{
         background-color: rgba(24,31,151,0.10);
         color: rgba(24,31,151,0.93);
     }
@@ -195,7 +195,7 @@
         left: 250px;
     }
 
-    .addresses-container{
+    .table-container{
         padding-top: 100px;
     }
 
@@ -230,10 +230,10 @@
         font-size: 15px;
         color: #828997;
     }
-    #address-head tr th {
+    #patient-head tr th {
         text-align: center;
     }
-    .address-table tr td {
+    .patient-table tr td {
         text-align: center;
     }
 
@@ -246,7 +246,7 @@
 <body>
 <nav class="navbar navbar-expand-sm fixed-top" id="nav1">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/main_admin}">
+        <a class="navbar-brand" th:href="@{/main_doctor}">
             <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
@@ -258,9 +258,9 @@
                 vertical-align: middle; display: inline-block">
                 <li class="nav-item">
                     <a class="nav-link" th:inline="text">
-                        <span class="material-symbols-rounded">admin_panel_settings</span>
+                        <img src="../doctor.png" alt="" style="height: 30px;">
                         <b style="text-transform:capitalize; padding: 10px 10px;
-                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+                            vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
 
                 <li class="nav-item">
@@ -279,31 +279,25 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div id="mp" class="active" title="Check your profile" th:href="@{/admin/admin_profile}">
+    <div class="prof" title="Check your profile" th:href="@{/doctor/doctor_profile}">
         <header>
             <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
-            <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+            <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </div>
     <br>
     <ul>
-        <li class="list">
-            <a class="active" th:href="@{/admin/admin_users}">
-                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
-                Users
+        <li class="list" id="patient-list">
+            <a href="#" class="active" id="pl">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >list</span>
+                Patient list
             </a>
         </li>
-        <li class="list" id="pp">
-            <a class="active" th:href="@{/admin/admin_patients}">
-                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
-                Patients
-            </a>
-        </li>
-        <li class="list">
-            <a class="active" id="first">
-                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
-                Addresses
+        <li class="list" id="assignment">
+            <a href="#" class="active" data-toggle='modal' data-target="#whichPatient" onclick="show()">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >assignment_add</span>
+                Create a new appointment
             </a>
         </li>
     </ul>
@@ -311,30 +305,31 @@
 </div>
 
 <div class="container">
-    <div class="addresses-container" id="address" style="display: block; width: 100%">
-        <table class="table table-striped address-table" style="border-spacing: 0">
-            <thead id="address-head">
+    <div class="table-container" id="patients" style="display: block; width: 100%">
+        <table class="table table-striped patient-table" style="border-spacing: 0">
+            <thead id="patient-head">
             <tr>
                 <th>ID</th>
-                <th>Street</th>
-                <th>House number</th>
-                <th>Apartment number</th>
-                <th>Postcode</th>
-                <th>City</th>
-                <th>Country</th>
-                <th class="text-right" >Actions</th>
+                <th>First name</th>
+                <th>Middle name</th>
+                <th>Surname</th>
+                <th>Birth date</th>
+                <th>PESEL</th>
+                <th>Sex</th>
+                <th>uid</th>
+                <th style="width: 102%">Actions</th>
             </tr>
             </thead>
-            <tbody id="addressesData">
+            <tbody id="patientsData">
 
             </tbody>
         </table>
     </div>
-    <div class="modal fade" id="editAddress" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" style="max-height: 100vh">
+    <div class="modal fade" id="queryData" tabindex="-1" role="dialog" aria-labelledby="Query data" aria-hidden="true" style="max-height: 100vh">
         <div class="modal-dialog modal-lg modal-80p" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editAddressLabel">Edit Address</h5>
+                    <h5 class="modal-title" id="editUserLabel">Gynecology appointment</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -342,45 +337,97 @@
                 <div class="modal-body">
                     <form class="needs-validation" novalidate>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-11">
                                 <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <p class="lead">Address</p>
-                                        <label for="addressidu">ID</label>
-                                        <input type="text" class="form-control" required="required" id="addressidu">
-                                        <label for="streetu">Street</label>
-                                        <input type="text" class="form-control" required="required" id="streetu">
-                                        <div class="invalid-feedback">
-                                            Street is required.
+                                    <p class="lead">Body mass index</p>
+                                    <label for="bmi">Body mass index</label>
+                                    <div class="input-group" style="width: 200px">
+                                        <input type="number" class="form-control" required="required" id="bmi" min="0" max="1000" step="0.1">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">kg/m<sup>2</sup></span>
                                         </div>
-                                        <label for="housenumberu">House number</label>
-                                        <input type="text" class="form-control" required="required" id="housenumberu">
                                         <div class="invalid-feedback">
-                                            House number is required.
+                                            BMI is required.
                                         </div>
-                                        <label for="apartmentnumberu">Apartment number</label>
-                                        <input type="text" class="form-control" id="apartmentnumberu">
-                                        <label for="postcodeu">Postcode</label>
-                                        <input type="text" class="form-control" required="required" id="postcodeu">
-                                        <div class="invalid-feedback">
-                                            Postcode is required.
-                                        </div>
-                                        <label for="cityu">City</label>
-                                        <input type="text" class="form-control" required="required" id="cityu">
-                                        <div class="invalid-feedback">
-                                            City is required.
-                                        </div>
-                                        <label for="countryu">Country</label>
-                                        <input type="text" class="form-control" required="required" id="countryu">
-                                        <div class="invalid-feedback">
-                                            Country is required.
-                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p class="lead">Last menstrual period</p>
+                                    <label for="lastUpdated">Date when the last menstrual period was updated</label>
+                                    <input type="datetime-local" class="form-control" required="required" id="lastUpdated" style="width: 200px">
+                                    <div class="invalid-feedback">
+                                        Date when the last menstrual period was updated is required.
+                                    </div>
+                                    <br>
+                                    <label for="lmp">Date of onset</label>
+                                    <input type="date" class="form-control" required="required" id="lmp" style="width: 180px;">
+                                    <div class="invalid-feedback">
+                                        Date of onset is required.
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <label>Description</label>
+                                    <textarea class="form-control" id="description" rows="5" cols="60"></textarea>
+
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p class="lead">Summary and persistent information about use of the methods to prevent pregnancy</p>
+                                    <label for="contraception">Statement about regular use of any type of contraception</label>
+                                    <select id="contraception" name="contraception">
+                                        <option value="current user">Current user</option>
+                                        <option value="not current user">Not current user</option>
+                                        <option value="never used">Never used</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label>The type of contraception used by patient</label>
+                                    <select id="contraceptionType" name="contraceptionType">
+                                        <option value="combination pill">Combination pill</option>
+                                        <option value="progestrogen-only pill">Progestrogen-only pill</option>
+                                        <option value="combination skin patch">Combination skin patch</option>
+                                        <option value="depot progesstrogen">Depot progestrogen</option>
+                                        <option value="hormone implant">Hormone implant</option>
+                                        <option value="vaginal ring">Vaginal ring</option>
+                                        <option value="IUD with hormone">IUD with hormone</option>
+                                        <option value="IUD without hormone">IUD without hormone</option>
+                                        <option value="female sterilisation">Female sterilisation</option>
+                                        <option value="male sterilisation">Male sterilisation</option>
+                                        <option value="diaphragm">Diaphragm</option>
+                                        <option value="vaginal douching">Vaginal douching</option>
+                                        <option value="female condom">Female condom</option>
+                                        <option value="male condom">Male condom</option>
+                                        <option value="withdrawal">Withdrawal</option>
+                                        <option value="fertilty awereness method">Fertilty awereness method</option>
+                                        <option value="abstinence">Abstinence</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label>Statement about current use of specified type of contraception</label>
+                                    <select name="status" id="status">
+                                        <option value="current user">Current user</option>
+                                        <option value="not current user">Not current user</option>
+                                        <option value="never used">Never used</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label for="dateContraception">Date of first use of the specified type of contraception</label>
+                                    <input type="datetime-local" class="form-control" required="required" id="dateContraception" style="width: 200px;">
+                                    <div class="invalid-feedback">
+                                        Date is required.
+                                    </div>
+                                    <br>
+                                    <label for="dateLast">Date when patient last used the specified type of contraception</label>
+                                    <input type="datetime-local" class="form-control" required="required" id="dateLast" style="width: 200px">
+                                    <div class="invalid-feedback">
+                                        Date is required.
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="savebtna" onclick="editAddress()">Save changes</button>
+                            <button type="button" class="btn btn-primary" id="savebtnu" onclick="queryData()">Save</button>
                         </div>
                     </form>
 
@@ -389,66 +436,9 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-80p" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addAddressLabel">Add new address</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="needs-validation" novalidate>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <p class="lead">Address</p>
-                                        <label>ID</label>
-                                        <input type="text" class="form-control" required="required" id="newaddressidu">
-                                        <label for="newstreetu">Street</label>
-                                        <input type="text" class="form-control" required="required" id="newstreetu">
-                                        <div class="invalid-feedback">
-                                            Street is required.
-                                        </div>
-                                        <label for="newhousenumberu">House number</label>
-                                        <input type="text" class="form-control" required="required" id="newhousenumberu">
-                                        <div class="invalid-feedback">
-                                            House number is required.
-                                        </div>
-                                        <label for="newapartmentnumberu">Apartment number</label>
-                                        <input type="text" class="form-control" id="newapartmentnumberu">
-                                        <label for="newpostcodeu">Postcode</label>
-                                        <input type="text" class="form-control" required="required" id="newpostcodeu">
-                                        <div class="invalid-feedback">
-                                            Postcode is required.
-                                        </div>
-                                        <label for="newcityu">City</label>
-                                        <input type="text" class="form-control" required="required" id="newcityu">
-                                        <div class="invalid-feedback">
-                                            City is required.
-                                        </div>
-                                        <label for="newcountryu">Country</label>
-                                        <input type="text" class="form-control" required="required" id="newcountryu">
-                                        <div class="invalid-feedback">
-                                            Country is required.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="newsavebtna" onclick="newAddress()">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </div>
+
 
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -460,7 +450,7 @@
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
-<script th:src="@{/js/addressScript.js}"></script>
+<script th:src="@{/js/doctorScript.js}"></script>
 
 
 <script>
@@ -501,4 +491,3 @@
 
 
 </body>
-</html>
