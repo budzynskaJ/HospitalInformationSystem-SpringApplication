@@ -142,6 +142,9 @@
         background-color: rgba(24,31,151,0.10);
         color: rgba(24,31,151,0.93);
     }
+    .sidebar ul li a{
+        color: #191919;
+    }
 
     .sidebar ul li a span{
         height: 35px;
@@ -250,6 +253,9 @@
     .values .val-box:nth-child(3) i {
         background: #da7a7a;
     }
+    .values .val-box:nth-child(4) i {
+        background: #f2aaaa;
+    }
     .values .val-box h3 {
         font-size: 20px;
         font-weight: 600;
@@ -285,7 +291,7 @@
                 vertical-align: middle; display: inline-block">
                 <li class="nav-item">
                     <a class="nav-link" th:inline="text">
-                        <span class="material-symbols-rounded">admin_panel_settings</span>
+                        <span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 32px">admin_panel_settings</span>
                         <b style="text-transform:capitalize; padding: 10px 10px;
                             vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
@@ -363,6 +369,13 @@
                         <span>Patients</span>
                     </div>
                 </div>
+                <div class="val-box">
+                    <i class="fa fa-home"></i>
+                    <div>
+                        <h3 id="numberOfA"></h3>
+                        <span>Addresses</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -381,7 +394,9 @@
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
 <script th:src="@{/js/userScript.js}"></script>
+<script th:src="@{/js/adminScript.js}"></script>
 <script th:src="@{/js/patientScript.js}"></script>
+<script th:src="@{/js/addressScript.js}"></script>
 
 
 <script>

@@ -136,6 +136,9 @@
     background-color: rgba(24,31,151,0.10);
     color: rgba(24,31,151,0.93);
   }
+  .sidebar ul li a{
+    color: #191919;
+  }
 
   #pp{
     background-color: rgba(24,31,151,0.10);
@@ -258,7 +261,7 @@
                 vertical-align: middle; display: inline-block">
         <li class="nav-item">
           <a class="nav-link" th:inline="text">
-            <span class="material-symbols-rounded">admin_panel_settings</span>
+            <span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 32px">admin_panel_settings</span>
             <b style="text-transform:capitalize; padding: 10px 10px;
                             vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
         </li>

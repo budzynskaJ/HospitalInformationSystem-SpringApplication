@@ -140,26 +140,23 @@ function newData() {
         },
         mode: 'cors',
         body: newPatientData,
-    }).then(response => response.json().then(() => {
-        console.log(response);
-    }).catch(error => error));
+    }).then(response => {
+        if(!response.ok) {
+            throw new Error("This patient already exists!");
+        }
+        return response.json();
+    }).catch(error => {
+        if(error.message == "This patient already exists!") {
+            alert(error.message);
+            location.reload();
+        }else {
+            alert("Patient successfully added!");
+            location.reload();
+        }
+    });
 
 };
 
-function getNumberOfPatients() {
-
-    let number;
-    fetch("/patients").then(
-        res => {
-            res.json().then(
-                patientsData => {
-                    number = patientsData.length.toString();
-                    document.getElementById("numberOfP").innerText = number;
-                })
-        })
-
-}
-getNumberOfPatients();
 
 fetch("/patients").then(
     res=>{

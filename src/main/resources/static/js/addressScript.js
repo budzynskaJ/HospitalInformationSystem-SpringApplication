@@ -79,9 +79,22 @@ function newAddress() {
         },
         mode: 'cors',
         body: JSON.stringify(newAddressData),
-    }).then(response => response.json().then(() => {
+    }).then(response => {
+        if(!response.ok) {
+            throw new Error("This address already exists!")
+        }
+        return response.json();
 
-    }).catch(error => setError()));
+    })
+        .catch(error => {
+          if(error.message == "This address already exists!") {
+              alert(error.message);
+              location.reload();
+          } else {
+              alert("Address successfully added!");
+              location.reload();
+          }
+        });
 
 };
 

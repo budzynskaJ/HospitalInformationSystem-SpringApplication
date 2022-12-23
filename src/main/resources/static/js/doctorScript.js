@@ -588,6 +588,7 @@ function queryData() {
                     res.json().then(
                         data => {
                             console.log(data);
+                            location.reload();
                         }
                     ).catch(err => console.log(err))
                 }

@@ -69,6 +69,7 @@ async function editUser() {
 };
 
 function newUser() {
+
     let newUSerData = {
         id: document.getElementById('newidu').value,
         firstname: document.getElementById('newfnu').value,
@@ -98,33 +99,25 @@ function newUser() {
         },
         mode: 'cors',
         body: JSON.stringify(newUSerData),
-    }).then(response => response.json().then(() => {
-
-    }).catch(error => error));
+    }).then(response => {
+      if(!response.ok) {
+          throw new Error("User with this username already exists!");
+      }
+      return response.json();
+    })
+    .catch(error => {
+        if(error.message == "User with this username already exists!") {
+            alert(error.message);
+            location.reload();
+        } else {
+            alert("User successfully added!");
+            location.reload();
+        }
+        }
+    );
 
 };
 
-function getNumberOfUsers() {
-
-    let number;
-    let numberD = 0;
-    fetch("/admin/admin_users/users").then(
-        res => {
-            res.json().then(
-                usersData => {
-                    number = usersData.length.toString();
-                    for(let i=0; i<usersData.length; i++){
-                        if(usersData[i].role==="USER") {
-                            numberD = numberD + 1;
-                        }
-                    }
-                    document.getElementById("numberOfU").innerText = number;
-                    document.getElementById("numberOfD").innerText = numberD;
-                })
-        })
-
-}
-getNumberOfUsers();
 
 fetch("/admin/admin_users/users").then(
     res => {
