@@ -212,6 +212,13 @@
         height: 170px;
         width: 80%;
     }
+    .card table tr td:nth-child(2) {
+        width: 300px;
+    }
+    .card table tr td:nth-child(3) {
+        width: 200px;
+        horiz-align: right;
+    }
     #editprofile {
         position: absolute;
         color: #bdcee3;
@@ -300,28 +307,34 @@
         <div class="col mb-3" id="profile-page" >
             <div class="prof" style="padding-top: 110px; padding-left: 150px;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="text-right" style="font-weight: bold">Profile settings</h3>
+                    <h3 class="text-right" style="font-weight: bold">My profile</h3>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <span id="editprofile" class="material-symbols-rounded">edit</span>
                         <table>
                             <tbody>
                             <tr>
                                 <td class="title">First name: </td>
                                 <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
+                                <td class="address" style="font-weight: bold">Address </td>
                             </tr>
                             <tr>
                                 <td class="title">Middle name:</td>
                                 <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.street}]]
+                                [[${#httpServletRequest.userPrincipal.principal.address.house_number}]]
+                                     [[${#httpServletRequest.userPrincipal.principal.address.apartment_number}]]</td>
                             </tr>
                             <tr>
                                 <td class="title">Surname:</td>
                                 <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.postcode}]]
+                                [[${#httpServletRequest.userPrincipal.principal.address.city}]]</td>
                             </tr>
                             <tr>
                                 <td class="title">Username:</td>
                                 <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.country}]]</td>
                             </tr>
                             <tr>
                                 <td class="title">E-mail:</td>

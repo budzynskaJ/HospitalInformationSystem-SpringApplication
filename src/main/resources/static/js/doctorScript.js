@@ -66,6 +66,26 @@ setTimeout(function () {
 )
 }, 2000);**/
 
+function showinQuery() {
+    $('.patient-table').on('click', '#queryD', function () {
+        var patient_firstname = $(this).parents('tr')[0].cells[1].textContent;
+        var patient_middlename = $(this).parents('tr')[0].cells[2].textContent;
+        var patient_surname = $(this).parents('tr')[0].cells[3].textContent;
+        var patient_birthday = $(this).parents('tr')[0].cells[4].textContent;
+
+        let today = new Date().getFullYear();
+        let patient_birth_year = patient_birthday.split("-").at(0);
+        console.log(patient_birth_year);
+        let age = today - patient_birth_year;
+
+        $('#name').text(patient_firstname + " " + patient_middlename + " " + patient_surname);
+        $('#age').text("Age: " + age);
+
+        jQuery.noConflict();
+        jQuery('#queryData').modal('show');
+    })
+}
+
 let uid = "";
 function newEHR() {
     let format = "json";
@@ -139,7 +159,7 @@ fetch("/patients").then(
                     temp += "<td id='s'>" + p.sex + "</td>";
                     temp += "<td id='UID'>" + p.uid + "</td>";
                     temp += "<td style='vertical-align: middle'>\n" +
-                        "                             <span type=\"button\" data-toggle='modal' data-target='#queryData' id='edit' \n" +
+                        "                             <span type=\"button\" data-toggle='modal' data-target='#queryData' id='queryD' onclick='showinQuery()' \n" +
                         "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Query data'>\n" +
                         "                                   diagnosis \n" +
                         "                              </span>\n" +
@@ -157,7 +177,6 @@ fetch("/patients").then(
     })
 
 function getEHRBySubjectID() {
-
     subjectUid = document.getElementById("uid").value;
     fetch('http://localhost:8090/rest/v1/ehrs/subjectUid/' + subjectUid, {
         method: 'GET',
@@ -190,6 +209,7 @@ function uuid() {
     });
     return uuid;
 }
+
 
 function queryData() {
     getEHRBySubjectID();
