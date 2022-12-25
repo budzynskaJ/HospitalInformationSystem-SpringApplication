@@ -38,7 +38,7 @@ getNumberOfPatients();
 function getNumberOfAddresses() {
     let numberA;
 
-    fetch("/addresses").then(
+    fetch("/admin/admin_addresses/addresses").then(
         res => {
             res.json().then(
                 addressesData => {
@@ -49,3 +49,4 @@ function getNumberOfAddresses() {
         }
     )
 }
+getNumberOfAddresses();
