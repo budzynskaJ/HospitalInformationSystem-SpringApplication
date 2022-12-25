@@ -9,7 +9,8 @@ function showUser() {
         var user = $(this).parents('tr')[0].cells[4].textContent;
         var email = $(this).parents('tr')[0].cells[5].textContent;
         var role = $(this).parents('tr')[0].cells[6].textContent;
-
+        var street = str;
+        var house_number = hn;
 
 
         $('#idu').val(rowu);
@@ -19,6 +20,8 @@ function showUser() {
         $('#username').val(user);
         $('#email').val(email);
         $('#role').val(role);
+        $('#streetu').val(street);
+        $('#housenumberu').val(house_number);
 
 
         jQuery.noConflict();
@@ -71,7 +74,7 @@ async function editUser() {
 function newUser() {
 
     let newUSerData = {
-        id: document.getElementById('newidu').value,
+        id: null,
         firstname: document.getElementById('newfnu').value,
         middlename: document.getElementById('newmiddlenameu').value,
         surname: document.getElementById('newsurnameu').value,
@@ -80,7 +83,7 @@ function newUser() {
         password: document.getElementById('password').value,
         role: document.getElementById('newrole').value,
         address: {
-            address_ID: document.getElementById('newaddressidu').value,
+            address_ID: null,
             street: document.getElementById("newstreetu").value,
             house_number: document.getElementById("newhousenumberu").value,
             apartment_number: document.getElementById("newapartmentnumberu").value,
@@ -118,7 +121,6 @@ function newUser() {
 
 };
 
-
 fetch("/admin/admin_users/users").then(
     res => {
         res.json().then(
@@ -154,6 +156,7 @@ fetch("/admin/admin_users/users").then(
                         "                        </td>";
                     temp += "</tr>";
                     numb = numb+1;
+
                 })
                 document.getElementById("usersData").innerHTML = await temp;
                 $(document).ready(function () {

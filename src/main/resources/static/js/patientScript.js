@@ -119,18 +119,30 @@ function createehruid() {
 function newData() {
 
     let newPatientData = {
-        Patient_ID: document.getElementById('newIDP').value,
+        Patient_ID: null,
         firstname: document.getElementById('newfn').value,
         middlename: document.getElementById('newmiddlename').value,
         surname: document.getElementById('newsurname').value,
         birth_date: document.getElementById('newbirthdate').value,
         pesel: document.getElementById('newpesel').value,
-        sex: document.getElementById('newsex').value,
+        sex: document.querySelector("input[name=newsex]:checked").value,
         phone_number: document.getElementById('newphonenumber').value,
         uid: document.getElementById("newuid").value,
+        address: {
+            address_ID: null,
+            street: document.getElementById("newstreet").value,
+            house_number: document.getElementById("newhousenumber").value,
+            apartment_number: document.getElementById("newapartmentnumber").value,
+            postcode: document.getElementById("newpostcode").value,
+            city: document.getElementById("newcity").value,
+            country: document.getElementById("newcountry").value,
+        }
     };
 
+
     newPatientData = JSON.stringify(newPatientData);
+    console.log(newPatientData)
+
 
     return fetch("/patients/", {
         method: 'post',
@@ -139,7 +151,7 @@ function newData() {
             'Content-Type': 'application/json',
         },
         mode: 'cors',
-        body: newPatientData,
+        body: newPatientData
     }).then(response => {
         if(!response.ok) {
             throw new Error("This patient already exists!");

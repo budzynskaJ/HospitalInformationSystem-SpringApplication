@@ -42,7 +42,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/admin/admin_users/adduser")
     //@PostMapping("/users")
-    public void add(@RequestBody User user ) {
+    public void add(@RequestBody User user) {
         customUserDetailsService.save(user);
 
     }
@@ -54,7 +54,7 @@ public class UserController {
             user.setId(id);
             user.setPassword(existUser.getPassword());
             user.setRole(existUser.getRole());
-            customUserDetailsService.save(user);
+            customUserDetailsService.update(user);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {

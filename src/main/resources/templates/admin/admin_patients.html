@@ -375,10 +375,12 @@
                 <input type="text" class="form-control" id="pesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
                 <br>
                 <label>Sex</label>
-                <select name = "sex" id="sex" class="form-control">
-                  <option value="F">F</option>
-                  <option value="M">M</option>
-                </select>
+                <br>
+                <form id="sex">
+                  <label><input type="radio" name="sex" value="F" checked> Female</label>
+                  <br>
+                  <label><input type="radio" name="sex" value="M"> Male</label>
+                </form>
                 <br>
                 <label for="phonenumber">Phone number</label>
                 <input type="text" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
@@ -399,7 +401,7 @@
     </div>
   </div>
   <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="New" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg modal-80p" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addPatientLabel">Add new patient</h5>
@@ -409,51 +411,92 @@
         </div>
         <div class="modal-body">
           <form class="needs-validation" novalidate>
-            <div class="form-group">
-              <label>ID</label>
-              <input type="text" class="form-control" required="required" id="newIDP" readonly="readonly">
-              <br>
-              <label for="newfn">First name</label>
-              <input type="text" class="form-control" required="required" id="newfn">
-              <div class="invalid-feedback">
-                First name is required.
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <p class="lead">Demographic data</p>
+                    <label for="newfn">First name</label>
+                    <input type="text" class="form-control" required="required" id="newfn">
+                    <div class="invalid-feedback">
+                      First name is required.
+                    </div>
+                    <br>
+                    <label>Middle name</label>
+                    <input type="text" class="form-control" id="newmiddlename">
+                    <br>
+                    <label for="newsurname">Surname</label>
+                    <input type="text" class="form-control" required="required" id="newsurname">
+                    <div class="invalid-feedback">
+                      Surname is required.
+                    </div>
+                    <br>
+                    <label for="newbirthdate">Birth date</label>
+                    <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
+                    <div class="invalid-feedback">
+                      Birth date is required.
+                    </div>
+                    <br>
+                    <label>PESEL</label>
+                    <input type="text" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
+                    <br>
+                    <label>Sex</label>
+                    <br>
+                    <form id="newsex">
+                      <label><input type="radio" name="newsex" value="F" checked> Female</label>
+                      <br>
+                      <label><input type="radio" name="newsex" value="M"> Male</label>
+                    </form>
+                    <br>
+                    <label for="newphonenumber">Phone number</label>
+                    <input type="text" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                    <div class="invalid-feedback">
+                      Phone number is required.
+                    </div>
+                    <br>
+                    <label for="newuid">UID</label>
+                    <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
+                    <br>
+                    <input type="checkbox" id="checkUID" onclick="createehruid()">
+                    <label for="checkUID">Create an ehr UID for this patient</label>
+                  </div>
+                </div>
               </div>
-              <br>
-              <label>Middle name</label>
-              <input type="text" class="form-control" id="newmiddlename">
-              <br>
-              <label for="newsurname">Surname</label>
-              <input type="text" class="form-control" required="required" id="newsurname">
-              <div class="invalid-feedback">
-                Surname is required.
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <p class="lead">Address</p>
+                    <label for="newstreet">Street</label>
+                    <input type="text" class="form-control" required="required" id="newstreet">
+                    <div class="invalid-feedback">
+                      Street is required.
+                    </div>
+                    <label for="newhousenumber">House number</label>
+                    <input type="text" class="form-control" required="required" id="newhousenumber">
+                    <div class="invalid-feedback">
+                      House number is required.
+                    </div>
+                    <label for="newapartmentnumber">Apartment number</label>
+                    <input type="text" class="form-control" id="newapartmentnumber">
+                    <label for="newpostcode">Postcode</label>
+                    <input type="text" class="form-control" required="required" id="newpostcode">
+                    <div class="invalid-feedback">
+                      Postcode is required.
+                    </div>
+                    <label for="newcity">City</label>
+                    <input type="text" class="form-control" required="required" id="newcity">
+                    <div class="invalid-feedback">
+                      City is required.
+                    </div>
+                    <label for="newcountry">Country</label>
+                    <input type="text" class="form-control" required="required" id="newcountry">
+                    <div class="invalid-feedback">
+                      Country is required.
+                    </div>
+                  </div>
+                </div>
               </div>
-              <br>
-              <label for="newbirthdate">Birth date</label>
-              <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
-              <div class="invalid-feedback">
-                Birth date is required.
-              </div>
-              <br>
-              <label>PESEL</label>
-              <input type="text" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
-              <br>
-              <label>Sex</label>
-              <select name = "sex" id="newsex" class="form-control" style="width: 60px">
-                <option value="F">F</option>
-                <option value="M">M</option>
-              </select>
-              <br>
-              <label for="newphonenumber">Phone number</label>
-              <input type="text" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}" title="incorrect phone number length">
-              <div class="invalid-feedback">
-                Phone number is required.
-              </div>
-              <br>
-              <label for="newuid">UID</label>
-              <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
-              <br>
-              <input type="checkbox" id="checkUID" onclick="createehruid()">
-              <label for="checkUID">Create an ehr UID for this patient</label>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary" id="newsavebtn" onclick="newData()" data-dismiss="modal">Save</button>
