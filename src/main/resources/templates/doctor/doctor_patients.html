@@ -286,7 +286,7 @@
         <header>
             <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
-            <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+            <b id="doctorsData" style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </div>
     <br>
@@ -329,7 +329,7 @@
         </table>
     </div>
     <div class="modal fade" id="queryData" tabindex="-1" role="dialog" aria-labelledby="Query data" aria-hidden="true" style="max-height: 100vh">
-        <div class="modal-dialog modal-lg modal-80p" role="document">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-80p" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editUserLabel">Gynecology appointment</h5>
@@ -342,15 +342,36 @@
                         <div class="row">
                             <div class="col-sm-11">
                                 <div class="form-group">
+                                    <p class="lead">Patient</p>
+                                    <p id="name"></p>
+                                    <p id="age"></p>
+                                </div>
+                                <div class="form-group">
                                     <p class="lead">Body mass index</p>
                                     <label for="bmi">Body mass index</label>
                                     <div class="input-group" style="width: 200px">
-                                        <input type="number" class="form-control" required="required" id="bmi" min="0" max="1000" step="0.1">
+                                        <input type="number" class="form-control" required="required" id="weight" min="0" max="1000" step="0.1">
                                         <div class="input-group-append">
-                                            <span class="input-group-text">kg/m<sup>2</sup></span>
+                                            <span class="input-group-text">kg</span>
                                         </div>
                                         <div class="invalid-feedback">
-                                            BMI is required.
+                                            Weight is required.
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="input-group" style="width: 200px">
+                                        <input type="number" class="form-control" required="required" id="height" min="0" max="2.30" step="0.01">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">m</span>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Height is required.
+                                        </div>
+                                    </div>
+                                    <div class="input-group" style="width: 200px">
+                                        <input type="number" class="form-control" required="required" id="bmi" min="0" max="1000" step="0.1" readonly="readonly">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">kg/m<sup>2</sup></span>
                                         </div>
                                     </div>
                                     <br>

@@ -7,7 +7,7 @@ $(document).ready(function (){
   fetch(url, {
       method: 'POST',
       headers: {
-          'Origin': 'http://localhost:8070/main_doctor',
+          'Origin': 'http://localhost:8070/doctor/doctor_patients',
           'Content-Type': 'application/json',
           'Accept': 'application/json',
       },
@@ -65,36 +65,16 @@ setTimeout(function () {
     }
 )
 }, 2000);**/
-
-function showinQuery() {
-    $('.patient-table').on('click', '#queryD', function () {
-        var patient_firstname = $(this).parents('tr')[0].cells[1].textContent;
-        var patient_middlename = $(this).parents('tr')[0].cells[2].textContent;
-        var patient_surname = $(this).parents('tr')[0].cells[3].textContent;
-        var patient_birthday = $(this).parents('tr')[0].cells[4].textContent;
-
-        let today = new Date().getFullYear();
-        let patient_birth_year = patient_birthday.split("-").at(0);
-        console.log(patient_birth_year);
-        let age = today - patient_birth_year;
-
-        $('#name').text(patient_firstname + " " + patient_middlename + " " + patient_surname);
-        $('#age').text("Age: " + age);
-
-        jQuery.noConflict();
-        jQuery('#queryData').modal('show');
-    })
-}
-
 let uid = "";
-function newEHR() {
+
+function newEHR(subjectUid) {
     let format = "json";
-    let subjectUid = document.getElementById("uid").value;
+
     return fetch('http://localhost:8090/rest/v1/ehrs?' + "format=" + format + "&subjectUid=" + subjectUid, {
 
-    method: 'POST',
+        method: 'POST',
         headers: {
-            'Origin': 'http://localhost:8070/main_doctor',
+            'Origin': 'http://localhost:8070/doctor/doctor_patients',
             Authorization: 'Bearer ' + token,
             'Accept': 'application/json',
             'Content-Type': 'application/json; charset=UTF-8',
@@ -112,14 +92,70 @@ function newEHR() {
             }
 
 
-    )
+        )
 }
+
+function showinQuery() {
+    $('.patient-table').on('click', '#queryD', function () {
+        var patient_firstname = $(this).parents('tr')[0].cells[1].textContent;
+        var patient_middlename = $(this).parents('tr')[0].cells[2].textContent;
+        var patient_surname = $(this).parents('tr')[0].cells[3].textContent;
+        var patient_birthday = $(this).parents('tr')[0].cells[4].textContent;
+        var subjectUid = $(this).parents('tr')[0].cells[7].textContent;
+
+        let today = new Date().getFullYear();
+        let patient_birth_year = patient_birthday.split("-").at(0);
+        console.log(patient_birth_year);
+        let age = today - patient_birth_year;
+
+        $('#name').text(patient_firstname + " " + patient_middlename + " " + patient_surname);
+        $('#age').text("Age: " + age);
+
+        jQuery.noConflict();
+        jQuery('#queryData').modal('show');
+
+
+        fetch('http://localhost:8090/rest/v1/ehrs/subjectUid/' + subjectUid, {
+            method: 'GET',
+            headers: {
+                'Origin': 'http://localhost:8070/doctor/doctor_patients',
+                Authorization: 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then(res => {
+                if (!res.ok) {
+                    let confirmation = confirm("EHR does not exists in EHR Server! Do you want to add?");
+                    if(confirmation) {
+                        newEHR(subjectUid);
+                    } else {
+                        alert("You can't query data for this patient!");
+                        jQuery('#queryData').modal('hide');
+                    }
+
+                }
+                res.json().then(
+                    data => {
+                        console.log(data);
+                        uid = data.uid;
+                    }
+                )
+            })
+
+
+        return uid;
+    })
+}
+
+
+
 let subjectUid = "";
 setTimeout(function getEHR() {
     fetch("http://localhost:8090/rest/v1/ehrs", {
         method: 'GET',
         headers: {
-            'Origin': 'http://localhost:8070/main_doctor',
+            'Origin': 'http://localhost:8070/doctor/doctor_patients',
             Authorization: 'Bearer ' + token,
             'Accept': 'application/json',
             'Content-Type': 'application/json; charset=UTF-8',
@@ -134,6 +170,7 @@ setTimeout(function getEHR() {
     })
     return subjectUid;
 }, 1500)
+
 
 
 fetch("/patients").then(
@@ -176,35 +213,12 @@ fetch("/patients").then(
         }
     })
 
-function getEHRBySubjectID() {
-    subjectUid = document.getElementById("uid").value;
-    fetch('http://localhost:8090/rest/v1/ehrs/subjectUid/' + subjectUid, {
-        method: 'GET',
-        headers: {
-            'Origin': 'http://localhost:8070/main_doctor',
-            Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
-        },
-    })
-        .then(res=>{
-            res.json().then(
-                data => {
-                    console.log(data);
-                    uid = data.uid;
-                    console.log(uid);
-                }
-            )
-        })
 
-
-    return uid;
-}
 function uuid() {
     var time = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var random = (tima + Math.random()*16)%16|0;
-        tima = Math.floor(time/16);
+        var random = (time + Math.random()*16)%16|0;
+        time = Math.floor(time/16);
         return(c=='x' ? random:(random&0x3|0x8)).toString(16);
     });
     return uuid;
@@ -212,26 +226,41 @@ function uuid() {
 
 
 function queryData() {
-    getEHRBySubjectID();
+    let patientsuid = uid;
 
         let format = "json";
 
-        let current_doctor = document.getElementById("doctorsData").value;
+        let current_doctor = document.getElementById('doctorsData').textContent;
+        let name = current_doctor.split(" ").at(1);
+        let surname = current_doctor.split(" ").at(2);
         let time_commited = new Date().toISOString().slice(0, 10)+"T"+ new Date().toLocaleTimeString();
-        let bmi = document.getElementById("bmi").value;
-        let lmp = document.getElementById("lmp").value;
-        let lastUpdated = document.getElementById("lastUpdated").value;
-        let description = document.getElementById("description").value;
-        let contraception = document.getElementById("contraception").value;
-        let contraceptionType = document.getElementById("contraceptionType").value;
-        let status = document.getElementById("status").value;
-        let dateContraception = document.getElementById("dateContraception").value;
-        let dateLast = document.getElementById("dateLast").value;
+        let weight = document.getElementById('weight').value;
+        let height = document.getElementById('height').value;
+        let lastUpdated = document.getElementById('lastUpdated').value;
+        let lmp = document.getElementById('lmp').value;
+        let description = document.getElementById('description').value;
+        let contraception = document.getElementById('contraception').value;
+        let contraceptionType = document.getElementById('contraceptionType').value;
+        let status = document.getElementById('status').value;
+        let dateContraception = document.getElementById('dateContraception').value;
+        let dateLast = document.getElementById('dateLast').value;
 
-        fetch('http://localhost:8090/rest/v1/ehrs/' + '6f53e00b-c38a-4a11-9334-36c454bec667' + '/compositions?auditCommitter=Gregory%20House,%20MD', {
+        weight = parseFloat(weight);
+        height = parseFloat(height);
+        height = height.toFixed(2);
+        weight = weight.toFixed(2);
+        let bmi_h = 0;
+        bmi_h = height**2;
+        bmi_h = bmi_h.toFixed(2);
+        let bmi = weight/bmi_h;
+
+        bmi = bmi.toFixed(2);
+
+
+        fetch('http://localhost:8090/rest/v1/ehrs/' + patientsuid + '/compositions?auditCommitter=' + name + '%20' + surname, {
             method: 'POST',
             headers: {
-                'Origin': 'http://localhost:8070/main_doctor',
+                'Origin': 'http://localhost:8070/doctor/doctor_patients',
                 Authorization: 'Bearer ' + token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -245,7 +274,7 @@ function queryData() {
                         "contribution": {
                             "id": {
                                 "@xsi:type": "HIER_OBJECT_ID",
-                                "value": "6f53e00b-c48a-4a11-9334-36c454bec667"
+                                "value": uuid()
                             },
                             "namespace": "EHR::COMMON",
                             "type": "CONTRIBUTION"
@@ -254,7 +283,7 @@ function queryData() {
                             "system_id": "CABOLABS_EHR",
                             "committer": {
                                 "@xsi:type": "PARTY_IDENTIFIED",
-                                "name": current_doctor
+                                "name": "current_doctor"
                             },
                             "time_committed": {
                                 "value": time_commited
@@ -268,12 +297,12 @@ function queryData() {
                                     "code_string": 249
                                 }
                             }
-                        },
+                            },
                         "data": {
                             "@xsi:type": "COMPOSITION",
                             "@archetype_node_id": "openEHR-EHR-COMPOSITION.health_summary.v1",
                             "name": {
-                                "value": "Gynecological appointment"
+                                "value": "Gynecology appointment"
                             },
                             "uid": {
                                 "@xsi:type": "HIER_OBJECT_ID",
@@ -308,7 +337,7 @@ function queryData() {
                                     },
                                     "code_string": 433
                                 }
-                            },
+                                },
                             "composer": {
                                 "@xsi:type": "PARTY_IDENTIFIED",
                                 "name": current_doctor
@@ -326,7 +355,8 @@ function queryData() {
                                         "code_string": 227
                                     }
                                 }
-                            },
+
+                                },
                             "content": [{
                                 "@xsi:type" : "OBSERVATION",
                                 "@archetype_node_id" : "openEHR-EHR-OBSERVATION.body_mass_index.v2",
@@ -356,7 +386,7 @@ function queryData() {
                                     },
                                     "origin" : {
                                         "@xsi:type" : "DV_DATE_TIME",
-                                        "value" : "20220812T211200,115-0300"
+                                        "value" : time_commited
                                     },
                                     "events" : {
                                         "@xsi:type" : "POINT_EVENT",
@@ -366,7 +396,7 @@ function queryData() {
                                         },
                                         "time" : {
                                             "@xsi:type" : "DV_DATE_TIME",
-                                            "value" : "20220812T211200,117-0300"
+                                            "value" : time_commited
                                         },
                                         "data" : {
                                             "@xsi:type" : "ITEM_TREE",
@@ -390,7 +420,8 @@ function queryData() {
                                         }
                                     }
                                 }
-                            },
+
+                                },
                                 {
                                     "@xsi:type" : "EVALUATION",
                                     "@archetype_node_id" : "openEHR-EHR-EVALUATION.last_menstrual_period.v1",
@@ -450,7 +481,7 @@ function queryData() {
                                                 "@xsi:type" : "DV_DATE",
                                                 "value": lmp
                                             }
-                                        },
+                                            },
                                             {
                                                 "@xsi:type" : "ELEMENT",
                                                 "@archetype_node_id" : "at0007",
@@ -463,9 +494,9 @@ function queryData() {
                                                     "value": description
                                                 }
                                             }
-                                        ]
+                                            ]
                                     }
-                                },
+                                    },
                                 {
                                     "@xsi:type": "EVALUATION",
                                     "@archetype_node_id" : "openEHR-EHR-EVALUATION.contraceptive_summary.v1",
@@ -512,7 +543,7 @@ function queryData() {
                                                     "code_string":"at0003"
                                                 }
                                             }
-                                        },
+                                            },
                                             {
                                                 "@xsi:type": "CLUSTER",
                                                 "@archetype_node_id":"at0029",
@@ -528,7 +559,6 @@ function queryData() {
                                                         "value": "The type of contraception used by the individual."
                                                     },
                                                     "value": [{
-
                                                         "@xsi:type": "DV_CODED_TEXT",
                                                         "value":contraceptionType,
                                                         "defining_code":{
@@ -537,7 +567,8 @@ function queryData() {
                                                             },
                                                             "code_string":"at0155"
                                                         }
-                                                    }]
+                                                    }
+                                                    ]
                                                 },
                                                     {
                                                         "@xsi:type": "ELEMENT",
@@ -556,7 +587,7 @@ function queryData() {
                                                                 "code_string":"at0145"
                                                             }
                                                         }
-                                                    },
+                                                        },
                                                     {
                                                         "@xsi:type": "ELEMENT",
                                                         "@archetype_node_id": "at0148",
@@ -568,7 +599,7 @@ function queryData() {
                                                             "@xsi:type": "DV_DATE_TIME",
                                                             "value": dateContraception
                                                         }
-                                                    },
+                                                        },
                                                     {
                                                         "@xsi:type": "ELEMENT",
                                                         "@archetype_node_id": "at0149",
@@ -582,11 +613,14 @@ function queryData() {
                                                         }
 
                                                     }
-                                                ]
+                                                    ]
+
                                             }]
+
                                     }
                                 }
-                            ]
+                                ]
+
                         },
                         "lifecycle_state": {
                             "value": "complete",
@@ -608,7 +642,7 @@ function queryData() {
                     res.json().then(
                         data => {
                             console.log(data);
-                            location.reload();
+
                         }
                     ).catch(err => console.log(err))
                 }
