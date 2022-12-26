@@ -3,12 +3,14 @@ package praca.SpringApplication.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import praca.SpringApplication.address.Address;
 import praca.SpringApplication.address.AddressRepository;
 
 import java.security.Principal;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -43,6 +45,10 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, path = "/admin/admin_users/adduser")
     //@PostMapping("/users")
     public void add(@RequestBody User user) {
+        String password = user.getPassword();
+        int strength = 10;
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(strength, new SecureRandom());
+        user.setPassword(bCryptPasswordEncoder.encode(password));
         customUserDetailsService.save(user);
 
     }
@@ -63,15 +69,31 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/updatePassword")
-    public String changeUserPassword(@RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass, Principal principal) {
+    public ResponseEntity<?> changeUserPassword(@RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass, Principal principal) throws Exception {
+        List<User> users = userRepository.findAll();
         String username = principal.getName();
-        User currentUser = (User) customUserDetailsService.loadUserByUsername(username);
+        UserDetails currentUser = customUserDetailsService.loadUserByUsername(username);
+        System.out.println(currentUser.getPassword());
+
+        int strength = 10;
+        BCryptPasswordEncoder bCryptPasswordEncoder2 = new BCryptPasswordEncoder(strength, new SecureRandom());
+
 
         if(bCryptPasswordEncoder.matches(oldPass, currentUser.getPassword())) {
-            currentUser.setPassword(bCryptPasswordEncoder.encode(newPass));
-            customUserDetailsService.save(currentUser);
+            System.out.println("matches");
+            for(int i = 0; i<users.size(); i++) {
+                if(users.get(i).getUsername().equals(currentUser.getUsername())) {
+                    users.get(i).setPassword(bCryptPasswordEncoder2.encode(newPass));
+                    customUserDetailsService.update(users.get(i));
+                }
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return "redirect:/";
+        else
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

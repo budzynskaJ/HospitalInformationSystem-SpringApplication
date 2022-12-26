@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import praca.SpringApplication.address.Address;
 import praca.SpringApplication.address.AddressRepository;
-import praca.SpringApplication.patient.Patient;
 
 import java.util.List;
 
@@ -19,6 +18,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,6 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public List<User> listAll() {
         return userRepository.findAll();
     }
+
 
     public void save(User user) {
         User userexists = userRepository.findByUsername(user.getUsername());

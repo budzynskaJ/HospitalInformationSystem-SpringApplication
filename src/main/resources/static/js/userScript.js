@@ -9,8 +9,6 @@ function showUser() {
         var user = $(this).parents('tr')[0].cells[4].textContent;
         var email = $(this).parents('tr')[0].cells[5].textContent;
         var role = $(this).parents('tr')[0].cells[6].textContent;
-        var street = str;
-        var house_number = hn;
 
 
         $('#idu').val(rowu);

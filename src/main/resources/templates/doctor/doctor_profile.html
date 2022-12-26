@@ -143,6 +143,9 @@
     .sidebar ul li a{
         color: #191919;
     }
+    #first{
+        color: rgba(24,31,151,0.93);
+    }
 
     .sidebar ul li a span{
         height: 35px;
@@ -281,7 +284,7 @@
         <header>
             <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
             <br><br>
-            <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+            <b id="first" style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
     </div>
     <br>
@@ -351,7 +354,7 @@
                     <h3 class="text-right" style="font-weight: bold">Password change</h3>
                 </div>
                 <div class="card">
-                    <div class="card-body" style="height: 330px !important;">
+                    <div class="card-body" style=" max-height: 400px; height: 370px !important;">
                         <form class="needs-validation" novalidate>
                             <div class="form-group">
                             <tbody>
@@ -361,6 +364,9 @@
                                 </tr>
                                 <div class="invalid-feedback">
                                     Please fill in this field.
+                                </div>
+                                <div>
+                                    <span id="message0" style="color: red"> </span>
                                 </div>
                                 <br>
                                 <tr>
@@ -378,11 +384,14 @@
                                 <div class="invalid-feedback">
                                     Please fill in this field.
                                 </div>
+                                <div>
+                                    <span id="message" style="color: red"> </span>
+                                </div>
                                 <br>
                                 <tr>
                                     <td>
                                         <button type="button" class="btn btn-primary" id="savebtn" onclick="password()"
-                                        style="position: absolute; right: 30px">Save</button>
+                                        style="position: absolute; bottom: 20px; right: 30px">Save</button>
                                     </td>
                                 </tr>
                             </tbody>

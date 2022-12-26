@@ -303,24 +303,31 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <span id="editprofile" class="material-symbols-rounded" onclick="editMe()">edit</span>
+                        <span type="button" data-toggle="modal" data-target="#editMe" onclick="showModal()" id="editprofile" class="material-symbols-rounded" >edit</span>
                         <table>
                             <tbody>
                             <tr>
                                 <td class="title">First name: </td>
-                                <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
+                                <td id="myname">[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
+                                <td style="font-weight: bold">Address</td>
                             </tr>
                             <tr>
                                 <td class="title">Middle name:</td>
                                 <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.street}]]
+                                [[${#httpServletRequest.userPrincipal.principal.address.house_number}]]/
+                                [[${#httpServletRequest.userPrincipal.principal.address.apartment_number}]]</td>
                             </tr>
                             <tr>
                                 <td class="title">Surname:</td>
                                 <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.postcode}]]
+                                [[${#httpServletRequest.userPrincipal.principal.address.city}]]</td>
                             </tr>
                             <tr>
                                 <td class="title">Username:</td>
                                 <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.country}]]</td>
                             </tr>
                             <tr>
                                 <td class="title">E-mail:</td>
@@ -338,7 +345,7 @@
                     <h3 class="text-right" style="font-weight: bold">Password change</h3>
                 </div>
                 <div class="card">
-                    <div class="card-body" style="height: 330px !important;">
+                    <div class="card-body" style="max-height: 400px; height: 370px !important;">
                         <form class="needs-validation" novalidate>
                             <div class="form-group">
                                 <tbody>
@@ -348,6 +355,9 @@
                                 </tr>
                                 <div class="invalid-feedback">
                                     Please fill in this field.
+                                </div>
+                                <div>
+                                    <span id="message0" style="color: red"> </span>
                                 </div>
                                 <br>
                                 <tr>
@@ -365,11 +375,14 @@
                                 <div class="invalid-feedback">
                                     Please fill in this field.
                                 </div>
+                                <div>
+                                    <span id="message" style="color: red"> </span>
+                                </div>
                                 <br>
                                 <tr>
                                     <td>
                                         <button type="button" class="btn btn-primary" id="savebtn" onclick="password()"
-                                        style="position: absolute; right: 30px">
+                                        style="position: absolute; bottom: 20px; right: 30px">
                                             Save</button>
                                     </td>
                                 </tr>
@@ -383,6 +396,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -394,6 +408,7 @@
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script th:src="@{/js/adminProfileScript.js}"></script>
 
 
 <script>
@@ -430,6 +445,7 @@
         }, false);
     })();
 </script>
+
 
 
 </body>
