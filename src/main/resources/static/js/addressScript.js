@@ -88,11 +88,27 @@ function newAddress() {
     })
         .catch(error => {
           if(error.message == "This address already exists!") {
-              alert(error.message);
-              location.reload();
+              Swal.fire({
+                  title: 'This address already exists!',
+                  icon: 'error',
+                  showConfirmButton: false,
+                  showCloseButton: false,
+                  timer: 1500,
+              })
+              setTimeout(function(){
+                  window.location.reload();
+              }, 1600);
           } else {
-              alert("Address successfully added!");
-              location.reload();
+              Swal.fire({
+                  title: 'Address has been successfully added!',
+                  icon: 'success',
+                  showConfirmButton: false,
+                  showCloseButton: false,
+                  timer: 1500,
+              })
+              setTimeout(function(){
+                  window.location.reload();
+              }, 1600);
           }
         });
 
@@ -150,16 +166,40 @@ fetch("/admin/admin_addresses/addresses").then(
                     });
                     $('.address-table').on('click', '#deleteA', function (g) {
                         g.preventDefault();
-                        var result = confirm("Are you sure you want to delete this address?");//sprawdzić
-                        if(result) {
+                        Swal.fire({
+                            title: 'Are you sure you want to delete this address?',
+                            icon: 'warning',
+                            showCloseButton: true,
+                            showDenyButton: true,
+                            confirmButtonText: "Yes",
+                            denyButtonText: "No",
+                            confirmButtonColor: "#2AB32A",
+                            denyButtonColor: "#d33",
+                            reverseButtons: true,
+                        }).then((result) => {
+                            if(result.isConfirmed) {
+                                fetch("/admin/admin_addresses/address" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                                    method: 'delete',
 
-                            fetch("/admin/admin_addresses/address" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
-                                method: 'delete',
+                                }).then((response) => {
+                                    if(response.ok) {
+                                        Swal.fire({
+                                            title: 'Address has been successfully deleted!',
+                                            icon: 'success',
+                                            showConfirmButton: false,
+                                            showCloseButton: false,
+                                            timer: 1500,
+                                        })
+                                        setTimeout(function(){
+                                            window.location.reload();
+                                        }, 1600);
+                                    } else if (result.isDenied) {
 
-                            }).then(() => {
-                                $(this).closest('tr').remove();
-                            })
-                        }
+                                    }
+                                })
+                            }
+                        })
+
                     } );
                 });
             }

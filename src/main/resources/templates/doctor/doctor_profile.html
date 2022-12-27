@@ -295,12 +295,6 @@
                 Patient list
             </a>
         </li>
-        <li class="list" id="assignment">
-            <a href="#" class="active" data-toggle='modal' data-target="#whichPatient" onclick="show()">
-                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >assignment_add</span>
-                Create a new appointment
-            </a>
-        </li>
     </ul>
 
 </div>
@@ -409,6 +403,7 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/doctorProfileScript.js}"></script>
 
@@ -416,20 +411,12 @@
 <script>
     let list = document.querySelectorAll('.list');
     for(let i = 0; i<list.length; i++){
-        list[i].onclick = function (){
+        list[i].onclick = function () {
             let j = 0;
-            while(j<list.length){
+            while (j < list.length) {
                 list[j++].className = 'list';
             }
             list[i].className = 'list active';
-
-            if(list[i] === document.querySelector('#assignment')) {
-                document.querySelector('#assignment-page').style.display = "block";
-                document.querySelector('#profile-page').style.display = "none";
-            } else if (list[i] === document.querySelector('#history')) {
-                //document.querySelector('').style.display = "none";
-                //document.querySelector('').style.display = "block";
-            }
         }
     };
 

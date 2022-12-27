@@ -55,9 +55,18 @@ function editData() {
         surname: document.getElementById('surname').value,
         birth_date: document.getElementById('birthdate').value,
         pesel: document.getElementById('pesel').value,
-        sex: document.getElementById('sex').value,
+        sex: document.querySelector("input[name=newsex]:checked").value,
         phone_number: document.getElementById('phonenumber').value,
         uid: document.getElementById('uid').value,
+        address: {
+            address_ID: null,
+            street: document.getElementById("street").value,
+            house_number: document.getElementById("housenumber").value,
+            apartment_number: document.getElementById("apartmentnumber").value,
+            postcode: document.getElementById("postcode").value,
+            city: document.getElementById("city").value,
+            country: document.getElementById("country").value,
+        }
     };
     console.log(Patient_data);
 
@@ -159,11 +168,27 @@ function newData() {
         return response.json();
     }).catch(error => {
         if(error.message == "This patient already exists!") {
-            alert(error.message);
-            location.reload();
+            Swal.fire({
+                title: 'This patient already exists!',
+                icon: 'error',
+                showConfirmButton: false,
+                showCloseButton: false,
+                timer: 1500,
+            })
+            setTimeout(function(){
+                window.location.reload();
+            }, 1600);
         }else {
-            alert("Patient successfully added!");
-            location.reload();
+            Swal.fire({
+                title: 'Patient has been successfully added!',
+                icon: 'success',
+                showConfirmButton: false,
+                showCloseButton: false,
+                timer: 1500,
+            })
+            setTimeout(function(){
+                window.location.reload();
+            }, 1600);
         }
     });
 
@@ -231,16 +256,41 @@ fetch("/patients").then(
 
                         $('.patient-table').on('click', '#delete', function (e) {
                             e.preventDefault();
-                            var result = confirm("Are you sure you want to delete this Patient?");
-                            if(result) {
+                            Swal.fire({
+                                title: 'Are you sure you want to delete this Patient?',
+                                icon: 'warning',
+                                showCloseButton: true,
+                                showDenyButton: true,
+                                confirmButtonText: "Yes",
+                                denyButtonText: "No",
+                                confirmButtonColor: "#2AB32A",
+                                denyButtonColor: "#d33",
+                                reverseButtons: true,
+                            }).then((result) => {
+                                if(result.isConfirmed) {
+                                    fetch("/patient" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                                        method: 'delete',
 
-                                $(this).closest('tr').remove();
-                                fetch("/patient" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
-                                    method: 'delete',
+                                    }).then((response) => {
+                                        if(response.ok) {
+                                            Swal.fire({
+                                                title: 'Patient has been successfully deleted!',
+                                                icon: 'success',
+                                                showConfirmButton: false,
+                                                showCloseButton: false,
+                                                timer: 1500,
+                                            })
+                                            setTimeout(function(){
+                                                window.location.reload();
+                                            }, 1600);
 
-                                }).then(() => {
-                                })
-                            }
+                                        }
+                                    })
+                                } else if(result.isDenied) {
+
+                                }
+                            })
+
                         });
 
 

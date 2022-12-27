@@ -358,19 +358,22 @@
                                         <div class="invalid-feedback">
                                             First name is required.
                                         </div>
+                                        <br>
                                         <label>Middle name</label>
                                         <input type="text" class="form-control" id="middlenameu">
+                                        <br>
                                         <label for="surnameu">Surname</label>
                                         <input type="text" class="form-control" required="required" id="surnameu">
                                         <div class="invalid-feedback">
                                             Surname is required.
                                         </div>
-
-
+                                        <br>
                                         <label>Username</label>
-                                        <input type="text" class="form-control" required="required" id="username">
+                                        <input type="text" class="form-control" required="required" id="username" readonly="readonly">
+                                        <br>
                                         <label>E-mail</label>
-                                        <input type="email" class="form-control" required="required" id="email">
+                                        <input type="email" class="form-control" required="required" id="email" readonly="readonly">
+                                        <br>
                                         <label>Role</label>
                                         <input type="text" class="form-control" id="role" readonly="readonly">
                                     </div>
@@ -386,23 +389,28 @@
                                         <div class="invalid-feedback">
                                             Street is required.
                                         </div>
+                                        <br>
                                         <label for="housenumberu">House number</label>
                                         <input type="text" class="form-control" required="required" id="housenumberu">
                                         <div class="invalid-feedback">
                                             House number is required.
                                         </div>
+                                        <br>
                                         <label for="apartmentnumberu">Apartment number</label>
                                         <input type="text" class="form-control" id="apartmentnumberu">
+                                        <br>
                                         <label for="postcodeu">Postcode</label>
                                         <input type="text" class="form-control" required="required" id="postcodeu">
                                         <div class="invalid-feedback">
                                             Postcode is required.
                                         </div>
+                                        <br>
                                         <label for="cityu">City</label>
                                         <input type="text" class="form-control" required="required" id="cityu">
                                         <div class="invalid-feedback">
                                             City is required.
                                         </div>
+                                        <br>
                                         <label for="countryu">Country</label>
                                         <input type="text" class="form-control" required="required" id="countryu">
                                         <div class="invalid-feedback">
@@ -442,28 +450,34 @@
                                         <div class="invalid-feedback">
                                             First name is required.
                                         </div>
+                                        <br>
                                         <label>Middle name</label>
                                         <input type="text" class="form-control" id="newmiddlenameu">
+                                        <br>
                                         <label for="newsurnameu">Surname</label>
                                         <input type="text" class="form-control" required="required" id="newsurnameu">
                                         <div class="invalid-feedback">
                                             Surname is required.
                                         </div>
+                                        <br>
                                         <label for="newusername">Username</label>
                                         <input type="text" class="form-control" required="required" id="newusername">
                                         <div class="invalid-feedback">
                                             Username is required
                                         </div>
+                                        <br>
                                         <label for="newemail">E-mail</label>
                                         <input type="email" class="form-control" id="newemail">
                                         <div class="invalid-feedback">
                                             E-mail is required.
                                         </div>
+                                        <br>
                                         <label>Role</label>
                                         <select name = "newrole" id="newrole" class="form-control">
                                             <option value="ADMIN">ADMIN</option>
                                             <option value="USER">USER</option>
                                         </select>
+                                        <br>
                                         <label for="password">Password</label>
                                         <input type="text" class="form-control" required="required" id="password">
                                         <div class="invalid-feedback">
@@ -482,23 +496,28 @@
                                         <div class="invalid-feedback">
                                             Street is required.
                                         </div>
+                                        <br>
                                         <label for="newhousenumberu">House number</label>
                                         <input type="text" class="form-control" required="required" id="newhousenumberu">
                                         <div class="invalid-feedback">
                                             House number is required.
                                         </div>
+                                        <br>
                                         <label for="newapartmentnumberu">Apartment number</label>
                                         <input type="text" class="form-control" id="newapartmentnumberu">
+                                        <br>
                                         <label for="newpostcodeu">Postcode</label>
                                         <input type="text" class="form-control" required="required" id="newpostcodeu">
                                         <div class="invalid-feedback">
                                             Postcode is required.
                                         </div>
+                                        <br>
                                         <label for="newcityu">City</label>
                                         <input type="text" class="form-control" required="required" id="newcityu">
                                         <div class="invalid-feedback">
                                             City is required.
                                         </div>
+                                        <br>
                                         <label for="newcountryu">Country</label>
                                         <input type="text" class="form-control" required="required" id="newcountryu">
                                         <div class="invalid-feedback">
@@ -524,12 +543,13 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/userScript.js}"></script>
 
 

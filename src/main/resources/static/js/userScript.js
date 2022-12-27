@@ -18,8 +18,7 @@ function showUser() {
         $('#username').val(user);
         $('#email').val(email);
         $('#role').val(role);
-        $('#streetu').val(street);
-        $('#housenumberu').val(house_number);
+
 
 
         jQuery.noConflict();
@@ -39,7 +38,7 @@ async function editUser() {
         email: document.getElementById('email').value,
         role: document.getElementById('role').value,
         address: {
-            id: document.getElementById("addressidu").value,
+            id: null,
             street: document.getElementById("streetu").value,
             house_number: document.getElementById("housenumberu").value,
             apartment_number: document.getElementById("apartmentnumberu").value,
@@ -108,11 +107,28 @@ function newUser() {
     })
     .catch(error => {
         if(error.message == "User with this username already exists!") {
-            alert(error.message);
-            location.reload();
+            Swal.fire({
+                title: 'User with this username already exists!',
+                html: "You cannot add user with this username",
+                icon: 'error',
+                showConfirmButton: false,
+                showCloseButton: false,
+                timer: 1500,
+            })
+            setTimeout(function(){
+                window.location.reload();
+            }, 1600);
         } else {
-            alert("User successfully added!");
-            location.reload();
+            Swal.fire({
+                title: 'User has been successfully added!',
+                icon: 'success',
+                showConfirmButton: false,
+                showCloseButton: false,
+                timer: 1500,
+            })
+            setTimeout(function(){
+                window.location.reload();
+            }, 1600);
         }
         }
     );
@@ -174,16 +190,39 @@ fetch("/admin/admin_users/users").then(
                     });
                     $('.user-table').on('click', '#deleteU', function (g) {
                         g.preventDefault();
-                        var result = confirm("Are you sure you want to delete this User?");//sprawdzić
-                        if(result) {
+                        Swal.fire({
+                            title: 'Are you sure you want to delete this User?',
+                            icon: 'warning',
+                            showCloseButton: true,
+                            showDenyButton: true,
+                            confirmButtonText: "Yes",
+                            denyButtonText: "No",
+                            confirmButtonColor: "#2AB32A",
+                            denyButtonColor: "#d33",
+                            reverseButtons: true,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                fetch("/admin/admin_users/user" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
+                                    method: 'delete',
 
-                            $(this).closest('tr').remove();
-                            fetch("/admin/admin_users/user" + '/' + $(this).closest('tr')[0].firstChild.textContent, {
-                                method: 'delete',
+                                }).then(response => {
+                                    if(response.ok) {
+                                        Swal.fire({
+                                            title: 'User has been successfully deleted!',
+                                            icon: 'success',
+                                            showConfirmButton: false,
+                                            showCloseButton: false,
+                                            timer: 1500,
+                                        })
+                                        setTimeout(function(){
+                                            window.location.reload();
+                                        }, 1600);
+                                    }
+                                })
+                            } else if (result.isDenied) {
 
-                            }).then(() => {
-                            })
-                        }
+                            }
+                        })
                     } );
                 });
             }

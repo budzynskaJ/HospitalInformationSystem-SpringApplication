@@ -288,13 +288,6 @@
                 Patient list
             </a>
         </li>
-        <li class="list" id="assignment">
-            <a href="#" class="active" data-toggle='modal' data-target="#whichPatient" onclick="show()">
-                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >assignment_add</span>
-                Create a new appointment
-            </a>
-        </li>
-
     </ul>
 
 </div>
@@ -303,38 +296,7 @@
     <div class="row">
 
 
-        <div class="col mb-3" id="assignment-page" style="display: none">
-            <div id="data">
-                <div class="modal fade" id="whichPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="selectPatientLabel">Select patient</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="needs-validation" novalidate>
-                                    <div class="form-group">
-                                        <label>Give patient's uid: </label>
-                                        <input type="text" class="form-controll" required="required" id="uid">
-                                        <div class="invalid-feedback">
-                                            Patient's uid is required.
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-promary" style="font-weight: bold" id="select" onclick="newEHR()" data-dismiss="modal">Select</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-
-        </div>
     </div>
 </div>
 
@@ -343,46 +305,30 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/doctorScript.js}"></script>
 
 
 <script>
     let list = document.querySelectorAll('.list');
     for(let i = 0; i<list.length; i++){
-        list[i].onclick = function (){
+        list[i].onclick = function () {
             let j = 0;
-            while(j<list.length){
+            while (j < list.length) {
                 list[j++].className = 'list';
             }
             list[i].className = 'list active';
-
-            if(list[i] === document.querySelector('#patient-list')) {
-                document.querySelector('#patient-page').style.display = "block";
-                document.querySelector('#assignment-page').style.display = "none";
-                document.querySelector('#profile-page').style.display = "none";
-            }else if(list[i] === document.querySelector('#assignment')) {
-                document.querySelector('#patient-page').style.display = "none";
-                document.querySelector('#assignment-page').style.display = "block";
-                document.querySelector('#profile-page').style.display = "none";
-            } else if (list[i] === document.querySelector('#history')) {
-                //document.querySelector('').style.display = "none";
-                //document.querySelector('').style.display = "block";
-            }
         }
+
     };
 
-    function first(){
-        document.querySelector('#profile-page').style.display="block";
-        document.querySelector('#assignment-page').style.display="none";
-        //document.querySelector('#history').style.display="none";
-        //document.querySelector('#appointment-page').style.display="none";
-    }
+
 </script>
 
 <script>

@@ -50,6 +50,20 @@ public class PatientService {
         patientRepository.save(patient);
     }
     public void update(Patient patient) {
+        List<Patient> patients = patientRepository.findAll();
+        List<Address> addresses = addressRepository.findAll();
+        if (patient.getAddress().getAddress_ID() == null) {
+            for(int j = 0; j<addresses.size(); j++) {
+                if(patient.getAddress().getStreet().equals(addresses.get(j).getStreet()) &&
+                     patient.getAddress().getHouse_number().equals(addresses.get(j).getHouse_number()) &&
+                     patient.getAddress().getApartment_number().equals(addresses.get(j).getApartment_number()) &&
+                     patient.getAddress().getPostcode().equals(addresses.get(j).getPostcode())) {
+
+                    patient.getAddress().setAddress_ID(addresses.get(j).getAddress_ID());
+                }
+            }
+        }
+        addressRepository.save(patient.getAddress());
         patientRepository.save(patient);
     }
 

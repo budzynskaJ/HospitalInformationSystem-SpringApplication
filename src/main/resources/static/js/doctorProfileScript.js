@@ -25,8 +25,13 @@ function password() {
                     if (!res.ok) {
                         document.getElementById("message0").innerHTML = "Password does not match current user password!"
                     } else {
-                        alert("Password successfully changed!");
-                        location.reload();
+                        Swal.fire({
+                            title: 'Password has been successfully changed!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            showCloseButton: false,
+                            timer: 1500,
+                        })
                     }
                     return res.json();
 

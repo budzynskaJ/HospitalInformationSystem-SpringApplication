@@ -336,7 +336,7 @@
       </tbody>
     </table>
     <div class="modal fade" id="editPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg modal-80p" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="editPatientLabel">Edit Patient</h5>
@@ -346,50 +346,96 @@
           </div>
           <div class="modal-body">
             <form class="needs-validation" novalidate>
-              <div class="form-group">
-                <label>ID</label>
-                <input type="text" name="name_id" class="form-control" id="idp" readonly="readonly">
-                <br>
-                <label for="fn">First name</label>
-                <input type="text" class="form-control" required="required" id="fn">
-                <div class="invalid-feedback">
-                  First name is required.
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <p class="lead">Demographic data</p>
+                      <label>ID</label>
+                      <input type="text" name="name_id" class="form-control" id="idp" readonly="readonly">
+                      <br>
+                      <label for="fn">First name</label>
+                      <input type="text" class="form-control" required="required" id="fn">
+                      <div class="invalid-feedback">
+                        First name is required.
+                      </div>
+                      <br>
+                      <label>Middle name</label>
+                      <input type="text" class="form-control" id="middlename">
+                      <br>
+                      <label for="surname">Surname</label>
+                      <input type="text" class="form-control" required="required" id="surname">
+                      <div class="invalid-feedback">
+                        Surname is required.
+                      </div>
+                      <br>
+                      <label for="birthdate">Birth date</label>
+                      <input type="date" class="form-control" required="required" id="birthdate" readonly="readonly">
+                      <div class="invalid-feedback">
+                        Birth date is required.
+                      </div>
+                      <br>
+                      <label>PESEL</label>
+                      <input type="text" class="form-control" id="pesel" readonly= "readonly"; pattern=".{0}|.{11}" title="incorrect PESEL length">
+                      <br>
+                      <label>Sex</label>
+                      <br>
+                      <form id="sex">
+                        <label><input type="radio" name="sex" value="F" checked> Female</label>
+                        <br>
+                        <label><input type="radio" name="sex" value="M"> Male</label>
+                      </form>
+                      <br>
+                      <label for="phonenumber">Phone number</label>
+                      <input type="text" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                      <div class="invalid-feedback">
+                        Phone number is required.
+                      </div>
+                      <br>
+                      <label>UID</label>
+                      <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
+                    </div>
+                  </div>
                 </div>
-                <br>
-                <label>Middle name</label>
-                <input type="text" class="form-control" id="middlename">
-                <br>
-                <label for="surname">Surname</label>
-                <input type="text" class="form-control" required="required" id="surname">
-                <div class="invalid-feedback">
-                  Surname is required.
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <p class="lead">Address</p>
+                      <label for="street">Street</label>
+                      <input type="text" class="form-control" required="required" id="street">
+                      <div class="invalid-feedback">
+                        Street is required.
+                      </div>
+                      <br>
+                      <label for="housenumber">House number</label>
+                      <input type="text" class="form-control" required="required" id="housenumber">
+                      <div class="invalid-feedback">
+                        House number is required.
+                      </div>
+                      <br>
+                      <label for="apartmentnumber">Apartment number</label>
+                      <input type="text" class="form-control" id="apartmentnumber">
+                      <br>
+                      <label for="postcode">Postcode</label>
+                      <input type="text" class="form-control" required="required" id="postcode">
+                      <div class="invalid-feedback">
+                        Postcode is required.
+                      </div>
+                      <br>
+                      <label for="city">City</label>
+                      <input type="text" class="form-control" required="required" id="city">
+                      <div class="invalid-feedback">
+                        City is required.
+                      </div>
+                      <br>
+                      <label for="country">Country</label>
+                      <input type="text" class="form-control" required="required" id="country">
+                      <div class="invalid-feedback">
+                        Country is required.
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <br>
-                <label for="birthdate">Birth date</label>
-                <input type="date" class="form-control" required="required" id="birthdate">
-                <div class="invalid-feedback">
-                  Birth date is required.
-                </div>
-                <br>
-                <label>PESEL</label>
-                <input type="text" class="form-control" id="pesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
-                <br>
-                <label>Sex</label>
-                <br>
-                <form id="sex">
-                  <label><input type="radio" name="sex" value="F" checked> Female</label>
-                  <br>
-                  <label><input type="radio" name="sex" value="M"> Male</label>
-                </form>
-                <br>
-                <label for="phonenumber">Phone number</label>
-                <input type="text" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
-                <div class="invalid-feedback">
-                  Phone number is required.
-                </div>
-                <br>
-                <label>UID</label>
-                <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
@@ -472,23 +518,28 @@
                     <div class="invalid-feedback">
                       Street is required.
                     </div>
+                    <br>
                     <label for="newhousenumber">House number</label>
                     <input type="text" class="form-control" required="required" id="newhousenumber">
                     <div class="invalid-feedback">
                       House number is required.
                     </div>
+                    <br>
                     <label for="newapartmentnumber">Apartment number</label>
                     <input type="text" class="form-control" id="newapartmentnumber">
+                    <br>
                     <label for="newpostcode">Postcode</label>
                     <input type="text" class="form-control" required="required" id="newpostcode">
                     <div class="invalid-feedback">
                       Postcode is required.
                     </div>
+                    <br>
                     <label for="newcity">City</label>
                     <input type="text" class="form-control" required="required" id="newcity">
                     <div class="invalid-feedback">
                       City is required.
                     </div>
+                    <br>
                     <label for="newcountry">Country</label>
                     <input type="text" class="form-control" required="required" id="newcountry">
                     <div class="invalid-feedback">
@@ -515,12 +566,13 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/patientScript.js}"></script>
 
 

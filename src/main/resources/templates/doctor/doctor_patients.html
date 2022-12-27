@@ -241,7 +241,12 @@
     }
 
     .modal-80p {
-        width:80%; /* 80% of page to provide space for labels */
+        width:80%;
+    }
+
+
+    #patient-info tr td:nth-child(1) {
+        font-weight: bold;
     }
 
 
@@ -297,12 +302,6 @@
                 Patient list
             </a>
         </li>
-        <li class="list" id="assignment">
-            <a href="#" class="active" data-toggle='modal' data-target="#whichPatient" onclick="show()">
-                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >assignment_add</span>
-                Create a new appointment
-            </a>
-        </li>
     </ul>
 
 </div>
@@ -339,56 +338,78 @@
                 </div>
                 <div class="modal-body">
                     <form class="needs-validation" novalidate>
-                        <div class="row">
+                        <div class="row" style="align-items:center; padding-left: 15px">
                             <div class="col-sm-11">
                                 <div class="form-group">
                                     <p class="lead">Patient</p>
-                                    <p id="name"></p>
-                                    <p id="age"></p>
+                                    <table id="patient-info" class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>Full name</td>
+                                            <td id="name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Birth date</td>
+                                            <td id="birth"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Age</td>
+                                            <td id="age"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <br>
                                 <div class="form-group">
                                     <p class="lead">Body mass index</p>
-                                    <label for="bmi">Body mass index</label>
-                                    <div class="input-group" style="width: 200px">
-                                        <input type="number" class="form-control" required="required" id="weight" min="0" max="1000" step="0.1">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">kg</span>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="weight">Weight</label>
+                                            <div class="input-group" style="width: 200px">
+                                                <input type="number" class="form-control" required="required" id="weight" min="0" max="1000" step="0.1">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">kg</span>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Weight is required.
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <label for="height">Height</label>
+                                            <div class="input-group" style="width: 200px">
+                                                <input type="number" class="form-control" required="required" id="height" min="0" max="2.30" step="0.01">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">m</span>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Height is required.
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="invalid-feedback">
-                                            Weight is required.
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="input-group" style="width: 200px">
-                                        <input type="number" class="form-control" required="required" id="height" min="0" max="2.30" step="0.01">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">m</span>
-                                        </div>
-                                        <div class="invalid-feedback">
-                                            Height is required.
-                                        </div>
-                                    </div>
-                                    <div class="input-group" style="width: 200px">
-                                        <input type="number" class="form-control" required="required" id="bmi" min="0" max="1000" step="0.1" readonly="readonly">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">kg/m<sup>2</sup></span>
+                                        <div class="col" style="align-items: center">
+                                            <label for="bmi">Body mass index</label>
+                                            <div class="input-group" style="width: 200px">
+                                                <input type="number" class="form-control" required="required" id="bmi" readonly="readonly">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">kg/m<sup>2</sup></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <br>
                                     <br>
                                     <br>
                                     <p class="lead">Last menstrual period</p>
-                                    <label for="lastUpdated">Date when the last menstrual period was updated</label>
+                                    <label for="lastUpdated">Date when the last menstrual period started</label>
                                     <input type="datetime-local" class="form-control" required="required" id="lastUpdated" style="width: 200px">
                                     <div class="invalid-feedback">
                                         Date when the last menstrual period was updated is required.
                                     </div>
                                     <br>
-                                    <label for="lmp">Date of onset</label>
+                                    <label for="lmp">Date of onset of menstrual bleeding</label>
+                                    <p style="font-size: 20px; color: grey">Useful to persist for calculations including estimated date of delivery in pregnancy, or to distinguish the latest
+                                    typical menstrual cycle when there is an irregular menstrual pattern.</p>
                                     <input type="date" class="form-control" required="required" id="lmp" style="width: 180px;">
-                                    <div class="invalid-feedback">
-                                        Date of onset is required.
-                                    </div>
                                     <br>
                                     <br>
                                     <label>Description</label>
@@ -468,14 +489,14 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/doctorScript.js}"></script>
-
 
 <script>
     let list = document.querySelectorAll('.list');
@@ -512,6 +533,7 @@
         }, false);
     })();
 </script>
+
 
 
 </body>

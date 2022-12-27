@@ -82,6 +82,15 @@ function newEHR(subjectUid) {
     })
         .then(
             res=>{
+                if(res.ok) {
+                    Swal.fire({
+                        title: 'EHR has been successfully created!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        showCloseButton: false,
+                        timer: 1500,
+                    })
+                }
                 res.json().then(
                     data => {
                         console.log(data);
@@ -109,7 +118,8 @@ function showinQuery() {
         let age = today - patient_birth_year;
 
         $('#name').text(patient_firstname + " " + patient_middlename + " " + patient_surname);
-        $('#age').text("Age: " + age);
+        $('#birth').text(patient_birthday);
+        $('#age').text(age);
 
         jQuery.noConflict();
         jQuery('#queryData').modal('show');
@@ -126,14 +136,33 @@ function showinQuery() {
         })
             .then(res => {
                 if (!res.ok) {
-                    let confirmation = confirm("EHR does not exists in EHR Server! Do you want to add?");
-                    if(confirmation) {
-                        newEHR(subjectUid);
-                    } else {
-                        alert("You can't query data for this patient!");
-                        jQuery('#queryData').modal('hide');
-                    }
-
+                    Swal.fire({
+                        title: 'EHR for this patient does not exist in the EHR Server!',
+                        icon: 'warning',
+                        html: 'Do you want to add this patient to the EHR Server?',
+                        showCloseButton: true,
+                        showDenyButton: true,
+                        confirmButtonText: "Yes",
+                        denyButtonText: "No",
+                        confirmButtonColor: "#2AB32A",
+                        denyButtonColor: "#d33",
+                        reverseButtons: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            newEHR(subjectUid);
+                        } else if (result.isDenied) {
+                            Swal.fire({
+                                title: 'You cannot query data for this patient!',
+                                icon: 'warning',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary',
+                                },
+                                buttonsStyling: false,
+                                showCloseButton: true,
+                            })
+                            jQuery('#queryData').modal('hide');
+                        }
+                    })
                 }
                 res.json().then(
                     data => {
@@ -455,7 +484,7 @@ function queryData() {
                                             "@archetype_node_id": "at0004",
                                             "name": {
                                                 "@xsi:type": "DV_TEXT",
-                                                "value": "Date when the last menstrual period was updated"
+                                                "value": "Date when the last menstrual period started"
                                             },
                                             "value": {
                                                 "@xsi:type": "DV_DATE_TIME",
@@ -475,7 +504,7 @@ function queryData() {
                                             "@archetype_node_id" : "at0002",
                                             "name" : {
                                                 "@xsi:type" : "DV_TEXT",
-                                                "value" : "Date of onset"
+                                                "value" : "Date of onset of menstrual bleeding"
                                             },
                                             "value" : {
                                                 "@xsi:type" : "DV_DATE",

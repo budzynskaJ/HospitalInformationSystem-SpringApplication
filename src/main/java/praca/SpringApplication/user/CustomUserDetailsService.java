@@ -59,6 +59,21 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRepository.save(user);
     }
     public void update(User user) {
+        User userexists = userRepository.findByUsername(user.getUsername());
+        List<Address> addresses = addressRepository.findAll();
+
+        if (user.getAddress().getAddress_ID()==null) {
+            for(int i = 0; i<addresses.size(); i++) {
+                if(user.getAddress().getStreet().equals(addresses.get(i).getStreet()) &&
+                     user.getAddress().getHouse_number().equals(addresses.get(i).getHouse_number()) &&
+                     user.getAddress().getApartment_number().equals(addresses.get(i).getApartment_number()) &&
+                     user.getAddress().getPostcode().equals(addresses.get(i).getPostcode())) {
+
+                    user.getAddress().setAddress_ID(addresses.get(i).getAddress_ID());
+                }
+            }
+        }
+        addressRepository.save(user.getAddress());
         userRepository.save(user);
     }
 
