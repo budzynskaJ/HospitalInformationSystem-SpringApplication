@@ -666,8 +666,22 @@ function queryData() {
 })
 
 
-        }) .then(
-                res => {
+        }) .then((res) => {
+            if(res.ok) {
+                Swal.fire({
+                    title: 'The data has been saved successfully!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    showCloseButton: false,
+                    timer: 1600,
+                })
+                setTimeout(function(){
+                    window.location.reload();},
+                    1700);
+                } else if (result.isDenied) {
+
+                }
+
                     res.json().then(
                         data => {
                             console.log(data);
