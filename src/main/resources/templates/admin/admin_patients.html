@@ -240,8 +240,8 @@
     text-align: center;
   }
 
-  .modal-80p {
-    width:80%; /* 80% of page to provide space for labels */
+  .modal-90p {
+    width:90%;
   }
 
 
@@ -336,7 +336,7 @@
       </tbody>
     </table>
     <div class="modal fade" id="editPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-80p" role="document">
+      <div class="modal-dialog modal-lg modal-90p" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="editPatientLabel">Edit Patient</h5>
@@ -370,7 +370,8 @@
                       </div>
                       <br>
                       <label for="birthdate">Birth date</label>
-                      <input type="date" class="form-control" required="required" id="birthdate" readonly="readonly">
+                      <input type="date" class="form-control" required="required" id="birthdate" readonly="readonly"
+                      style="width: 180px">
                       <div class="invalid-feedback">
                         Birth date is required.
                       </div>
@@ -407,29 +408,40 @@
                         Street is required.
                       </div>
                       <br>
-                      <label for="housenumber">House number</label>
-                      <input type="text" class="form-control" required="required" id="housenumber">
-                      <div class="invalid-feedback">
-                        House number is required.
+                      <div class="row">
+                        <div class="col">
+                          <br>
+                          <label for="housenumber">House number</label>
+                          <input type="text" class="form-control" required="required" id="housenumber" style="width: 120px">
+                          <div class="invalid-feedback">
+                            House number is required.
+                          </div>
+                        </div>
+                        <div class="col">
+                          <label for="apartmentnumber">Apartment number</label>
+                          <input type="text" class="form-control" id="apartmentnumber" style="width: 120px">
+                        </div>
                       </div>
                       <br>
-                      <label for="apartmentnumber">Apartment number</label>
-                      <input type="text" class="form-control" id="apartmentnumber">
-                      <br>
-                      <label for="postcode">Postcode</label>
-                      <input type="text" class="form-control" required="required" id="postcode">
-                      <div class="invalid-feedback">
-                        Postcode is required.
-                      </div>
-                      <br>
-                      <label for="city">City</label>
-                      <input type="text" class="form-control" required="required" id="city">
-                      <div class="invalid-feedback">
-                        City is required.
+                      <div class="row">
+                        <div class="col">
+                          <label for="city">City</label>
+                          <input type="text" class="form-control" required="required" id="city">
+                          <div class="invalid-feedback">
+                            City is required.
+                          </div>
+                        </div>
+                        <div class="col">
+                          <label for="postcode">Postcode</label>
+                          <input type="text" class="form-control" required="required" id="postcode" style="width: 120px">
+                          <div class="invalid-feedback">
+                            Postcode is required.
+                          </div>
+                        </div>
                       </div>
                       <br>
                       <label for="country">Country</label>
-                      <input type="text" class="form-control" required="required" id="country">
+                      <input type="text" class="form-control" required="required" id="country" style="width: 270px">
                       <div class="invalid-feedback">
                         Country is required.
                       </div>
@@ -447,7 +459,7 @@
     </div>
   </div>
   <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="New" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-80p" role="document">
+    <div class="modal-dialog modal-lg modal-90p" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addPatientLabel">Add new patient</h5>
@@ -519,29 +531,40 @@
                       Street is required.
                     </div>
                     <br>
-                    <label for="newhousenumber">House number</label>
-                    <input type="text" class="form-control" required="required" id="newhousenumber">
-                    <div class="invalid-feedback">
-                      House number is required.
+                    <div class="row">
+                      <div class="col">
+                        <br>
+                        <label for="newhousenumber">House number</label>
+                        <input type="text" class="form-control" required="required" id="newhousenumber" style="width: 120px;">
+                        <div class="invalid-feedback">
+                          House number is required.
+                        </div>
+                      </div>
+                      <div class="col">
+                        <label for="newapartmentnumber">Apartment number</label>
+                        <input type="text" class="form-control" id="newapartmentnumber" style="width: 120px">
+                      </div>
                     </div>
                     <br>
-                    <label for="newapartmentnumber">Apartment number</label>
-                    <input type="text" class="form-control" id="newapartmentnumber">
-                    <br>
-                    <label for="newpostcode">Postcode</label>
-                    <input type="text" class="form-control" required="required" id="newpostcode">
-                    <div class="invalid-feedback">
-                      Postcode is required.
-                    </div>
-                    <br>
-                    <label for="newcity">City</label>
-                    <input type="text" class="form-control" required="required" id="newcity">
-                    <div class="invalid-feedback">
-                      City is required.
+                    <div class="row">
+                      <div class="col">
+                        <label for="newcity">City</label>
+                        <input type="text" class="form-control" required="required" id="newcity">
+                        <div class="invalid-feedback">
+                          City is required.
+                        </div>
+                      </div>
+                      <div class="col">
+                        <label for="newpostcode">Postcode</label>
+                        <input type="text" class="form-control" required="required" id="newpostcode" style="width: 120px;">
+                        <div class="invalid-feedback">
+                          Postcode is required.
+                        </div>
+                      </div>
                     </div>
                     <br>
                     <label for="newcountry">Country</label>
-                    <input type="text" class="form-control" required="required" id="newcountry">
+                    <input type="text" class="form-control" required="required" id="newcountry" style="width: 270px;">
                     <div class="invalid-feedback">
                       Country is required.
                     </div>
