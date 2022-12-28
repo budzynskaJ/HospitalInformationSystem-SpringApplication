@@ -8,6 +8,7 @@ import praca.SpringApplication.address.AddressRepository;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientService {
@@ -62,6 +63,14 @@ public class PatientService {
                     patient.getAddress().setAddress_ID(addresses.get(j).getAddress_ID());
                 }
             }
+        } else if (patient.getAddress().getAddress_ID() != null) {
+            Optional<Address> address = addressRepository.findById(patient.getAddress().getAddress_ID());
+            patient.getAddress().setStreet(address.get().getStreet());
+            patient.getAddress().setHouse_number(address.get().getHouse_number());
+            patient.getAddress().setApartment_number(address.get().getApartment_number());
+            patient.getAddress().setPostcode(address.get().getPostcode());
+            patient.getAddress().setCity(address.get().getCity());
+            patient.getAddress().setCountry(address.get().getCountry());
         }
         addressRepository.save(patient.getAddress());
         patientRepository.save(patient);

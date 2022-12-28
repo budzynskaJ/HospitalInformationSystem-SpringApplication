@@ -48,41 +48,69 @@ $(document).ready(function (){
 })
 
 function editData() {
-    var Patient_data = {
-        Patient_ID: document.getElementById('idp').value,
-        firstname: document.getElementById('fn').value,
-        middlename: document.getElementById('middlename').value,
-        surname: document.getElementById('surname').value,
-        birth_date: document.getElementById('birthdate').value,
-        pesel: document.getElementById('pesel').value,
-        sex: document.querySelector("input[name=newsex]:checked").value,
-        phone_number: document.getElementById('phonenumber').value,
-        uid: document.getElementById('uid').value,
-        address: {
-            address_ID: null,
-            street: document.getElementById("street").value,
-            house_number: document.getElementById("housenumber").value,
-            apartment_number: document.getElementById("apartmentnumber").value,
-            postcode: document.getElementById("postcode").value,
-            city: document.getElementById("city").value,
-            country: document.getElementById("country").value,
+    if(document.getElementById("EditPatientForm").reportValidity() == true) {
+        var Patient_data = {
+            Patient_ID: document.getElementById('idp').value,
+            firstname: document.getElementById('fn').value,
+            middlename: document.getElementById('middlename').value,
+            surname: document.getElementById('surname').value,
+            birth_date: document.getElementById('birthdate').value,
+            pesel: document.getElementById('pesel').value,
+            sex: document.querySelector("input[name=newsex]:checked").value,
+            phone_number: document.getElementById('phonenumber').value,
+            uid: document.getElementById('uid').value,
+            address: {
+                address_ID: null,
+                street: document.getElementById("street").value,
+                house_number: document.getElementById("housenumber").value,
+                apartment_number: document.getElementById("apartmentnumber").value,
+                postcode: document.getElementById("postcode").value,
+                city: document.getElementById("city").value,
+                country: document.getElementById("country").value,
+            }
+        };
+        if(Patient_data.address.street === "" && Patient_data.address.house_number ==="" &&
+        Patient_data.address.apartment_number === "" && Patient_data.address.postcode === "" &&
+        Patient_data.address.city === "" && Patient_data.address.country === "") {
+            Patient_data.address.address_ID = document.getElementById('addressID').textContent;
         }
-    };
-    console.log(Patient_data);
+        console.log(Patient_data.address.address_ID);
+        console.log(Patient_data);
 
 
-    return fetch("/patients/" + document.getElementById('idp').value, {
-        method: 'put',
-        credentials: 'include',
-        headers:{
-            'content-type': "application/json",
-        },
-        mode: 'cors',
-        body: JSON.stringify(Patient_data),
-    }).then(response => response.json().then(() => {
+        return fetch("/patients/" + document.getElementById('idp').value, {
+            method: 'put',
+            credentials: 'include',
+            headers:{
+                'content-type': "application/json",
+            },
+            mode: 'cors',
+            body: JSON.stringify(Patient_data),
+        }).then(
+            res => {
+                if (res.ok) {
+                    Swal.fire({
+                        title: 'Data has been successfully updated!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        showCloseButton: false,
+                        timer: 1600,
+                    })
+                    setTimeout(function () {
+                            window.location.reload();
+                        },
+                        1700);
+                } else if (result.isDenied) {
 
-    }).catch(error => error));
 
+                }
+                res.json().then(
+
+                ).catch(err => console.log(err))
+            }
+        )
+
+    }
 };
 
 function uuid() {
@@ -126,71 +154,73 @@ function createehruid() {
 
 
 function newData() {
-
-    let newPatientData = {
-        Patient_ID: null,
-        firstname: document.getElementById('newfn').value,
-        middlename: document.getElementById('newmiddlename').value,
-        surname: document.getElementById('newsurname').value,
-        birth_date: document.getElementById('newbirthdate').value,
-        pesel: document.getElementById('newpesel').value,
-        sex: document.querySelector("input[name=newsex]:checked").value,
-        phone_number: document.getElementById('newphonenumber').value,
-        uid: document.getElementById("newuid").value,
-        address: {
-            address_ID: null,
-            street: document.getElementById("newstreet").value,
-            house_number: document.getElementById("newhousenumber").value,
-            apartment_number: document.getElementById("newapartmentnumber").value,
-            postcode: document.getElementById("newpostcode").value,
-            city: document.getElementById("newcity").value,
-            country: document.getElementById("newcountry").value,
-        }
-    };
-
-
-    newPatientData = JSON.stringify(newPatientData);
-    console.log(newPatientData)
+    if(document.getElementById("PatientForm").reportValidity() == true) {
+        let newPatientData = {
+            Patient_ID: null,
+            firstname: document.getElementById('newfn').value,
+            middlename: document.getElementById('newmiddlename').value,
+            surname: document.getElementById('newsurname').value,
+            birth_date: document.getElementById('newbirthdate').value,
+            pesel: document.getElementById('newpesel').value,
+            sex: document.querySelector("input[name=newsex]:checked").value,
+            phone_number: document.getElementById('newphonenumber').value,
+            uid: document.getElementById("newuid").value,
+            address: {
+                address_ID: null,
+                street: document.getElementById("newstreet").value,
+                house_number: document.getElementById("newhousenumber").value,
+                apartment_number: document.getElementById("newapartmentnumber").value,
+                postcode: document.getElementById("newpostcode").value,
+                city: document.getElementById("newcity").value,
+                country: document.getElementById("newcountry").value,
+            }
+        };
 
 
-    return fetch("/patients/", {
-        method: 'post',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-        body: newPatientData
-    }).then(response => {
-        if(!response.ok) {
-            throw new Error("This patient already exists!");
-        }
-        return response.json();
-    }).catch(error => {
-        if(error.message == "This patient already exists!") {
-            Swal.fire({
-                title: 'This patient already exists!',
-                icon: 'error',
-                showConfirmButton: false,
-                showCloseButton: false,
-                timer: 1500,
-            })
-            setTimeout(function(){
-                window.location.reload();
-            }, 1600);
-        }else {
-            Swal.fire({
-                title: 'Patient has been successfully added!',
-                icon: 'success',
-                showConfirmButton: false,
-                showCloseButton: false,
-                timer: 1500,
-            })
-            setTimeout(function(){
-                window.location.reload();
-            }, 1600);
-        }
-    });
+        newPatientData = JSON.stringify(newPatientData);
+        console.log(newPatientData)
+
+
+        return fetch("/patients/", {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body: newPatientData
+        }).then(response => {
+            if(!response.ok) {
+                throw new Error("This patient already exists!");
+            }
+            return response.json();
+        }).catch(error => {
+            if(error.message == "This patient already exists!") {
+                Swal.fire({
+                    title: 'This patient already exists!',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    showCloseButton: false,
+                    timer: 1500,
+                })
+                setTimeout(function(){
+                    window.location.reload();
+                }, 1600);
+            }else {
+                Swal.fire({
+                    title: 'Patient has been successfully added!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    showCloseButton: false,
+                    timer: 1500,
+                })
+                setTimeout(function(){
+                    window.location.reload();
+                }, 1600);
+            }
+        });
+    }
+
 
 };
 
@@ -217,7 +247,8 @@ fetch("/patients").then(
                     temp += "<td id='PESEL'>" + p.pesel + "</td>";
                     temp += "<td id='s'>" + p.sex + "</td>";
                     temp += "<td id='pn'>" + p.phone_number + "</td>";
-                    temp += "<td>" + Object.values(p.address)[1] + " " + Object.values(p.address)[2] + "/" + Object.values(p.address)[3] + "\n" + Object.values(p.address)[4] + " " +
+                    temp += "<td><span id='ad' style='display: none'>" + Object.values(p.address)[0] + "</span> " + Object.values(p.address)[1] +
+                        " " + Object.values(p.address)[2] + "/" + Object.values(p.address)[3] + "\n" + Object.values(p.address)[4] + " " +
                         Object.values(p.address)[5] + ", " + Object.values(p.address)[6] + "</td>";
                     temp += "<td id='UID'>" + p.uid + "</td>";
                     temp += "<td class=\"text-right\" style='vertical-align: middle'>\n" +
@@ -306,6 +337,10 @@ fetch("/patients").then(
                                 var sex = row[0].cells[6].textContent;
                                 var phonenumber = row[0].cells[7].textContent;
                                 var uid = row[0].cells[9].textContent;
+                                var address = row[0].cells[8].textContent.toString();
+
+                                var addressID = address.split(' ').at(0);
+                                address = address.substring(address.indexOf(' ') +1);
 
                             $('#idp').val(id);
                             $('#fn').val(firstname);
@@ -316,6 +351,8 @@ fetch("/patients").then(
                             $('#sex').val(sex);
                             $('#phonenumber').val(phonenumber);
                             $('#uid').val(uid);
+                            $('#address').text(address);
+                            $('#addressID').text(addressID);
 
                                 jQuery.noConflict();
                                 jQuery('#editPatient').modal('show');

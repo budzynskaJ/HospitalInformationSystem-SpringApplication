@@ -336,7 +336,7 @@
       </tbody>
     </table>
     <div class="modal fade" id="editPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-90p" role="document">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="editPatientLabel">Edit Patient</h5>
@@ -345,7 +345,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="needs-validation" novalidate>
+            <form id="EditPatientForm">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
@@ -356,25 +356,16 @@
                       <br>
                       <label for="fn">First name</label>
                       <input type="text" class="form-control" required="required" id="fn">
-                      <div class="invalid-feedback">
-                        First name is required.
-                      </div>
                       <br>
                       <label>Middle name</label>
                       <input type="text" class="form-control" id="middlename">
                       <br>
                       <label for="surname">Surname</label>
                       <input type="text" class="form-control" required="required" id="surname">
-                      <div class="invalid-feedback">
-                        Surname is required.
-                      </div>
                       <br>
                       <label for="birthdate">Birth date</label>
                       <input type="date" class="form-control" required="required" id="birthdate" readonly="readonly"
                       style="width: 180px">
-                      <div class="invalid-feedback">
-                        Birth date is required.
-                      </div>
                       <br>
                       <label>PESEL</label>
                       <input type="text" class="form-control" id="pesel" readonly= "readonly"; pattern=".{0}|.{11}" title="incorrect PESEL length">
@@ -389,9 +380,6 @@
                       <br>
                       <label for="phonenumber">Phone number</label>
                       <input type="text" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
-                      <div class="invalid-feedback">
-                        Phone number is required.
-                      </div>
                       <br>
                       <label>UID</label>
                       <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
@@ -402,48 +390,39 @@
                   <div class="form-group">
                     <div class="col-sm-12">
                       <p class="lead">Address</p>
-                      <label for="street">Street</label>
-                      <input type="text" class="form-control" required="required" id="street">
-                      <div class="invalid-feedback">
-                        Street is required.
-                      </div>
+                      <div id="addressID" style="display: none"></div>
+                      <div id="address" style="width: 200px"></div>
                       <br>
-                      <div class="row">
-                        <div class="col">
-                          <br>
-                          <label for="housenumber">House number</label>
-                          <input type="text" class="form-control" required="required" id="housenumber" style="width: 120px">
-                          <div class="invalid-feedback">
-                            House number is required.
+                      <button type="button" id="change-address" onclick="showPatientAddress()">Change address</button>
+                      <div id="addressForm" style="visibility: hidden">
+                        <label for="street">Street</label>
+                        <input type="text" class="form-control" id="street">
+                        <br>
+                        <div class="row">
+                          <div class="col">
+                            <br>
+                            <label for="housenumber">House number</label>
+                            <input type="text" class="form-control" id="housenumber" style="width: 120px">
+                          </div>
+                          <div class="col">
+                            <label for="apartmentnumber">Apartment number</label>
+                            <input type="text" class="form-control" id="apartmentnumber" style="width: 120px">
                           </div>
                         </div>
-                        <div class="col">
-                          <label for="apartmentnumber">Apartment number</label>
-                          <input type="text" class="form-control" id="apartmentnumber" style="width: 120px">
-                        </div>
-                      </div>
-                      <br>
-                      <div class="row">
-                        <div class="col">
-                          <label for="city">City</label>
-                          <input type="text" class="form-control" required="required" id="city">
-                          <div class="invalid-feedback">
-                            City is required.
+                        <br>
+                        <div class="row">
+                          <div class="col">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city">
+                          </div>
+                          <div class="col">
+                            <label for="postcode">Postcode</label>
+                            <input type="text" class="form-control" id="postcode" style="width: 120px">
                           </div>
                         </div>
-                        <div class="col">
-                          <label for="postcode">Postcode</label>
-                          <input type="text" class="form-control" required="required" id="postcode" style="width: 120px">
-                          <div class="invalid-feedback">
-                            Postcode is required.
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <label for="country">Country</label>
-                      <input type="text" class="form-control" required="required" id="country" style="width: 270px">
-                      <div class="invalid-feedback">
-                        Country is required.
+                        <br>
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" id="country" style="width: 270px">
                       </div>
                     </div>
                   </div>
@@ -459,7 +438,7 @@
     </div>
   </div>
   <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="New" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-90p" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addPatientLabel">Add new patient</h5>
@@ -468,7 +447,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form class="needs-validation" novalidate>
+          <form id="PatientForm">
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
@@ -476,24 +455,15 @@
                     <p class="lead">Demographic data</p>
                     <label for="newfn">First name</label>
                     <input type="text" class="form-control" required="required" id="newfn">
-                    <div class="invalid-feedback">
-                      First name is required.
-                    </div>
                     <br>
                     <label>Middle name</label>
                     <input type="text" class="form-control" id="newmiddlename">
                     <br>
                     <label for="newsurname">Surname</label>
                     <input type="text" class="form-control" required="required" id="newsurname">
-                    <div class="invalid-feedback">
-                      Surname is required.
-                    </div>
                     <br>
                     <label for="newbirthdate">Birth date</label>
                     <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
-                    <div class="invalid-feedback">
-                      Birth date is required.
-                    </div>
                     <br>
                     <label>PESEL</label>
                     <input type="text" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
@@ -508,9 +478,6 @@
                     <br>
                     <label for="newphonenumber">Phone number</label>
                     <input type="text" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}" title="incorrect phone number length">
-                    <div class="invalid-feedback">
-                      Phone number is required.
-                    </div>
                     <br>
                     <label for="newuid">UID</label>
                     <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
@@ -527,18 +494,12 @@
                     <p class="lead">Address</p>
                     <label for="newstreet">Street</label>
                     <input type="text" class="form-control" required="required" id="newstreet">
-                    <div class="invalid-feedback">
-                      Street is required.
-                    </div>
                     <br>
                     <div class="row">
                       <div class="col">
                         <br>
                         <label for="newhousenumber">House number</label>
                         <input type="text" class="form-control" required="required" id="newhousenumber" style="width: 120px;">
-                        <div class="invalid-feedback">
-                          House number is required.
-                        </div>
                       </div>
                       <div class="col">
                         <label for="newapartmentnumber">Apartment number</label>
@@ -550,30 +511,21 @@
                       <div class="col">
                         <label for="newcity">City</label>
                         <input type="text" class="form-control" required="required" id="newcity">
-                        <div class="invalid-feedback">
-                          City is required.
-                        </div>
                       </div>
                       <div class="col">
                         <label for="newpostcode">Postcode</label>
                         <input type="text" class="form-control" required="required" id="newpostcode" style="width: 120px;">
-                        <div class="invalid-feedback">
-                          Postcode is required.
-                        </div>
                       </div>
                     </div>
                     <br>
                     <label for="newcountry">Country</label>
                     <input type="text" class="form-control" required="required" id="newcountry" style="width: 270px;">
-                    <div class="invalid-feedback">
-                      Country is required.
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" id="newsavebtn" onclick="newData()" data-dismiss="modal">Save</button>
+              <button type="button" class="btn btn-primary" id="newsavebtn" onclick="newData()">Save</button>
             </div>
           </form>
         </div>
@@ -633,6 +585,16 @@
       });
     }, false);
   })();
+</script>
+<script>
+  function showPatientAddress() {
+    document.getElementById('addressForm').style.visibility = "visible";
+    document.getElementById('street').required = true;
+    document.getElementById('housenumber').required = true;
+    document.getElementById('city').required = true;
+    document.getElementById('postcode').required = true;
+    document.getElementById('country').required = true;
+  }
 </script>
 
 
