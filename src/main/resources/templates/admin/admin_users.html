@@ -335,7 +335,7 @@
         </table>
     </div>
     <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" style="max-height: 100vh">
-        <div class="modal-dialog modal-lg modal-90p" role="document">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editUserLabel">Edit User</h5>
@@ -344,7 +344,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="needs-validation" novalidate>
+                    <form id="EditUserForm">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -356,18 +356,12 @@
 
                                         <label for="fnu">First name</label>
                                         <input type="text" class="form-control" required="required" id="fnu">
-                                        <div class="invalid-feedback">
-                                            First name is required.
-                                        </div>
                                         <br>
                                         <label>Middle name</label>
                                         <input type="text" class="form-control" id="middlenameu">
                                         <br>
                                         <label for="surnameu">Surname</label>
                                         <input type="text" class="form-control" required="required" id="surnameu">
-                                        <div class="invalid-feedback">
-                                            Surname is required.
-                                        </div>
                                         <br>
                                         <label>Username</label>
                                         <input type="text" class="form-control" required="required" id="username" readonly="readonly">
@@ -385,48 +379,39 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <p class="lead">Address</p>
-                                        <label for="streetu">Street</label>
-                                        <input type="text" class="form-control" required="required" id="streetu">
-                                        <div class="invalid-feedback">
-                                            Street is required.
-                                        </div>
+                                        <div id="addressID" style="display: none"></div>
+                                        <div id="address" style="width: 200px;"></div>
                                         <br>
-                                        <div class="row">
-                                            <div class="col">
-                                                <br>
-                                                <label for="housenumberu">House number</label>
-                                                <input type="text" class="form-control" required="required" id="housenumberu" style="width: 120px;">
-                                                <div class="invalid-feedback">
-                                                    House number is required.
+                                        <button type="button" id="change-address" onclick="showUserAddress()">Change address</button>
+                                        <div id="addressForm" style="visibility: hidden">
+                                            <label for="streetu">Street</label>
+                                            <input type="text" class="form-control" id="streetu">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <br>
+                                                    <label for="housenumberu">House number</label>
+                                                    <input type="text" class="form-control" id="housenumberu" style="width: 120px;">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="apartmentnumberu">Apartment number</label>
+                                                    <input type="text" class="form-control" id="apartmentnumberu" style="width: 120px;">
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <label for="apartmentnumberu">Apartment number</label>
-                                                <input type="text" class="form-control" id="apartmentnumberu" style="width: 120px;">
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="cityu">City</label>
-                                                <input type="text" class="form-control" required="required" id="cityu">
-                                                <div class="invalid-feedback">
-                                                    City is required.
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="cityu">City</label>
+                                                    <input type="text" class="form-control" id="cityu">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="postcodeu">Postcode</label>
+                                                    <input type="text" class="form-control" id="postcodeu" style="width: 120px">
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <label for="postcodeu">Postcode</label>
-                                                <input type="text" class="form-control" required="required" id="postcodeu" style="width: 120px">
-                                                <div class="invalid-feedback">
-                                                    Postcode is required.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <label for="countryu">Country</label>
-                                        <input type="text" class="form-control" required="required" id="countryu" style="width: 270px">
-                                        <div class="invalid-feedback">
-                                            Country is required.
+                                            <br>
+                                            <label for="countryu">Country</label>
+                                            <input type="text" class="form-control" id="countryu" style="width: 270px">
                                         </div>
                                     </div>
                                 </div>
@@ -443,7 +428,7 @@
     </div>
 
     <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-90p" role="document">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addUserLabel">Add new user</h5>
@@ -452,7 +437,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="needs-validation" novalidate>
+                    <form id="UserForm">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -460,30 +445,18 @@
                                         <p class="lead">User data</p>
                                         <label for="newfnu">First name</label>
                                         <input type="text" class="form-control" required="required" id="newfnu">
-                                        <div class="invalid-feedback">
-                                            First name is required.
-                                        </div>
                                         <br>
                                         <label>Middle name</label>
                                         <input type="text" class="form-control" id="newmiddlenameu">
                                         <br>
                                         <label for="newsurnameu">Surname</label>
                                         <input type="text" class="form-control" required="required" id="newsurnameu">
-                                        <div class="invalid-feedback">
-                                            Surname is required.
-                                        </div>
                                         <br>
                                         <label for="newusername">Username</label>
                                         <input type="text" class="form-control" required="required" id="newusername">
-                                        <div class="invalid-feedback">
-                                            Username is required
-                                        </div>
                                         <br>
                                         <label for="newemail">E-mail</label>
                                         <input type="email" class="form-control" id="newemail">
-                                        <div class="invalid-feedback">
-                                            E-mail is required.
-                                        </div>
                                         <br>
                                         <label>Role</label>
                                         <select name = "newrole" id="newrole" class="form-control" style="width: 170px">
@@ -493,9 +466,6 @@
                                         <br>
                                         <label for="password">Password</label>
                                         <input type="text" class="form-control" required="required" id="password">
-                                        <div class="invalid-feedback">
-                                            Password is required.
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -506,18 +476,12 @@
                                         <p class="lead">Address</p>
                                         <label for="newstreetu">Street</label>
                                         <input type="text" class="form-control" required="required" id="newstreetu">
-                                        <div class="invalid-feedback">
-                                            Street is required.
-                                        </div>
                                         <br>
                                         <div class="row">
                                             <div class="col">
                                                 <br>
                                                 <label for="newhousenumberu">House number</label>
                                                 <input type="text" class="form-control" required="required" id="newhousenumberu" style="width: 120px;">
-                                                <div class="invalid-feedback">
-                                                    House number is required.
-                                                </div>
                                             </div>
                                             <div class="col">
                                                 <label for="newapartmentnumberu">Apartment number</label>
@@ -529,25 +493,16 @@
                                             <div class="col">
                                                 <label for="newcityu">City</label>
                                                 <input type="text" class="form-control" required="required" id="newcityu">
-                                                <div class="invalid-feedback">
-                                                    City is required.
-                                                </div>
                                             </div>
                                             <div class="col">
                                                 <label for="newpostcodeu">Postcode</label>
                                                 <input type="text" class="form-control" required="required" id="newpostcodeu"
                                                 style="width: 120px;">
-                                                <div class="invalid-feedback">
-                                                    Postcode is required.
-                                                </div>
                                             </div>
                                         </div>
                                         <br>
                                         <label for="newcountryu">Country</label>
                                         <input type="text" class="form-control" required="required" id="newcountryu" style="width: 270px">
-                                        <div class="invalid-feedback">
-                                            Country is required.
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -594,7 +549,7 @@
 
 
 </script>
-<script>
+<!--<script>
     (function() {
         'use strict';
         window.addEventListener('load', function() {
@@ -608,10 +563,22 @@
                         event.stopPropagation();
                     }
                     form.classList.add('was-validated');
+                    document.getElementById("savebtnu").onsubmit = editUser();
                 }, false);
             });
         }, false);
     })();
+</script>-->
+
+<script>
+    function showUserAddress() {
+        document.getElementById('addressForm').style.visibility = "visible";
+        document.getElementById('streetu').required = true;
+        document.getElementById('housenumberu').required = true;
+        document.getElementById('cityu').required = true;
+        document.getElementById('postcodeu').required = true;
+        document.getElementById('countryu').required = true;
+    }
 </script>
 
 
