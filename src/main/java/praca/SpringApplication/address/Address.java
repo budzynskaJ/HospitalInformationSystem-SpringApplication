@@ -8,6 +8,7 @@ import praca.SpringApplication.user.User;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Set;
 
@@ -23,20 +24,25 @@ public class Address {
     private Long address_ID;
 
     @NotNull
+    @NotBlank
     private String street;
 
     @NotNull
+    @NotBlank
     private String house_number;
 
     private String apartment_number;
 
     @NotNull
+    @NotBlank
     private String postcode;
 
     @NotNull
+    @NotBlank
     private String city;
 
     @NotNull
+    @NotBlank
     private String country;
 
     @JsonIgnore

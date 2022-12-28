@@ -28,89 +28,109 @@ function showAddress() {
 };
 
 async function editAddress() {
-    var Address_data = {
-        address_ID: document.getElementById("addressidu").value,
-        street: document.getElementById("streetu").value,
-        house_number: document.getElementById("housenumberu").value,
-        apartment_number: document.getElementById("apartmentnumberu").value,
-        postcode: document.getElementById("postcodeu").value,
-        city: document.getElementById("cityu").value,
-        country: document.getElementById("countryu").value,
+    if (document.getElementById("editForm").reportValidity() == true) {
+        var Address_data = {
+            address_ID: document.getElementById("addressidu").value,
+            street: document.getElementById("streetu").value,
+            house_number: document.getElementById("housenumberu").value,
+            apartment_number: document.getElementById("apartmentnumberu").value,
+            postcode: document.getElementById("postcodeu").value,
+            city: document.getElementById("cityu").value,
+            country: document.getElementById("countryu").value,
 
+        }
+
+        console.log(Address_data);
+        Address_data = JSON.stringify(Address_data);
+
+
+        const f = await fetch("/admin/admin_addresses/addresses/" + document.getElementById('addressidu').value, {
+            method: 'put',
+            credentials: 'include',
+            headers: {
+                'content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body: Address_data,
+        }).then(
+            res=>{
+                if(res.ok) {
+                    Swal.fire({
+                        title: 'Address has been successfully updated!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        showCloseButton: false,
+                        timer: 1500,
+                    })
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1600);
+                }
+                res.json().then(
+
+                ).catch(error=>console.log(error))
+            }
+        )
     }
 
-
-    Address_data = JSON.stringify(Address_data);
-
-    const f = await fetch("/admin/admin_addresses/addresses/" + document.getElementById('addressidu').value, {
-        method: 'put',
-        credentials: 'include',
-        headers: {
-            'content-Type': 'application/json',
-        },
-        mode: 'cors',
-        body: Address_data,
-    }).then(
-        res=>{
-            res.json().then(
-
-            ).catch(error=>console.log(error))
-        }
-    )
 };
 
+
 function newAddress() {
-    let newAddressData = {
-        address_ID: document.getElementById('newaddressidu').value,
-        street: document.getElementById("newstreetu").value,
-        house_number: document.getElementById("newhousenumberu").value,
-        apartment_number: document.getElementById("newapartmentnumberu").value,
-        postcode: document.getElementById("newpostcodeu").value,
-        city: document.getElementById("newcityu").value,
-        country: document.getElementById("newcountryu").value,
-    }
-
-    console.log(newAddressData);
-    return fetch("/admin/admin_addresses/addaddress/", {
-        method: 'post',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        mode: 'cors',
-        body: JSON.stringify(newAddressData),
-    }).then(response => {
-        if(!response.ok) {
-            throw new Error("This address already exists!")
+    if (document.getElementById("newForm").reportValidity() == true) {
+        let newAddressData = {
+            address_ID: null,
+            street: document.getElementById("newstreetu").value,
+            house_number: document.getElementById("newhousenumberu").value,
+            apartment_number: document.getElementById("newapartmentnumberu").value,
+            postcode: document.getElementById("newpostcodeu").value,
+            city: document.getElementById("newcityu").value,
+            country: document.getElementById("newcountryu").value,
         }
-        return response.json();
 
-    })
-        .catch(error => {
-          if(error.message == "This address already exists!") {
-              Swal.fire({
-                  title: 'This address already exists!',
-                  icon: 'error',
-                  showConfirmButton: false,
-                  showCloseButton: false,
-                  timer: 1500,
-              })
-              setTimeout(function(){
-                  window.location.reload();
-              }, 1600);
-          } else {
-              Swal.fire({
-                  title: 'Address has been successfully added!',
-                  icon: 'success',
-                  showConfirmButton: false,
-                  showCloseButton: false,
-                  timer: 1500,
-              })
-              setTimeout(function(){
-                  window.location.reload();
-              }, 1600);
-          }
-        });
+        console.log(newAddressData);
+        return fetch("/admin/admin_addresses/addaddress/", {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: JSON.stringify(newAddressData),
+        }).then(response => {
+            if (response.ok) {
+                Swal.fire({
+                    title: 'Address has been successfully added!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    showCloseButton: false,
+                    timer: 1500,
+                })
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1600);
+            } else {
+                throw new Error("This address already exists!");
+            }
+            return response.json();
+
+        })
+            .catch(error => {
+                if (error.message == "This address already exists!") {
+                    Swal.fire({
+                        title: 'This address already exists!',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        showCloseButton: false,
+                        timer: 1500,
+                    })
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1600);
+                }
+
+            });
+    }
 
 };
 
