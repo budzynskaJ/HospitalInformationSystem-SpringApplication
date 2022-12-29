@@ -404,9 +404,6 @@
                                     <p class="lead">Last menstrual period</p>
                                     <label for="lastUpdated">Date when the last menstrual period started</label>
                                     <input type="datetime-local" class="form-control" required="required" id="lastUpdated" style="width: 200px">
-                                    <div class="invalid-feedback">
-                                        Date when the last menstrual period was updated is required.
-                                    </div>
                                     <br>
                                     <label for="lmp">Date of onset of menstrual bleeding</label>
                                     <p style="font-size: 12px; color: grey">Useful to persist for calculations including estimated date of delivery in pregnancy, or to distinguish the latest
@@ -429,46 +426,51 @@
                                     </select>
                                     <br>
                                     <br>
-                                    <label>The type of contraception used by patient</label>
-                                    <select id="contraceptionType" name="contraceptionType">
-                                        <option value="combination pill">Combination pill</option>
-                                        <option value="progestrogen-only pill">Progestrogen-only pill</option>
-                                        <option value="combination skin patch">Combination skin patch</option>
-                                        <option value="depot progesstrogen">Depot progestrogen</option>
-                                        <option value="hormone implant">Hormone implant</option>
-                                        <option value="vaginal ring">Vaginal ring</option>
-                                        <option value="IUD with hormone">IUD with hormone</option>
-                                        <option value="IUD without hormone">IUD without hormone</option>
-                                        <option value="female sterilisation">Female sterilisation</option>
-                                        <option value="male sterilisation">Male sterilisation</option>
-                                        <option value="diaphragm">Diaphragm</option>
-                                        <option value="vaginal douching">Vaginal douching</option>
-                                        <option value="female condom">Female condom</option>
-                                        <option value="male condom">Male condom</option>
-                                        <option value="withdrawal">Withdrawal</option>
-                                        <option value="fertilty awereness method">Fertilty awereness method</option>
-                                        <option value="abstinence">Abstinence</option>
-                                    </select>
-                                    <br>
-                                    <br>
-                                    <label>Statement about current use of specified type of contraception</label>
-                                    <select name="status" id="status">
-                                        <option value="current user">Current user</option>
-                                        <option value="not current user">Not current user</option>
-                                        <option value="never used">Never used</option>
-                                    </select>
-                                    <br>
-                                    <br>
-                                    <label for="dateContraception">Date of first use of the specified type of contraception</label>
-                                    <input type="datetime-local" class="form-control" required="required" id="dateContraception" style="width: 200px;">
-                                    <div class="invalid-feedback">
-                                        Date is required.
-                                    </div>
-                                    <br>
-                                    <label for="dateLast">Date when patient last used the specified type of contraception</label>
-                                    <input type="datetime-local" class="form-control" required="required" id="dateLast" style="width: 200px">
-                                    <div class="invalid-feedback">
-                                        Date is required.
+                                    <div id="contraceptionSummary">
+                                        <div class="controls">
+                                            <a href="#" id="add_more">Add another type</a>
+                                        </div>
+                                        <label for="contraceptionType">The type of contraception used by patient</label>
+                                        <select id="contraceptionType" name="contraceptionType">
+                                            <option value="combination pill">Combination pill</option>
+                                            <option value="progestrogen-only pill">Progestrogen-only pill</option>
+                                            <option value="combination skin patch">Combination skin patch</option>
+                                            <option value="depot progesstrogen">Depot progesstrogen</option>
+                                            <option value="hormone implant">Hormone implant</option>
+                                            <option value="vaginal ring">Vaginal ring</option>
+                                            <option value="IUD with hormone">IUD with hormone</option>
+                                            <option value="IUD without hormone">IUD without hormone</option>
+                                            <option value="female sterilisation">Female sterilisation</option>
+                                            <option value="male sterilisation">Male sterilisation</option>
+                                            <option value="diaphragm">Diaphragm</option>
+                                            <option value="vaginal douching">Vaginal douching</option>
+                                            <option value="female condom">Female condom</option>
+                                            <option value="male condom">Male condom</option>
+                                            <option value="withdrawal">Withdrawal</option>
+                                            <option value="fertilty awereness method">Fertilty awereness method</option>
+                                            <option value="abstinence">Abstinence</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <label for="status">Statement about current use of specified type of contraception</label>
+                                        <select name="status" id="status">
+                                            <option value="current user">Current user</option>
+                                            <option value="not current user">Not current user</option>
+                                            <option value="never used">Never used</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <label for="dateContraception">Date of first use of the specified type of contraception</label>
+                                        <input type="datetime-local" class="form-control" required="required" id="dateContraception" style="width: 200px;">
+                                        <div class="invalid-feedback">
+                                            Date is required.
+                                        </div>
+                                        <br>
+                                        <label for="dateLast">Date when patient last used the specified type of contraception</label>
+                                        <input type="datetime-local" class="form-control" required="required" id="dateLast" style="width: 200px">
+                                        <div class="invalid-feedback">
+                                            Date is required.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -534,6 +536,146 @@
             });
         }, false);
     })();
+</script>
+
+<script>
+    var add_more = document.getElementById("add_more");
+    var parentDiv = document.getElementById("contraceptionSummary");
+
+
+    add_more.onclick = function () {
+        parentDiv.append(document.createElement("BR"));
+        parentDiv.append(document.createElement("BR"));
+
+        var newLabel2 = document.createElement("label");
+        newLabel2.setAttribute('for', 'contraceptionType2');
+        newLabel2.innerHTML = "The type of contraception used by patient&nbsp;";
+        var newSelect2 = document.createElement("select");
+        newSelect2.setAttribute('id', 'contraceptionType2');
+        newSelect2.setAttribute('name', 'contraceptionType2');
+
+        var combinationPill = document.createElement("option");
+        combinationPill.value = "combination pill";
+        combinationPill.innerHTML = "Combination pill";
+        var progestrogenOnlyPill = document.createElement("option");
+        progestrogenOnlyPill.value = "progestrogen-only pill";
+        progestrogenOnlyPill.innerHTML = "Progestrogen-only pill";
+        var combinationSkinPatch = document.createElement("option");
+        combinationSkinPatch.value = "combination skin patch";
+        combinationSkinPatch.innerHTML = "Combination skin patch";
+        var depotProgesstrogen = document.createElement("option");
+        depotProgesstrogen.value = "depot progesstrogen";
+        depotProgesstrogen.innerHTML = "Depot progesstrogen";
+        var hormoneImplant = document.createElement("option");
+        hormoneImplant.value = "hormone implant";
+        hormoneImplant.innerHTML = "Hormone implant";
+        var vaginalRing = document.createElement("option");
+        vaginalRing.value = "vaginal ring"
+        vaginalRing.innerHTML = "Vaginal ring";
+        var IUDwith = document.createElement("option");
+        IUDwith.value = "IUD with hormone";
+        IUDwith.innerHTML = "IUD with hormone";
+        var IUDwithout = document.createElement("option");
+        IUDwithout.value = "IUD without hormone";
+        IUDwithout.innerHTML = "IUD without hormone";
+        var fSterilisation = document.createElement("option");
+        fSterilisation.value = "female sterilisation";
+        fSterilisation.innerHTML = "Female sterilisation";
+        var mSterilisation = document.createElement("option");
+        mSterilisation.value = "male sterilisation";
+        mSterilisation.innerHTML = "Male sterilisation";
+        var diaphragm = document.createElement("option");
+        diaphragm.value = "diaphragm";
+        diaphragm.innerHTML = "Diaphragm";
+        var vaginalDouching = document.createElement("option");
+        vaginalDouching.value = "vaginal douching";
+        vaginalDouching.innerHTML = "Vaginal douching";
+        var fCondom = document.createElement("option");
+        fCondom.value = "female condom";
+        fCondom.innerHTML = "Female condom";
+        var mCondom = document.createElement("option");
+        mCondom.value = "male condom";
+        mCondom.innerHTML = "Male condom";
+        var withdrawal = document.createElement("option");
+        withdrawal.value = "withdrawal";
+        withdrawal.innerHTML = "Withdrawal";
+        var fertiltyyAwereness = document.createElement("option");
+        fertiltyyAwereness.value = "fertilty awereness method";
+        fertiltyyAwereness.innerHTML = "Fertilty awereness method";
+        var abstinence = document.createElement("option");
+        abstinence.value = "abstinence";
+        abstinence.innerHTML = "Abstinence";
+
+        newSelect2.add(combinationPill); newSelect2.add(progestrogenOnlyPill); newSelect2.add(combinationSkinPatch);
+        newSelect2.add(depotProgesstrogen); newSelect2.add(hormoneImplant); newSelect2.add(vaginalRing);
+        newSelect2.add(IUDwith); newSelect2.add(IUDwithout); newSelect2.add(fSterilisation); newSelect2.add(mSterilisation);
+        newSelect2.add(diaphragm); newSelect2.add(vaginalDouching); newSelect2.add(fCondom); newSelect2.add(mCondom);
+        newSelect2.add(withdrawal); newSelect2.add(fertiltyyAwereness); newSelect2.add(abstinence);
+
+        parentDiv.append(newLabel2);
+        parentDiv.append(newSelect2);
+        parentDiv.append(document.createElement("BR"));
+        parentDiv.append(document.createElement("BR"));
+
+        var newLabel3 = document.createElement("label");
+        newLabel3.setAttribute('for', 'status2');
+        newLabel3.innerHTML = "Statement about current use of specified type of contraception&nbsp;";
+
+        var newSelect3 = document.createElement("select");
+        newSelect3.setAttribute('id', 'status2');
+        newSelect3.setAttribute('name', 'status2');
+
+        var currentUser2 = document.createElement("option");
+        var notCurrentUser2 = document.createElement("option");
+        var neverUsed2 = document.createElement("option");
+
+        currentUser2.value = "current user";
+        currentUser2.innerHTML = "Current user";
+        notCurrentUser2.value = "not current user";
+        notCurrentUser2.innerHTML = "Not current user";
+        neverUsed2.value = "never used";
+        neverUsed2.innerHTML = "Never used";
+        newSelect3.add(currentUser2);
+        newSelect3.add(notCurrentUser2);
+        newSelect3.add(neverUsed2);
+        parentDiv.append(newLabel3);
+        parentDiv.append(newSelect3);
+        parentDiv.append(document.createElement("BR"));
+        parentDiv.append(document.createElement("BR"));
+
+        var newLabel4 = document.createElement("label");
+        newLabel4.setAttribute('for', 'dateContraception2');
+        newLabel4.innerHTML = "Date of first use of the specific type of contraception";
+
+        var newInput = document.createElement("input");
+        newInput.setAttribute('type', 'datetime-local');
+        newInput.setAttribute('className', 'form-control');
+        newInput.setAttribute('id', 'dateContraception2');
+        newInput.required;
+        newInput.style.width = "200px";
+
+        parentDiv.append(newLabel4);
+        parentDiv.append(document.createElement("BR"));
+        parentDiv.append(newInput);
+        parentDiv.append(document.createElement("BR"));
+        parentDiv.append(document.createElement("BR"));
+
+        var newLabel5 = document.createElement("label");
+        newLabel5.setAttribute('for', 'dateLast2');
+        newLabel5.innerHTML = "Date when patient last used the specified type of contraception";
+
+        var newInput2 = document.createElement("input");
+        newInput2.setAttribute('type', 'datetime-local');
+        newInput2.setAttribute('className', 'form-control');
+        newInput2.setAttribute('id', 'dateLast2');
+        newInput2.required;
+        newInput2.style.width = "200px";
+
+        parentDiv.append(newLabel5);
+        parentDiv.append(document.createElement("BR"));
+        parentDiv.append(newInput2);
+    }
+
 </script>
 
 

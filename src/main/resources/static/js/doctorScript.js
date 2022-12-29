@@ -285,112 +285,174 @@ function queryData() {
 
         bmi = bmi.toFixed(2);
 
+        let contraceptionType2 = document.getElementById('contraceptionType2');
+        let status2 = document.getElementById('status2');
+        let dateContraception2 = document.getElementById('dateContraception2');
+        let dateLast2 = document.getElementById('dateLast2');
+        let additional;
 
-        fetch('http://localhost:8090/rest/v1/ehrs/' + patientsuid + '/compositions?auditCommitter=' + name + '%20' + surname, {
-            method: 'POST',
-            headers: {
-                'Origin': 'http://localhost:8070/doctor/doctor_patients',
-                Authorization: 'Bearer ' + token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify({
-                "versions" : [{
-                    "version": {
-                        "@xmlns": "http://schemas.openehr.org/v1",
-                        "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-                        "@xsi:type": "ORIGINAL_VERSION",
-                        "contribution": {
-                            "id": {
-                                "@xsi:type": "HIER_OBJECT_ID",
-                                "value": uuid()
-                            },
-                            "namespace": "EHR::COMMON",
-                            "type": "CONTRIBUTION"
+        var json = {
+            "versions" : [{
+                "version": {
+                    "@xmlns": "http://schemas.openehr.org/v1",
+                    "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+                    "@xsi:type": "ORIGINAL_VERSION",
+                    "contribution": {
+                        "id": {
+                            "@xsi:type": "HIER_OBJECT_ID",
+                            "value": uuid()
                         },
-                        "commit_audit": {
-                            "system_id": "CABOLABS_EHR",
-                            "committer": {
-                                "@xsi:type": "PARTY_IDENTIFIED",
-                                "name": "current_doctor"
+                        "namespace": "EHR::COMMON",
+                        "type": "CONTRIBUTION"
+                    },
+                    "commit_audit": {
+                        "system_id": "CABOLABS_EHR",
+                        "committer": {
+                            "@xsi:type": "PARTY_IDENTIFIED",
+                            "name": "current_doctor"
+                        },
+                        "time_committed": {
+                            "value": time_commited
+                        },
+                        "change_type": {
+                            "value": "creation",
+                            "defining_code": {
+                                "terminology_id": {
+                                    "value": "openehr"
+                                },
+                                "code_string": 249
+                            }
+                        }
+                    },
+                    "data": {
+                        "@xsi:type": "COMPOSITION",
+                        "@archetype_node_id": "openEHR-EHR-COMPOSITION.health_summary.v1",
+                        "name": {
+                            "value": "Gynecology appointment"
+                        },
+                        "uid": {
+                            "@xsi:type": "HIER_OBJECT_ID",
+                            "value": uuid()
+                        },
+                        "archetype_details": {
+                            "archetype_id": {
+                                "value": "openEHR-EHR-COMPOSITION.health_summary.v1"
                             },
-                            "time_committed": {
+                            "template_id": {
+                                "value": "gin.pl.v1"
+                            },
+                            "rm_version": "1.0.2"
+                        },
+                        "language": {
+                            "terminology_id": {
+                                "value": "ISO_639-1"
+                            },
+                            "code_string": "pl"
+                        },
+                        "territory": {
+                            "terminology_id": {
+                                "value": "ISO_3166-1"
+                            },
+                            "code_string": "UY"
+                        },
+                        "category": {
+                            "value": "event",
+                            "defining_code": {
+                                "terminology_id": {
+                                    "value": "openehr"
+                                },
+                                "code_string": 433
+                            }
+                        },
+                        "composer": {
+                            "@xsi:type": "PARTY_IDENTIFIED",
+                            "name": current_doctor
+                        },
+                        "context": {
+                            "start_time": {
                                 "value": time_commited
                             },
-                            "change_type": {
-                                "value": "creation",
+                            "setting": {
+                                "value": "Hospital Montevideo",
                                 "defining_code": {
                                     "terminology_id": {
                                         "value": "openehr"
                                     },
-                                    "code_string": 249
+                                    "code_string": 227
                                 }
                             }
+
+                        },
+                        "content": [{
+                            "@xsi:type" : "OBSERVATION",
+                            "@archetype_node_id" : "openEHR-EHR-OBSERVATION.body_mass_index.v2",
+                            "name" : {
+                                "value" : "Body Mass Index"
                             },
-                        "data": {
-                            "@xsi:type": "COMPOSITION",
-                            "@archetype_node_id": "openEHR-EHR-COMPOSITION.health_summary.v1",
-                            "name": {
-                                "value": "Gynecology appointment"
-                            },
-                            "uid": {
-                                "@xsi:type": "HIER_OBJECT_ID",
-                                "value": uuid()
-                            },
-                            "archetype_details": {
-                                "archetype_id": {
-                                    "value": "openEHR-EHR-COMPOSITION.health_summary.v1"
+                            "language" : {
+                                "terminology_id" : {
+                                    "value" : "ISO_639-1"
                                 },
-                                "template_id": {
-                                    "value": "gin.pl.v1"
-                                },
-                                "rm_version": "1.0.2"
+                                "code_string" : "pl"
                             },
-                            "language": {
-                                "terminology_id": {
-                                    "value": "ISO_639-1"
+                            "encoding" : {
+                                "terminology_id" : {
+                                    "value" : "Unicode"
                                 },
-                                "code_string": "pl"
+                                "code_string" : "UTF-8"
                             },
-                            "territory": {
-                                "terminology_id": {
-                                    "value": "ISO_3166-1"
+                            "subject" : {
+                                "@xsi:type" : "PARTY_SELF"
+                            },
+                            "data" : {
+                                "@xsi:type" : "HISTORY",
+                                "@archetype_node_id" : "at0001",
+                                "name" : {
+                                    "value" : "history"
                                 },
-                                "code_string": "UY"
-                            },
-                            "category": {
-                                "value": "event",
-                                "defining_code": {
-                                    "terminology_id": {
-                                        "value": "openehr"
+                                "origin" : {
+                                    "@xsi:type" : "DV_DATE_TIME",
+                                    "value" : time_commited
+                                },
+                                "events" : {
+                                    "@xsi:type" : "POINT_EVENT",
+                                    "@archetype_node_id" : "at0002",
+                                    "name" : {
+                                        "value" : "Any event"
                                     },
-                                    "code_string": 433
-                                }
-                                },
-                            "composer": {
-                                "@xsi:type": "PARTY_IDENTIFIED",
-                                "name": current_doctor
-                            },
-                            "context": {
-                                "start_time": {
-                                    "value": time_commited
-                                },
-                                "setting": {
-                                    "value": "Hospital Montevideo",
-                                    "defining_code": {
-                                        "terminology_id": {
-                                            "value": "openehr"
+                                    "time" : {
+                                        "@xsi:type" : "DV_DATE_TIME",
+                                        "value" : time_commited
+                                    },
+                                    "data" : {
+                                        "@xsi:type" : "ITEM_TREE",
+                                        "@archetype_node_id" : "at0003",
+                                        "name" : {
+                                            "value" : "List"
                                         },
-                                        "code_string": 227
+                                        "items" : [ {
+                                            "@xsi:type" : "ELEMENT",
+                                            "@archetype_node_id" : "at0004",
+                                            "name" : {
+                                                "@xsi:type" : "DV_TEXT",
+                                                "value" : "Body Mass Index"
+                                            },
+                                            "value" : {
+                                                "@xsi:type" : "DV_QUANTITY",
+                                                "magnitude": bmi,
+                                                "units" : "kg/m2"
+                                            }
+                                        }]
                                     }
                                 }
+                            }
 
-                                },
-                            "content": [{
-                                "@xsi:type" : "OBSERVATION",
-                                "@archetype_node_id" : "openEHR-EHR-OBSERVATION.body_mass_index.v2",
+                        },
+                            {
+                                "@xsi:type" : "EVALUATION",
+                                "@archetype_node_id" : "openEHR-EHR-EVALUATION.last_menstrual_period.v1",
                                 "name" : {
-                                    "value" : "Body Mass Index"
+                                    "value" : "Last menstrual period"
                                 },
                                 "language" : {
                                     "terminology_id" : {
@@ -407,263 +469,296 @@ function queryData() {
                                 "subject" : {
                                     "@xsi:type" : "PARTY_SELF"
                                 },
+                                "protocol": {
+                                    "@xsi:type": "ITEM_TREE",
+                                    "@archetype_node_id": "at0003",
+                                    "name": {
+                                        "@xsi:type": "DV_TEXT",
+                                        "value": "List"
+                                    },
+                                    "items": [{
+                                        "@xsi:type": "ELEMENT",
+                                        "@archetype_node_id": "at0004",
+                                        "name": {
+                                            "@xsi:type": "DV_TEXT",
+                                            "value": "Date when the last menstrual period started"
+                                        },
+                                        "value": {
+                                            "@xsi:type": "DV_DATE_TIME",
+                                            "value": lastUpdated
+                                        }
+                                    }]
+                                },
                                 "data" : {
-                                    "@xsi:type" : "HISTORY",
+                                    "@xsi:type" : "ITEM_TREE",
                                     "@archetype_node_id" : "at0001",
                                     "name" : {
-                                        "value" : "history"
+                                        "@xsi:type": "DV_TEXT",
+                                        "value" : "List"
                                     },
-                                    "origin" : {
-                                        "@xsi:type" : "DV_DATE_TIME",
-                                        "value" : time_commited
-                                    },
-                                    "events" : {
-                                        "@xsi:type" : "POINT_EVENT",
+                                    "items" : [ {
+                                        "@xsi:type" : "ELEMENT",
                                         "@archetype_node_id" : "at0002",
                                         "name" : {
-                                            "value" : "Any event"
+                                            "@xsi:type" : "DV_TEXT",
+                                            "value" : "Date of onset of menstrual bleeding"
                                         },
-                                        "time" : {
-                                            "@xsi:type" : "DV_DATE_TIME",
-                                            "value" : time_commited
-                                        },
-                                        "data" : {
-                                            "@xsi:type" : "ITEM_TREE",
-                                            "@archetype_node_id" : "at0003",
-                                            "name" : {
-                                                "value" : "List"
-                                            },
-                                            "items" : [ {
-                                                "@xsi:type" : "ELEMENT",
-                                                "@archetype_node_id" : "at0004",
-                                                "name" : {
-                                                    "@xsi:type" : "DV_TEXT",
-                                                    "value" : "Body Mass Index"
-                                                },
-                                                "value" : {
-                                                    "@xsi:type" : "DV_QUANTITY",
-                                                    "magnitude": bmi,
-                                                    "units" : "kg/m2"
-                                                }
-                                            }]
+                                        "value" : {
+                                            "@xsi:type" : "DV_DATE",
+                                            "value": lmp
                                         }
-                                    }
-                                }
-
-                                },
-                                {
-                                    "@xsi:type" : "EVALUATION",
-                                    "@archetype_node_id" : "openEHR-EHR-EVALUATION.last_menstrual_period.v1",
-                                    "name" : {
-                                        "value" : "Last menstrual period"
                                     },
-                                    "language" : {
-                                        "terminology_id" : {
-                                            "value" : "ISO_639-1"
-                                        },
-                                        "code_string" : "pl"
-                                    },
-                                    "encoding" : {
-                                        "terminology_id" : {
-                                            "value" : "Unicode"
-                                        },
-                                        "code_string" : "UTF-8"
-                                    },
-                                    "subject" : {
-                                        "@xsi:type" : "PARTY_SELF"
-                                    },
-                                    "protocol": {
-                                        "@xsi:type": "ITEM_TREE",
-                                        "@archetype_node_id": "at0003",
-                                        "name": {
-                                            "@xsi:type": "DV_TEXT",
-                                            "value": "List"
-                                        },
-                                        "items": [{
-                                            "@xsi:type": "ELEMENT",
-                                            "@archetype_node_id": "at0004",
-                                            "name": {
-                                                "@xsi:type": "DV_TEXT",
-                                                "value": "Date when the last menstrual period started"
-                                            },
-                                            "value": {
-                                                "@xsi:type": "DV_DATE_TIME",
-                                                "value": lastUpdated
-                                            }
-                                        }]
-                                    },
-                                    "data" : {
-                                        "@xsi:type" : "ITEM_TREE",
-                                        "@archetype_node_id" : "at0001",
-                                        "name" : {
-                                            "@xsi:type": "DV_TEXT",
-                                            "value" : "List"
-                                        },
-                                        "items" : [ {
+                                        {
                                             "@xsi:type" : "ELEMENT",
-                                            "@archetype_node_id" : "at0002",
+                                            "@archetype_node_id" : "at0007",
                                             "name" : {
                                                 "@xsi:type" : "DV_TEXT",
-                                                "value" : "Date of onset of menstrual bleeding"
+                                                "value" : "Description"
                                             },
                                             "value" : {
-                                                "@xsi:type" : "DV_DATE",
-                                                "value": lmp
+                                                "@xsi:type" : "DV_TEXT",
+                                                "value": description
                                             }
-                                            },
-                                            {
-                                                "@xsi:type" : "ELEMENT",
-                                                "@archetype_node_id" : "at0007",
-                                                "name" : {
-                                                    "@xsi:type" : "DV_TEXT",
-                                                    "value" : "Description"
-                                                },
-                                                "value" : {
-                                                    "@xsi:type" : "DV_TEXT",
-                                                    "value": description
-                                                }
-                                            }
-                                            ]
-                                    }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "@xsi:type": "EVALUATION",
+                                "@archetype_node_id" : "openEHR-EHR-EVALUATION.contraceptive_summary.v1",
+                                "name" : {
+                                    "@xsi:type": "DV_TEXT",
+                                    "value" : "Summary and persistent information about the use of methods to prevent pregnancy."
+                                },
+                                "language" : {
+                                    "terminology_id" : {
+                                        "value" : "ISO_639-1"
                                     },
-                                {
-                                    "@xsi:type": "EVALUATION",
-                                    "@archetype_node_id" : "openEHR-EHR-EVALUATION.contraceptive_summary.v1",
-                                    "name" : {
+                                    "code_string" : "pl"
+                                },
+                                "encoding" : {
+                                    "terminology_id" : {
+                                        "value" : "Unicode"
+                                    },
+                                    "code_string" : "UTF-8"
+                                },
+                                "subject" : {
+                                    "@xsi:type" : "PARTY_SELF"
+                                },
+                                "data": {
+                                    "@xsi:type": "ITEM_TREE",
+                                    "@archetype_node_id": "at0001",
+                                    "name": {
                                         "@xsi:type": "DV_TEXT",
-                                        "value" : "Summary and persistent information about the use of methods to prevent pregnancy."
+                                        "value": "List"
                                     },
-                                    "language" : {
-                                        "terminology_id" : {
-                                            "value" : "ISO_639-1"
-                                        },
-                                        "code_string" : "pl"
-                                    },
-                                    "encoding" : {
-                                        "terminology_id" : {
-                                            "value" : "Unicode"
-                                        },
-                                        "code_string" : "UTF-8"
-                                    },
-                                    "subject" : {
-                                        "@xsi:type" : "PARTY_SELF"
-                                    },
-                                    "data": {
-                                        "@xsi:type": "ITEM_TREE",
-                                        "@archetype_node_id": "at0001",
+                                    "items": [{
+                                        "@xsi:type": "ELEMENT",
+                                        "@archetype_node_id": "at0089",
                                         "name": {
                                             "@xsi:type": "DV_TEXT",
-                                            "value": "List"
+                                            "value": "Statement about regular use of any type of contraception."
                                         },
-                                        "items": [{
-                                            "@xsi:type": "ELEMENT",
-                                            "@archetype_node_id": "at0089",
+                                        "value": {
+                                            "@xsi:type": "DV_CODED_TEXT",
+                                            "value":contraception,
+                                            "defining_code":{
+                                                "terminology_id":{
+                                                    "value":"local"
+                                                },
+                                                "code_string":"at0003"
+                                            }
+                                        }
+                                    },
+                                        {
+                                            "@xsi:type": "CLUSTER",
+                                            "@archetype_node_id":"at0029",
                                             "name": {
                                                 "@xsi:type": "DV_TEXT",
-                                                "value": "Statement about regular use of any type of contraception."
+                                                "value": "cluster"
                                             },
-                                            "value": {
-                                                "@xsi:type": "DV_CODED_TEXT",
-                                                "value":contraception,
-                                                "defining_code":{
-                                                    "terminology_id":{
-                                                        "value":"local"
-                                                    },
-                                                    "code_string":"at0003"
-                                                }
-                                            }
-                                            },
-                                            {
-                                                "@xsi:type": "CLUSTER",
-                                                "@archetype_node_id":"at0029",
+                                            "items": [{
+                                                "@xsi:type": "ELEMENT",
+                                                "@archetype_node_id": "at0151",
                                                 "name": {
                                                     "@xsi:type": "DV_TEXT",
-                                                    "value": "cluster"
+                                                    "value": "The type of contraception used by the individual."
                                                 },
-                                                "items": [{
+                                                "value": [{
+                                                    "@xsi:type": "DV_CODED_TEXT",
+                                                    "value":contraceptionType,
+                                                    "defining_code":{
+                                                        "terminology_id":{
+                                                            "value":"local"
+                                                        },
+                                                        "code_string":"at0155"
+                                                    }
+                                                }
+                                                ]
+                                            },
+                                                {
                                                     "@xsi:type": "ELEMENT",
-                                                    "@archetype_node_id": "at0151",
+                                                    "@archetype_node_id": "at0144",
                                                     "name": {
                                                         "@xsi:type": "DV_TEXT",
-                                                        "value": "The type of contraception used by the individual."
+                                                        "value": "Statement about current use of the specified type of contraception"
                                                     },
-                                                    "value": [{
+                                                    "value": {
                                                         "@xsi:type": "DV_CODED_TEXT",
-                                                        "value":contraceptionType,
+                                                        "value":status,
                                                         "defining_code":{
                                                             "terminology_id":{
                                                                 "value":"local"
                                                             },
-                                                            "code_string":"at0155"
+                                                            "code_string":"at0145"
                                                         }
                                                     }
-                                                    ]
                                                 },
-                                                    {
-                                                        "@xsi:type": "ELEMENT",
-                                                        "@archetype_node_id": "at0144",
-                                                        "name": {
-                                                            "@xsi:type": "DV_TEXT",
-                                                            "value": "Statement about current use of the specified type of contraception"
-                                                        },
-                                                        "value": {
-                                                            "@xsi:type": "DV_CODED_TEXT",
-                                                            "value":status,
-                                                            "defining_code":{
-                                                                "terminology_id":{
-                                                                    "value":"local"
-                                                                },
-                                                                "code_string":"at0145"
-                                                            }
-                                                        }
-                                                        },
-                                                    {
-                                                        "@xsi:type": "ELEMENT",
-                                                        "@archetype_node_id": "at0148",
-                                                        "name": {
-                                                            "@xsi:type": "DV_TEXT",
-                                                            "value": "Date when the individual first used the specified type of contraception"
-                                                        },
-                                                        "value": {
-                                                            "@xsi:type": "DV_DATE_TIME",
-                                                            "value": dateContraception
-                                                        }
-                                                        },
-                                                    {
-                                                        "@xsi:type": "ELEMENT",
-                                                        "@archetype_node_id": "at0149",
-                                                        "name": {
-                                                            "@xsi:type": "DV_TEXT",
-                                                            "value": "Date when the individual last used the specified type of contraception"
-                                                        },
-                                                        "value": {
-                                                            "@xsi:type": "DV_DATE_TIME",
-                                                            "value": dateLast
-                                                        }
-
+                                                {
+                                                    "@xsi:type": "ELEMENT",
+                                                    "@archetype_node_id": "at0148",
+                                                    "name": {
+                                                        "@xsi:type": "DV_TEXT",
+                                                        "value": "Date when the individual first used the specified type of contraception"
+                                                    },
+                                                    "value": {
+                                                        "@xsi:type": "DV_DATE_TIME",
+                                                        "value": dateContraception
                                                     }
-                                                    ]
+                                                },
+                                                {
+                                                    "@xsi:type": "ELEMENT",
+                                                    "@archetype_node_id": "at0149",
+                                                    "name": {
+                                                        "@xsi:type": "DV_TEXT",
+                                                        "value": "Date when the individual last used the specified type of contraception"
+                                                    },
+                                                    "value": {
+                                                        "@xsi:type": "DV_DATE_TIME",
+                                                        "value": dateLast
+                                                    }
 
-                                            }]
+                                                }
+                                            ]
 
-                                    }
+                                        }]
+
                                 }
-                                ]
-
-                        },
-                        "lifecycle_state": {
-                            "value": "complete",
-                            "defining_code": {
-                                "terminology_id": {
-                                    "value": "openehr"
-                                },
-                                "code_string": 532
                             }
+                        ]
+
+                    },
+                    "lifecycle_state": {
+                        "value": "complete",
+                        "defining_code": {
+                            "terminology_id": {
+                                "value": "openehr"
+                            },
+                            "code_string": 532
                         }
                     }
-                }]
+                }
+            }]
 
-})
+        }
+
+        if (contraceptionType2!==null && status2!==null && dateContraception2!==null && dateLast2!==null) {
+            contraceptionType2 = contraceptionType2.value;
+            status2 = status2.value;
+            dateContraception2 = dateContraception2.value;
+            dateLast2 = dateLast2.value;
+            additional =
+            {
+                "@xsi:type": "CLUSTER",
+                "@archetype_node_id":"at0029",
+                "name": {
+                "@xsi:type": "DV_TEXT",
+                    "value": "cluster"
+            },
+                "items": [{
+                "@xsi:type": "ELEMENT",
+                "@archetype_node_id": "at0151",
+                "name": {
+                    "@xsi:type": "DV_TEXT",
+                    "value": "The type of contraception used by the individual."
+                },
+                "value": [{
+
+                    "@xsi:type": "DV_CODED_TEXT",
+                    "value": contraceptionType2,
+                    "defining_code":{
+                        "terminology_id":{
+                            "value":"local"
+                        },
+                        "code_string":"at0155"
+                    }
+                }
+
+
+                ]
+            },
+                {
+                    "@xsi:type": "ELEMENT",
+                    "@archetype_node_id": "at0144",
+                    "name": {
+                        "@xsi:type": "DV_TEXT",
+                        "value": "Statement about current use of the specified type of contraception"
+                    },
+                    "value": {
+                        "@xsi:type": "DV_CODED_TEXT",
+                        "value": status2,
+                        "defining_code":{
+                            "terminology_id":{
+                                "value":"local"
+                            },
+                            "code_string":"at0145"
+                        }
+                    }
+                },
+                {
+                    "@xsi:type": "ELEMENT",
+                    "@archetype_node_id": "at0148",
+                    "name": {
+                        "@xsi:type": "DV_TEXT",
+                        "value": "Date when the individual first used the specified type of contraception"
+                    },
+                    "value": {
+                        "@xsi:type": "DV_DATE_TIME",
+                        "value": dateContraception2
+                    }
+                },
+                {
+                    "@xsi:type": "ELEMENT",
+                    "@archetype_node_id": "at0149",
+                    "name": {
+                        "@xsi:type": "DV_TEXT",
+                        "value": "Date when the individual last used the specified type of contraception"
+                    },
+                    "value": {
+                        "@xsi:type": "DV_DATE_TIME",
+                        "value": dateLast2
+                    }
+
+                }
+            ]
+
+            }
+            JSON.stringify(json);
+            json.versions.at(0).version.data.content.at(2).data.items[2] = additional;
+
+        }
+
+
+
+        fetch('http://localhost:8090/rest/v1/ehrs/' + patientsuid + '/compositions?auditCommitter=' + name + '%20' + surname, {
+            method: 'POST',
+            headers: {
+                'Origin': 'http://localhost:8070/doctor/doctor_patients',
+                Authorization: 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(json)
 
 
         }) .then((res) => {
@@ -678,7 +773,7 @@ function queryData() {
                 setTimeout(function(){
                     window.location.reload();},
                     1700);
-                } else if (result.isDenied) {
+                } else if (res.isDenied) {
 
                 }
 
