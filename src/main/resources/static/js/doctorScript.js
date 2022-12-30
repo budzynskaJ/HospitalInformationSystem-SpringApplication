@@ -1,18 +1,3 @@
-function getNumberOfPatients() {
-
-    let numberP;
-    fetch("/patients").then(
-        res => {
-            res.json().then(
-                patientsData => {
-                    numberP = patientsData.length.toString();
-                    document.getElementById("numberOfP").innerText = numberP;
-                })
-        })
-
-}
-getNumberOfPatients();
-
 let token = "";
 $(document).ready(function (){
     let email = "admin%40cabolabs.com";
@@ -194,8 +179,6 @@ function showinQuery() {
 
 
 let subjectUid = "";
-let numberOfEHRs;
-let EHRs = document.getElementById("numberOfEHRs");
 setTimeout(function getEHR() {
     fetch("http://localhost:8090/rest/v1/ehrs", {
         method: 'GET',
@@ -208,9 +191,6 @@ setTimeout(function getEHR() {
     }).then(res => {
         res.json().then(
             data => {
-                console.log(data.ehrs.length);
-                numberOfEHRs = (data.ehrs.length);
-                EHRs.innerText = numberOfEHRs;
                 subjectUid = data.subjectUid;
             }
         )
@@ -218,25 +198,6 @@ setTimeout(function getEHR() {
     return subjectUid;
 }, 1000)
 
-let contributions = document.getElementById("numberOfC");
-setTimeout(function getContributions() {
-    fetch("http://localhost:8090/mgt/v1/stats", {
-        method: 'GET',
-        headers: {
-            'Origin': 'http://localhost:8070/doctor/main_doctor',
-            Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
-        },
-    }).then(res => {
-        res.json().then(
-            data => {
-                contributions.innerText = data.total_contribution_count;
-
-            }
-        )
-    })
-}, 1050)
 
 fetch("/patients").then(
     res=>{
