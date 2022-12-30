@@ -163,9 +163,6 @@
         padding-left: 0;
         position: relative;
     }
-    .table-container{
-        padding-top: 100px;
-    }
 
     #check{
         display: none;
@@ -185,6 +182,7 @@
     }
     label #close{
         z-index: 1111;
+        position: fixed;
         left: -250px;
         top: 85px;
         font-size: 30px;
@@ -201,6 +199,9 @@
         opacity: 0;
         pointer-events: none;
     }
+    #check:checked ~ .container {
+        padding-left: 150px;
+    }
     #check:checked ~ label #close{
         left: 250px;
     }
@@ -210,19 +211,55 @@
     .prof:visited {
         color: black;
     }
+    .i-name {
+        color: #444a53;
+        padding: 30px 30px 0 30px;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    .values {
+        padding: 30px 30px 0 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        align-items: center;
 
-    #select {
-        background-color: rgba(24,31,151,0.30);
     }
-    #uid {
-        width: 350px;
-
+    .values .val-box {
+        background: #fff;
+        width: 250px;
+        padding: 16px 20px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
     }
-    .invalid input:required:invalid {
-        background: #BE4C54;
-    }
-    #patient-head tr th {
+    .values .val-box i {
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 50%;
         text-align: center;
+        color: #fff;
+        margin-right: 15px;
+    }
+    .values .val-box:nth-child(1) i {
+        background: #b24242;
+    }
+    .values .val-box:nth-child(2) i {
+        background: #c66262;
+    }
+    .values .val-box:nth-child(3) i {
+        background: #da7a7a;
+    }
+    .values .val-box h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .values .val-box span {
+        font-size: 15px;
+        color: #828997;
     }
 
 
@@ -294,11 +331,36 @@
 
 <div class="container">
     <div class="row">
-
-
-
+        <div id="dashboard" style="display: block; width: 100%; padding-top: 80px">
+            <h3 class="i-name">Dashboard</h3>
+            <div class="values">
+                <div class="val-box">
+                    <i class="fa fa-group"></i>
+                    <div>
+                        <h3 id="numberOfP"></h3>
+                        <span>Patients</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fas fa-file-medical"></i>
+                    <div>
+                        <h3 id="numberOfEHRs"></h3>
+                        <span>EHRs</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fa fa-share"></i>
+                    <div>
+                        <h3 id="numberOfC"></h3>
+                        <span>Contributions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
+
 
 
 
@@ -329,32 +391,6 @@
     };
 
 
-</script>
-
-<script>
-    function show() {
-        jQuery.noConflict();
-        jQuery('#whichPatient').modal('show');
-    }
-</script>
-<script>
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-
-            var forms = document.getElementsByClassName('needs-validation');
-
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
 </script>
 
 
