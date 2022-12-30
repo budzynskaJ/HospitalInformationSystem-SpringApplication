@@ -269,10 +269,6 @@ function queryData() {
         let lmp = document.getElementById('lmp').value;
         let description = document.getElementById('description').value;
         let contraception = document.getElementById('contraception').value;
-        let contraceptionType = document.getElementById('contraceptionType').value;
-        let status = document.getElementById('status').value;
-        let dateContraception = document.getElementById('dateContraception').value;
-        let dateLast = document.getElementById('dateLast').value;
 
         weight = parseFloat(weight);
         height = parseFloat(height);
@@ -285,11 +281,6 @@ function queryData() {
 
         bmi = bmi.toFixed(2);
 
-        let contraceptionType2 = document.getElementById('contraceptionType2');
-        let status2 = document.getElementById('status2');
-        let dateContraception2 = document.getElementById('dateContraception2');
-        let dateLast2 = document.getElementById('dateLast2');
-        let additional;
 
         var json = {
             "versions" : [{
@@ -418,7 +409,7 @@ function queryData() {
                                     "@xsi:type" : "POINT_EVENT",
                                     "@archetype_node_id" : "at0002",
                                     "name" : {
-                                        "value" : "Any event"
+                                        "value" : "Measured at"
                                     },
                                     "time" : {
                                         "@xsi:type" : "DV_DATE_TIME",
@@ -569,79 +560,8 @@ function queryData() {
                                                 "code_string":"at0003"
                                             }
                                         }
-                                    },
-                                        {
-                                            "@xsi:type": "CLUSTER",
-                                            "@archetype_node_id":"at0029",
-                                            "name": {
-                                                "@xsi:type": "DV_TEXT",
-                                                "value": "cluster"
-                                            },
-                                            "items": [{
-                                                "@xsi:type": "ELEMENT",
-                                                "@archetype_node_id": "at0151",
-                                                "name": {
-                                                    "@xsi:type": "DV_TEXT",
-                                                    "value": "The type of contraception used by the individual."
-                                                },
-                                                "value": [{
-                                                    "@xsi:type": "DV_CODED_TEXT",
-                                                    "value":contraceptionType,
-                                                    "defining_code":{
-                                                        "terminology_id":{
-                                                            "value":"local"
-                                                        },
-                                                        "code_string":"at0155"
-                                                    }
-                                                }
-                                                ]
-                                            },
-                                                {
-                                                    "@xsi:type": "ELEMENT",
-                                                    "@archetype_node_id": "at0144",
-                                                    "name": {
-                                                        "@xsi:type": "DV_TEXT",
-                                                        "value": "Statement about current use of the specified type of contraception"
-                                                    },
-                                                    "value": {
-                                                        "@xsi:type": "DV_CODED_TEXT",
-                                                        "value":status,
-                                                        "defining_code":{
-                                                            "terminology_id":{
-                                                                "value":"local"
-                                                            },
-                                                            "code_string":"at0145"
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "@xsi:type": "ELEMENT",
-                                                    "@archetype_node_id": "at0148",
-                                                    "name": {
-                                                        "@xsi:type": "DV_TEXT",
-                                                        "value": "Date when the individual first used the specified type of contraception"
-                                                    },
-                                                    "value": {
-                                                        "@xsi:type": "DV_DATE_TIME",
-                                                        "value": dateContraception
-                                                    }
-                                                },
-                                                {
-                                                    "@xsi:type": "ELEMENT",
-                                                    "@archetype_node_id": "at0149",
-                                                    "name": {
-                                                        "@xsi:type": "DV_TEXT",
-                                                        "value": "Date when the individual last used the specified type of contraception"
-                                                    },
-                                                    "value": {
-                                                        "@xsi:type": "DV_DATE_TIME",
-                                                        "value": dateLast
-                                                    }
-
-                                                }
-                                            ]
-
-                                        }]
+                                    }
+                                        ]
 
                                 }
                             }
@@ -662,91 +582,193 @@ function queryData() {
 
         }
 
+    let contraceptionType = document.getElementById('contraceptionType');
+    let status = document.getElementById('status');
+    let dateContraception = document.getElementById('dateContraception');
+    let dateLast = document.getElementById('dateLast');
+        let contr;
+        if (contraception !== "never used") {
+            contraceptionType = contraceptionType.value;
+            status = status.value;
+            dateContraception = dateContraception.value;
+            dateLast = dateLast.value;
+            contr =
+                {
+                    "@xsi:type": "CLUSTER",
+                    "@archetype_node_id": "at0029",
+                    "name": {
+                        "@xsi:type": "DV_TEXT",
+                        "value": " "
+                    },
+                    "items": [{
+                        "@xsi:type": "ELEMENT",
+                        "@archetype_node_id": "at0151",
+                        "name": {
+                            "@xsi:type": "DV_TEXT",
+                            "value": "The type of contraception used by the individual."
+                        },
+                        "value": [{
+                            "@xsi:type": "DV_CODED_TEXT",
+                            "value": contraceptionType,
+                            "defining_code": {
+                                "terminology_id": {
+                                    "value": "local"
+                                },
+                                "code_string": "at0155"
+                            }
+                        }
+                        ]
+                    },
+                        {
+                            "@xsi:type": "ELEMENT",
+                            "@archetype_node_id": "at0144",
+                            "name": {
+                                "@xsi:type": "DV_TEXT",
+                                "value": "Statement about current use of the specified type of contraception"
+                            },
+                            "value": {
+                                "@xsi:type": "DV_CODED_TEXT",
+                                "value": status,
+                                "defining_code": {
+                                    "terminology_id": {
+                                        "value": "local"
+                                    },
+                                    "code_string": "at0145"
+                                }
+                            }
+                        },
+                        {
+                            "@xsi:type": "ELEMENT",
+                            "@archetype_node_id": "at0148",
+                            "name": {
+                                "@xsi:type": "DV_TEXT",
+                                "value": "Date when the individual first used the specified type of contraception"
+                            },
+                            "value": {
+                                "@xsi:type": "DV_DATE_TIME",
+                                "value": dateContraception
+                            }
+                        },
+                        {
+                            "@xsi:type": "ELEMENT",
+                            "@archetype_node_id": "at0149",
+                            "name": {
+                                "@xsi:type": "DV_TEXT",
+                                "value": "Date when the individual last used the specified type of contraception"
+                            },
+                            "value": {
+                                "@xsi:type": "DV_DATE_TIME",
+                                "value": dateLast
+                            }
+
+                        }
+                    ]
+
+
+            }
+            JSON.stringify(json);
+            json.versions.at(0).version.data.content.at(2).data.items[1] = contr;
+
+        }
+
+    let contraceptionType2;
+    let status2;
+    let dateContraception2;
+    let dateLast2;
+    let additional;
+
+    for (let i = 1; i<5; i++) {
+        contraceptionType2 = document.getElementById('contraceptionType' + i);
+        status2 = document.getElementById('status' + i);
+        dateContraception2 = document.getElementById('dateContraception' + i);
+        dateLast2 = document.getElementById('dateLast' + i);
+
         if (contraceptionType2!==null && status2!==null && dateContraception2!==null && dateLast2!==null) {
             contraceptionType2 = contraceptionType2.value;
             status2 = status2.value;
             dateContraception2 = dateContraception2.value;
             dateLast2 = dateLast2.value;
             additional =
-            {
-                "@xsi:type": "CLUSTER",
-                "@archetype_node_id":"at0029",
-                "name": {
-                "@xsi:type": "DV_TEXT",
-                    "value": "cluster"
-            },
-                "items": [{
-                "@xsi:type": "ELEMENT",
-                "@archetype_node_id": "at0151",
-                "name": {
-                    "@xsi:type": "DV_TEXT",
-                    "value": "The type of contraception used by the individual."
-                },
-                "value": [{
-
-                    "@xsi:type": "DV_CODED_TEXT",
-                    "value": contraceptionType2,
-                    "defining_code":{
-                        "terminology_id":{
-                            "value":"local"
+                {
+                    "@xsi:type": "CLUSTER",
+                    "@archetype_node_id":"at0029",
+                    "name": {
+                        "@xsi:type": "DV_TEXT",
+                        "value": " "
+                    },
+                    "items": [{
+                        "@xsi:type": "ELEMENT",
+                        "@archetype_node_id": "at0151",
+                        "name": {
+                            "@xsi:type": "DV_TEXT",
+                            "value": "The type of contraception used by the individual."
                         },
-                        "code_string":"at0155"
-                    }
-                }
+                        "value": [{
 
-
-                ]
-            },
-                {
-                    "@xsi:type": "ELEMENT",
-                    "@archetype_node_id": "at0144",
-                    "name": {
-                        "@xsi:type": "DV_TEXT",
-                        "value": "Statement about current use of the specified type of contraception"
-                    },
-                    "value": {
-                        "@xsi:type": "DV_CODED_TEXT",
-                        "value": status2,
-                        "defining_code":{
-                            "terminology_id":{
-                                "value":"local"
-                            },
-                            "code_string":"at0145"
+                            "@xsi:type": "DV_CODED_TEXT",
+                            "value": contraceptionType2,
+                            "defining_code":{
+                                "terminology_id":{
+                                    "value":"local"
+                                },
+                                "code_string":"at0155"
+                            }
                         }
-                    }
-                },
-                {
-                    "@xsi:type": "ELEMENT",
-                    "@archetype_node_id": "at0148",
-                    "name": {
-                        "@xsi:type": "DV_TEXT",
-                        "value": "Date when the individual first used the specified type of contraception"
+
+
+                        ]
                     },
-                    "value": {
-                        "@xsi:type": "DV_DATE_TIME",
-                        "value": dateContraception2
-                    }
-                },
-                {
-                    "@xsi:type": "ELEMENT",
-                    "@archetype_node_id": "at0149",
-                    "name": {
-                        "@xsi:type": "DV_TEXT",
-                        "value": "Date when the individual last used the specified type of contraception"
-                    },
-                    "value": {
-                        "@xsi:type": "DV_DATE_TIME",
-                        "value": dateLast2
-                    }
+                        {
+                            "@xsi:type": "ELEMENT",
+                            "@archetype_node_id": "at0144",
+                            "name": {
+                                "@xsi:type": "DV_TEXT",
+                                "value": "Statement about current use of the specified type of contraception"
+                            },
+                            "value": {
+                                "@xsi:type": "DV_CODED_TEXT",
+                                "value": status2,
+                                "defining_code":{
+                                    "terminology_id":{
+                                        "value":"local"
+                                    },
+                                    "code_string":"at0145"
+                                }
+                            }
+                        },
+                        {
+                            "@xsi:type": "ELEMENT",
+                            "@archetype_node_id": "at0148",
+                            "name": {
+                                "@xsi:type": "DV_TEXT",
+                                "value": "Date when the individual first used the specified type of contraception"
+                            },
+                            "value": {
+                                "@xsi:type": "DV_DATE_TIME",
+                                "value": dateContraception2
+                            }
+                        },
+                        {
+                            "@xsi:type": "ELEMENT",
+                            "@archetype_node_id": "at0149",
+                            "name": {
+                                "@xsi:type": "DV_TEXT",
+                                "value": "Date when the individual last used the specified type of contraception"
+                            },
+                            "value": {
+                                "@xsi:type": "DV_DATE_TIME",
+                                "value": dateLast2
+                            }
+
+                        }
+                    ]
 
                 }
-            ]
-
-            }
             JSON.stringify(json);
-            json.versions.at(0).version.data.content.at(2).data.items[2] = additional;
-
+            json.versions.at(0).version.data.content.at(2).data.items[1+i] = additional;
         }
+    }
+
 
 
 
