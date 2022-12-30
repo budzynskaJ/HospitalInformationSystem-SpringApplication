@@ -244,6 +244,16 @@
         width:90%; /* 80% of page to provide space for labels */
     }
 
+    #change-address {
+        border: none;
+        outline: none;
+        border-radius: 5%;
+        /*background-color: #89CFF0;*/
+        text-align: center;
+        height: 40px;
+        width: 150px;
+    }
+
 
 </style>
 <body>
@@ -382,7 +392,7 @@
                                         <div id="addressID" style="display: none"></div>
                                         <div id="address" style="width: 200px;"></div>
                                         <br>
-                                        <button type="button" id="change-address" onclick="showUserAddress()">Change address</button>
+                                        <button type="button" class="btn btn-primary" id="change-address" onclick="showUserAddress()">Change address</button>
                                         <div id="addressForm" style="visibility: hidden">
                                             <label for="streetu">Street</label>
                                             <input type="text" class="form-control" id="streetu">
@@ -418,7 +428,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="savebtnu" onclick="editUser()">Save changes</button>
+                            <button type="button" class="btn btn-success" id="savebtnu" onclick="editUser()">Save changes</button>
                         </div>
                     </form>
 
@@ -509,7 +519,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="newsavebtnu" onclick="newUser()">Save</button>
+                            <button type="button" class="btn btn-success" id="newsavebtnu" onclick="newUser()">Save</button>
                         </div>
                     </form>
                 </div>

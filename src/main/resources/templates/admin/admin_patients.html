@@ -244,6 +244,16 @@
     width:90%;
   }
 
+  #change-address {
+    border: none;
+    outline: none;
+    border-radius: 5%;
+    /*background-color: #89CFF0;*/
+    text-align: center;
+    height: 40px;
+    width: 150px;
+  }
+
 
 </style>
 <body>
@@ -393,7 +403,7 @@
                       <div id="addressID" style="display: none"></div>
                       <div id="address" style="width: 200px"></div>
                       <br>
-                      <button type="button" id="change-address" onclick="showPatientAddress()">Change address</button>
+                      <button type="button" class="btn btn-primary" id="change-address" onclick="showPatientAddress()">Change address</button>
                       <div id="addressForm" style="visibility: hidden">
                         <label for="street">Street</label>
                         <input type="text" class="form-control" id="street">
@@ -429,7 +439,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="savebtn" onclick="editData()">Save changes</button>
+                <button type="button" class="btn btn-success" id="savebtn" onclick="editData()">Save changes</button>
               </div>
             </form>
           </div>
@@ -525,7 +535,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id="newsavebtn" onclick="newData()">Save</button>
+              <button type="button" class="btn btn-success" id="newsavebtn" onclick="newData()">Save</button>
             </div>
           </form>
         </div>
