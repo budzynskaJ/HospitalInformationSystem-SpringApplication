@@ -206,33 +206,6 @@
     background: #BE4C54;
   }
 
-  .values .val-box i {
-    font-size: 25px;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 50%;
-    text-align: center;
-    color: #fff;
-    margin-right: 15px;
-  }
-  .values .val-box:nth-child(1) i {
-    background: #b24242;
-  }
-  .values .val-box:nth-child(2) i {
-    background: #c66262;
-  }
-  .values .val-box:nth-child(3) i {
-    background: #da7a7a;
-  }
-  .values .val-box h3 {
-    font-size: 20px;
-    font-weight: 600;
-  }
-  .values .val-box span {
-    font-size: 15px;
-    color: #828997;
-  }
   #patient-head tr th {
     text-align: center;
   }
@@ -244,6 +217,10 @@
     width:90%;
   }
 
+  .modal-title {
+    font-weight: bold;
+  }
+
   #change-address {
     border: none;
     outline: none;
@@ -252,6 +229,8 @@
     text-align: center;
     height: 40px;
     width: 150px;
+    color: white;
+    background-color: rgb(25, 159, 239);
   }
 
 
@@ -403,7 +382,7 @@
                       <div id="addressID" style="display: none"></div>
                       <div id="address" style="width: 200px"></div>
                       <br>
-                      <button type="button" class="btn btn-primary" id="change-address" onclick="showPatientAddress()">Change address</button>
+                      <button type="button" id="change-address" onclick="showPatientAddress()">Change address</button>
                       <div id="addressForm" style="visibility: hidden">
                         <label for="street">Street</label>
                         <input type="text" class="form-control" id="street">
@@ -438,10 +417,10 @@
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="savebtn" onclick="editData()">Save changes</button>
-              </div>
             </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="savebtn" onclick="editData()">Save changes</button>
           </div>
         </div>
       </div>
@@ -534,10 +513,10 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" id="newsavebtn" onclick="newData()">Save</button>
-            </div>
           </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="newsavebtn" onclick="newData()">Save</button>
         </div>
       </div>
     </div>

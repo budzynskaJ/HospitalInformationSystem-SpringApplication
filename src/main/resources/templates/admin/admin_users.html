@@ -243,6 +243,9 @@
     .modal-90p {
         width:90%; /* 80% of page to provide space for labels */
     }
+    .modal-title {
+        font-weight: bold;
+    }
 
     #change-address {
         border: none;
@@ -252,6 +255,8 @@
         text-align: center;
         height: 40px;
         width: 150px;
+        color: white;
+        background-color: rgb(25, 159, 239);
     }
 
 
@@ -392,7 +397,7 @@
                                         <div id="addressID" style="display: none"></div>
                                         <div id="address" style="width: 200px;"></div>
                                         <br>
-                                        <button type="button" class="btn btn-primary" id="change-address" onclick="showUserAddress()">Change address</button>
+                                        <button type="button" id="change-address" onclick="showUserAddress()">Change address</button>
                                         <div id="addressForm" style="visibility: hidden">
                                             <label for="streetu">Street</label>
                                             <input type="text" class="form-control" id="streetu">
@@ -427,11 +432,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" id="savebtnu" onclick="editUser()">Save changes</button>
-                        </div>
                     </form>
-
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="savebtnu" onclick="editUser()">Save changes</button>
                 </div>
             </div>
         </div>
@@ -518,10 +522,10 @@
                             </div>
 
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" id="newsavebtnu" onclick="newUser()">Save</button>
-                        </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="newsavebtnu" onclick="newUser()">Save</button>
                 </div>
             </div>
         </div>

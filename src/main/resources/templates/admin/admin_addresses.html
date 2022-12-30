@@ -206,33 +206,6 @@
         background: #BE4C54;
     }
 
-    .values .val-box i {
-        font-size: 25px;
-        width: 60px;
-        height: 60px;
-        line-height: 60px;
-        border-radius: 50%;
-        text-align: center;
-        color: #fff;
-        margin-right: 15px;
-    }
-    .values .val-box:nth-child(1) i {
-        background: #b24242;
-    }
-    .values .val-box:nth-child(2) i {
-        background: #c66262;
-    }
-    .values .val-box:nth-child(3) i {
-        background: #da7a7a;
-    }
-    .values .val-box h3 {
-        font-size: 20px;
-        font-weight: 600;
-    }
-    .values .val-box span {
-        font-size: 15px;
-        color: #828997;
-    }
     #address-head tr th {
         text-align: center;
     }
@@ -242,6 +215,9 @@
 
     .modal-32p {
         width:32%; /* 80% of page to provide space for labels */
+    }
+    .modal-title {
+        font-weight: bold;
     }
 
 
@@ -380,11 +356,10 @@
                                 <input type="text" class="form-control" required="required" id="countryu" style="width: 370px">
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" id="savebtna" onclick="editAddress()">Save changes</button>
-                        </div>
                     </form>
-
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="savebtna" onclick="editAddress()">Save changes</button>
                 </div>
             </div>
         </div>
@@ -435,10 +410,10 @@
                             </div>
 
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" id="newsavebtna" onclick="newAddress()">Save</button>
-                        </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="newsavebtna" onclick="newAddress()">Save</button>
                 </div>
             </div>
         </div>
