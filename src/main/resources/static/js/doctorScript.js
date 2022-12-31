@@ -211,23 +211,25 @@ fetch("/patients").then(
                 let temp = "";
                 let numb = 1;
                 patientsData.forEach((p) => {
-                    temp += "<tr id=" + numb + " class='tabrow editing'>";
-                    temp += "<td id = 'patient'>" + p.patient_ID + "</td>";
-                    temp += "<td id='first'>" + p.firstname + "</td>";
-                    temp += "<td id='middle'>" + p.middlename + "</td>";
-                    temp += "<td id='sur'>" + p.surname + "</td>";
-                    temp += "<td id='bd'>" + (p.birth_date).toString().split('T')[0] + "</td>";
-                    temp += "<td id='PESEL'>" + p.pesel + "</td>";
-                    temp += "<td id='s'>" + p.sex + "</td>";
-                    temp += "<td id='UID'>" + p.uid + "</td>";
-                    temp += "<td style='vertical-align: middle'>\n" +
-                        "                             <span type=\"button\" data-toggle='modal' data-target='#queryData' id='queryD' onclick='showinQuery()' \n" +
-                        "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Query data'>\n" +
-                        "                                   diagnosis \n" +
-                        "                              </span>\n" +
-                        "                        </td>";
-                    temp += "</tr>";
-                    numb = numb + 1;
+                    if(p.status === 'active') {
+                        temp += "<tr id=" + numb + " class='tabrow editing'>";
+                        temp += "<td id = 'patient'>" + p.patient_ID + "</td>";
+                        temp += "<td id='first'>" + p.firstname + "</td>";
+                        temp += "<td id='middle'>" + p.middlename + "</td>";
+                        temp += "<td id='sur'>" + p.surname + "</td>";
+                        temp += "<td id='bd'>" + (p.birth_date).toString().split('T')[0] + "</td>";
+                        temp += "<td id='PESEL'>" + p.pesel + "</td>";
+                        temp += "<td id='s'>" + p.sex + "</td>";
+                        temp += "<td id='UID'>" + p.uid + "</td>";
+                        temp += "<td style='vertical-align: middle'>\n" +
+                            "                             <span type=\"button\" data-toggle='modal' data-target='#queryData' id='queryD' onclick='showinQuery()' \n" +
+                            "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Query data'>\n" +
+                            "                                   diagnosis \n" +
+                            "                              </span>\n" +
+                            "                        </td>";
+                        temp += "</tr>";
+                        numb = numb + 1;
+                    }
                 })
                 document.getElementById("patientsData").innerHTML = await temp;
                 $(document).ready(function () {

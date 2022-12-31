@@ -81,7 +81,14 @@ public class PatientService {
     }
 
     public void delete(Long Patient_id) {
-        patientRepository.deleteById(Patient_id);
+        Patient patient = patientRepository.findById(Patient_id).get();
+        if(patient.getStatus().equals("active")) {
+            patient.setStatus("inactive");
+        } else if (patient.getStatus().equals("inactive")) {
+            patient.setStatus("active");
+        }
+        patientRepository.save(patient);
+        //patientRepository.deleteById(Patient_id);
     }
 
 

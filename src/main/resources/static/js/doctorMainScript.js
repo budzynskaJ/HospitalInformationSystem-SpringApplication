@@ -1,12 +1,16 @@
 function getNumberOfPatients() {
 
-    let numberP;
+    let numberP = 0;
     fetch("/patients").then(
         res => {
             res.json().then(
                 patientsData => {
-                    numberP = patientsData.length.toString();
-                    document.getElementById("numberOfP").innerText = numberP;
+                    for(let i = 0; i<patientsData.length; i++){
+                        if(patientsData[i].status == 'active') {
+                            numberP = numberP + 1;
+                            document.getElementById("numberOfP").innerText = numberP;
+                        }
+                    }
                 })
         })
 

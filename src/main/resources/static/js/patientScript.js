@@ -251,6 +251,7 @@ fetch("/patients").then(
                         " " + Object.values(p.address)[2] + "/" + Object.values(p.address)[3] + "\n" + Object.values(p.address)[4] + " " +
                         Object.values(p.address)[5] + ", " + Object.values(p.address)[6] + "</td>";
                     temp += "<td id='UID'>" + p.uid + "</td>";
+                    temp += "<td style='align-items: center; vertical-align: center'><icon id='status' style='color: white'>"+ p.status + "</icon></td>";
                     temp += "<td class=\"text-right\" style='vertical-align: middle'>\n" +
                         "                             <span type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
                         "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Edit patient'>\n" +
@@ -262,6 +263,7 @@ fetch("/patients").then(
                         "                        </td>";
                     temp += "</tr>";
                     numb = numb + 1;
+
                 })
 
                     document.getElementById("patientsData").innerHTML = await temp;
@@ -284,11 +286,20 @@ fetch("/patients").then(
 
                         });
 
+                        console.log($('.patient-table tbody tr').length);
+                        for(let i = 1; i<($('.patient-table tbody tr').length)+1; i++) {
+                            let j = $('.patient-table tr').get(i);
+                            if (j.cells[10].querySelector('#status').textContent != "active") {
+                                j.cells[10].querySelector('#status').setAttribute('class', 'badge bg-danger text-wrap');
+                            } else {
+                                j.cells[10].querySelector('#status').setAttribute('class', 'badge bg-success text-wrap');
+                            }
+                        }
 
                         $('.patient-table').on('click', '#delete', function (e) {
                             e.preventDefault();
                             Swal.fire({
-                                title: 'Are you sure you want to delete this Patient?',
+                                title: 'Are you sure you want to change status of this Patient?',
                                 icon: 'warning',
                                 showCloseButton: true,
                                 showDenyButton: true,
@@ -305,7 +316,7 @@ fetch("/patients").then(
                                     }).then((response) => {
                                         if(response.ok) {
                                             Swal.fire({
-                                                title: 'Patient has been successfully deleted!',
+                                                title: 'Patient status has benn successfully changed!',
                                                 icon: 'success',
                                                 showConfirmButton: false,
                                                 showCloseButton: false,
@@ -338,6 +349,7 @@ fetch("/patients").then(
                                 var phonenumber = row[0].cells[7].textContent;
                                 var uid = row[0].cells[9].textContent;
                                 var address = row[0].cells[8].textContent.toString();
+                                var status = row[0].cells[10].textContent;
 
                                 var addressID = address.split(' ').at(0);
                                 address = address.substring(address.indexOf(' ') +1);

@@ -27,6 +27,7 @@
 
   .table-container{
     padding-top: 100px;
+    width: 110%;
   }
 
   .invalid input:required:invalid {
@@ -39,6 +40,7 @@
   .patient-table tr td {
     text-align: center;
   }
+
 
   .modal-90p {
     width:90%;
@@ -130,27 +132,30 @@
 </div>
 
 <div class="container">
-  <div class="table-container" id="patients" style="display: block; width: 100%">
-    <table class="table table-striped patient-table" style="border-spacing: 0">
-      <thead id="patient-head">
-      <tr>
-        <th>ID</th>
-        <th>First name</th>
-        <th>Middle name</th>
-        <th>Surname</th>
-        <th>Birth date</th>
-        <th>PESEL</th>
-        <th>Sex</th>
-        <th>Phone number</th>
-        <th>Address</th>
-        <th>uid</th>
-        <th class="text-right" style="width: 102%">Actions</th>
-      </tr>
-      </thead>
-      <tbody id="patientsData">
+  <div class="table-container" id="patients" style="display: block">
+    <div class="table-responsive">
+      <table class="table table-striped th-sm patient-table" style="border-spacing: 0">
+        <thead id="patient-head">
+        <tr>
+          <th>ID</th>
+          <th>First name</th>
+          <th>Middle name</th>
+          <th>Surname</th>
+          <th>Birth date</th>
+          <th>PESEL</th>
+          <th>Sex</th>
+          <th>Phone number</th>
+          <th>Address</th>
+          <th>uid</th>
+          <th>Status</th>
+          <th class="text-right" style="width: 102%">Actions</th>
+        </tr>
+        </thead>
+        <tbody id="patientsData">
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
     <div class="modal fade" id="editPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
         <div class="modal-content">

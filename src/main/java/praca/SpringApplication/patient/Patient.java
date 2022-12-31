@@ -39,6 +39,9 @@ public class Patient {
     @NotNull
     private String uid;
 
+    @NotNull
+    private String status;
+
     @ManyToOne()
     @JoinColumn(name = "address_ID")
     private Address address;
@@ -49,7 +52,7 @@ public class Patient {
     }
 
     public Patient(long patient_ID, String firstname, String middlename, String surname, Date birth_date, String PESEL,
-                   char sex, String phone_number, String uid, Address address) {
+                   char sex, String phone_number, String uid, String status, Address address) {
         Patient_ID = patient_ID;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -59,6 +62,7 @@ public class Patient {
         this.sex = sex;
         this.phone_number = phone_number;
         this.uid = uid;
+        this.status = status;
         this.address = address;
     }
 
@@ -140,6 +144,14 @@ public class Patient {
         this.uid = uid;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -160,6 +172,7 @@ public class Patient {
                  ", sex='" + sex + '\'' +
                  ", phone_number='" + phone_number + '\'' +
                  ", uid='" + uid + '\'' +
+                 ", status='" + status + '\'' +
                  ", address='" + address + '\'' +
                  '}';
     }
