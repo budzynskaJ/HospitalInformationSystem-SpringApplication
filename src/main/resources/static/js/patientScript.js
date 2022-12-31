@@ -59,6 +59,7 @@ function editData() {
             sex: document.querySelector("input[name=newsex]:checked").value,
             phone_number: document.getElementById('phonenumber').value,
             uid: document.getElementById('uid').value,
+            status: "active",
             address: {
                 address_ID: null,
                 street: document.getElementById("street").value,
@@ -166,6 +167,7 @@ function newData() {
             sex: document.querySelector("input[name=newsex]:checked").value,
             phone_number: document.getElementById('newphonenumber').value,
             uid: document.getElementById("newuid").value,
+            status: 'active',
             address: {
                 address_ID: null,
                 street: document.getElementById("newstreet").value,

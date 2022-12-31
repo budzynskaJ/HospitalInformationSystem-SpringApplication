@@ -2,6 +2,9 @@ package praca.SpringApplication.patient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
+import lombok.Builder;
+import net.bytebuddy.implementation.bind.annotation.Default;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 import praca.SpringApplication.address.Address;
 
@@ -39,7 +42,7 @@ public class Patient {
     @NotNull
     private String uid;
 
-    @NotNull
+    @Column(columnDefinition = "default 'active'")
     private String status;
 
     @ManyToOne()
@@ -145,6 +148,10 @@ public class Patient {
     }
 
     public String getStatus() {
+
+        if(status == null){
+            status = "active";
+        }
         return status;
     }
 
