@@ -71,6 +71,8 @@ public class PatientService {
             patient.getAddress().setPostcode(address.get().getPostcode());
             patient.getAddress().setCity(address.get().getCity());
             patient.getAddress().setCountry(address.get().getCountry());
+        } else if(patient.getStatus() == "inactive") {
+            throw new RuntimeException("You cannot update inactive patient!");
         }
         addressRepository.save(patient.getAddress());
         patientRepository.save(patient);
@@ -83,8 +85,8 @@ public class PatientService {
     public void delete(Long Patient_id) {
         Patient patient = patientRepository.findById(Patient_id).get();
         if(patient.getStatus().equals("active")) {
-            patient.setStatus("inactive");
-        } else if (patient.getStatus().equals("inactive")) {
+            patient.setStatus("archived");
+        } else if (patient.getStatus().equals("archived")) {
             patient.setStatus("active");
         }
         patientRepository.save(patient);

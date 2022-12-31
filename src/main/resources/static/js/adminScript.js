@@ -2,6 +2,7 @@ function getNumberOfUsers() {
 
     let number;
     let numberD = 0;
+    let numberAdmins = 0;
     fetch("/admin/admin_users/users").then(
         res => {
             res.json().then(
@@ -10,9 +11,11 @@ function getNumberOfUsers() {
                     for(let i=0; i<usersData.length; i++){
                         if(usersData[i].role==="USER") {
                             numberD = numberD + 1;
+                        } else if (usersData[i].role==="ADMIN"){
+                            numberAdmins = numberAdmins + 1;
                         }
                     }
-                    document.getElementById('numberOfU').innerText = number;
+                    document.getElementById('numberOfAdmins').innerText = numberAdmins;
                     document.getElementById('numberOfD').innerText = numberD;
                 })
         })

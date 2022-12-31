@@ -69,6 +69,7 @@ function editData() {
                 country: document.getElementById("country").value,
             }
         };
+
         if(Patient_data.address.street === "" && Patient_data.address.house_number ==="" &&
         Patient_data.address.apartment_number === "" && Patient_data.address.postcode === "" &&
         Patient_data.address.city === "" && Patient_data.address.country === "") {
@@ -270,6 +271,10 @@ fetch("/patients").then(
                     $(document).ready(function () {
                         let tableP = $('.patient-table').DataTable({
                             dom: 'Bfrtip',
+                            oSearch: {
+                                bRegex: false,
+                                bSmart: false
+                            },
                             buttons: [
                                 {
                                     text: '<i class="fas fa-plus fa-2x" style="color: #228B22;"></i>',
@@ -291,6 +296,7 @@ fetch("/patients").then(
                             let j = $('.patient-table tr').get(i);
                             if (j.cells[10].querySelector('#status').textContent != "active") {
                                 j.cells[10].querySelector('#status').setAttribute('class', 'badge bg-danger text-wrap');
+                                j.style.color = '#8d9294';
                             } else {
                                 j.cells[10].querySelector('#status').setAttribute('class', 'badge bg-success text-wrap');
                             }
@@ -366,9 +372,24 @@ fetch("/patients").then(
                             $('#address').text(address);
                             $('#addressID').text(addressID);
 
-                                jQuery.noConflict();
-                                jQuery('#editPatient').modal('show');
+                            if(status == 'inactive') {
+                                Swal.fire({
+                                    title: 'You cannot edit patient that is inactive!',
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                    showCloseButton: true,
+                                    confirmButtonColor: "rgb(25, 159, 239)",
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        jQuery('#editPatient').modal('hide');
 
+                                    } else {
+                                        jQuery.noConflict();
+                                        jQuery('#editPatient').modal('show');
+                                    }
+                                })
+
+                            }
                         })
                     });
 
