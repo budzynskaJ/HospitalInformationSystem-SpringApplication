@@ -58,6 +58,9 @@ setTimeout(function getEHR() {
             data => {
                 console.log(data.ehrs.length);
                 numberOfEHRs = (data.ehrs.length);
+                if(numberOfEHRs == undefined) {
+                    numberOfEHRs = 0;
+                }
                 EHRs.innerText = numberOfEHRs;
             }
         )
@@ -82,4 +85,4 @@ setTimeout(function getContributions() {
             }
         )
     })
-}, 1050)
+}, 1100)

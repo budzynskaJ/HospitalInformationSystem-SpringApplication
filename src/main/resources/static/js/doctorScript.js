@@ -233,7 +233,21 @@ fetch("/patients").then(
                 })
                 document.getElementById("patientsData").innerHTML = await temp;
                 $(document).ready(function () {
-                    $('.patient-table').DataTable();
+                    $('.patient-table').DataTable({
+                        responsive: true,
+                        columnDefs: [
+                            { width: "57px", targets: 0 },
+                            { width: "150px", targets: 1 },
+                            { width: "150px", targets: 2 },
+                            { width: "150px", targets: 3 },
+                            { width: "120px", targets: 4 },
+                            { width: "130px", targets: 5 },
+                            { width: "70px", targets: 6 },
+                            { width: "220px", targets: 7 },
+                            { width: "120px", targets: 8 },
+                    ]
+                        },
+                    );
                 });
 
             }
@@ -268,7 +282,27 @@ function queryData() {
         let description = document.getElementById('description').value;
         let contraception = document.getElementById('contraception').value;
 
-        weight = parseFloat(weight);
+        const letters     = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż'];
+        const replacement = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z'];
+        current_doctor = current_doctor.toLowerCase();
+        name = name.toLowerCase();
+        surname = surname.toLowerCase();
+        for(let l = 0; l<letters.length; ++l) {
+            current_doctor = current_doctor.replaceAll(letters[l], replacement[l]);
+            name = name.replaceAll(letters[l], replacement[l]);
+            surname = surname.replaceAll(letters[l], replacement[l]);
+        }
+        let data = current_doctor.split(" ");
+        for(let o = 0; o<data.length; o++) {
+            data[o] = data[o].charAt(0).toUpperCase() + data[o].slice(1);
+        }
+        current_doctor = data.join(" ");
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+        surname = surname.charAt(0).toUpperCase() + surname.slice(1);
+
+
+
+    weight = parseFloat(weight);
         height = parseFloat(height);
         height = height.toFixed(2);
         weight = weight.toFixed(2);
@@ -596,7 +630,7 @@ function queryData() {
                     "@archetype_node_id": "at0029",
                     "name": {
                         "@xsi:type": "DV_TEXT",
-                        "value": " "
+                        "value": "1"
                     },
                     "items": [{
                         "@xsi:type": "ELEMENT",
@@ -661,10 +695,10 @@ function queryData() {
 
                         }
                     ]
-
-
             }
             JSON.stringify(json);
+            console.log(json);
+            console.log(contr);
             json.versions.at(0).version.data.content.at(2).data.items[1] = contr;
 
         }
@@ -692,7 +726,7 @@ function queryData() {
                     "@archetype_node_id":"at0029",
                     "name": {
                         "@xsi:type": "DV_TEXT",
-                        "value": " "
+                        "value": i+1
                     },
                     "items": [{
                         "@xsi:type": "ELEMENT",
