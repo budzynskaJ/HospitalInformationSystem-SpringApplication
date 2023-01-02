@@ -149,83 +149,157 @@ function getEHRbySubjectUid() {
                                                     response1.json().then(
                                                         data3 => {
                                                             console.log(data3);
+                                                            var patient_firstname = $(this).parents('tr')[0].cells[1].textContent;
+                                                            var patient_middlename = $(this).parents('tr')[0].cells[2].textContent;
+                                                            var patient_surname = $(this).parents('tr')[0].cells[3].textContent;
+                                                            var patient_birthday = $(this).parents('tr')[0].cells[4].textContent;
+
+                                                            let today = new Date().getFullYear();
+                                                            let patient_birth_year = patient_birthday.split("-").at(0);
+                                                            console.log(patient_birth_year);
+                                                            let age = today - patient_birth_year;
+
+                                                            $('#name').text(patient_firstname + " " + patient_middlename + " " + patient_surname);
+                                                            $('#birth').text(patient_birthday);
+                                                            $('#age').text(age);
+
                                                             time_commited = data3.version.commit_audit.time_committed.value;
+                                                            time_commited = time_commited.toString().replace('T', ' ');
                                                             var time = document.createElement("div");
                                                             time.setAttribute('id', "time_committed");
+                                                            time.style.fontWeight = "bold";
                                                             time.innerHTML = time_commited;
                                                             parent.append(time);
 
                                                             doctor = data3.version.data.composer.name;
                                                             var doc = document.createElement("div");
                                                             doc.setAttribute('id', "doctor");
+                                                            doc.style.fontWeight = "bold";
                                                             doc.innerHTML = doctor;
                                                             parent.append(doc);
 
+                                                            parent.append(document.createElement("BR"));
+                                                            parent.append(document.createElement("BR"));
+
                                                             bmi = data3.version.data.content[0].data.events.data.items.value.magnitude;
+                                                            var BMILabel = document.createElement("label");
+                                                            BMILabel.setAttribute('for', 'bmi');
+                                                            BMILabel.innerHTML = "BMI: ";
+                                                            BMILabel.style.display = "inline-block";
+                                                            BMILabel.style.width = "50px";
+                                                            BMILabel.style.fontWeight = "bold";
+                                                            parent.append(BMILabel);
                                                             var BMI = document.createElement("div");
                                                             BMI.setAttribute('id', "bmi");
                                                             BMI.innerHTML = bmi;
+                                                            BMI.style.display = "inline-block";
                                                             parent.append(BMI);
 
+                                                            parent.append(document.createElement("BR"));
+                                                            parent.append(document.createElement("BR"));
+
                                                             period = data3.version.data.content[1].data.items[0].value.value;
+                                                            var perLabel = document.createElement("label");
+                                                            perLabel.setAttribute("for", "period");
+                                                            perLabel.innerHTML = "Date of last menstrual period: ";
+                                                            perLabel.style.display = "inline-block";
+                                                            perLabel.style.width = "260px";
+                                                            perLabel.style.fontWeight = "bold";
+                                                            parent.append(perLabel);
                                                             var per = document.createElement("div");
                                                             per.setAttribute('id', "period");
+                                                            per.style.display = "inline-block";
                                                             per.innerHTML = period;
                                                             parent.append(per);
 
+                                                            parent.append(document.createElement("BR"));
+
                                                             description = data3.version.data.content[1].data.items[1].value.value;
+                                                            var descrLabel = document.createElement("label");
+                                                            descrLabel.setAttribute("for", "description");
+                                                            descrLabel.innerHTML = "Description";
+                                                            descrLabel.style.fontWeight = "bold";
+                                                            parent.append(descrLabel);
                                                             var descr = document.createElement("div");
                                                             descr.setAttribute('id', "description");
                                                             descr.innerHTML = description;
                                                             parent.append(descr);
 
                                                             contraception = data3.version.data.content[2].data.items[0].value.value;
-                                                            var contr = document.createElement("div");
-                                                            contr.setAttribute('id', "contraception");
-                                                            contr.innerHTML = contraception;
-                                                            parent.append(contr);
+
 
                                                             if (contraception != "never used") {
                                                                 for (let i = 1; i < data3.version.data.content[2].data.items.length; i++) {
+                                                                    parent.append(document.createElement("BR"));
+                                                                    parent.append(document.createElement("BR"));
                                                                     contraceptionType = data3.version.data.content[2].data.items[i].items[0].value.value;
-                                                                    console.log(contraceptionType);
+                                                                    var cTLabel = document.createElement("label");
+                                                                    cTLabel.setAttribute("for", "type");
+                                                                    cTLabel.innerHTML = "Type of contraception: ";
+                                                                    cTLabel.style.fontWeight = "bold";
+                                                                    cTLabel.style.display = "inline-block";
+                                                                    cTLabel.style.width = "195px";
+                                                                    parent.append(cTLabel);
                                                                     var cT = document.createElement("div");
                                                                     cT.setAttribute('id', 'type');
                                                                     cT.innerHTML = contraceptionType;
+                                                                    cT.style.display = "inline-block";
                                                                     parent.append(cT);
 
                                                                     status = data3.version.data.content[2].data.items[i].items[1].value.value;
-                                                                    console.log(status);
+                                                                    var statLabel = document.createElement("label");
+                                                                    statLabel.setAttribute("for", "status");
+                                                                    statLabel.innerHTML = "Status of using a given type of contraception: ";
+                                                                    statLabel.style.fontWeight = "bold";
+                                                                    statLabel.style.display = "inline-block";
+                                                                    statLabel.style.width = "390px"
+                                                                    parent.append(statLabel);
                                                                     var stat = document.createElement("div");
                                                                     stat.setAttribute('id', 'status');
                                                                     stat.innerHTML = status;
+                                                                    stat.style.display = "inline-block";
                                                                     parent.append(stat);
 
                                                                     date = data3.version.data.content[2].data.items[i].items[2].value.value;
-                                                                    console.log(date);
+                                                                    date = date.toString().replace('T', ' ');
+                                                                    var fDateLabel = document.createElement("label");
+                                                                    fDateLabel.setAttribute("for", "date");
+                                                                    fDateLabel.innerHTML = "Date of first use of the given type of contraception: ";
+                                                                    fDateLabel.style.fontWeight = "bold";
+                                                                    fDateLabel.style.display = "inline-block";
+                                                                    fDateLabel.style.width = "435px";
+                                                                    parent.append(fDateLabel);
                                                                     var fDate = document.createElement("div");
                                                                     fDate.setAttribute('id', 'date');
                                                                     fDate.innerHTML = date;
+                                                                    fDate.style.display = "inline-block";
                                                                     parent.append(fDate);
 
                                                                     last = data3.version.data.content[2].data.items[i].items[3].value.value;
-                                                                    console.log(last);
+                                                                    last = last.toString().replace('T', ' ');
+                                                                    var lDateLabel = document.createElement("label");
+                                                                    lDateLabel.setAttribute("for", "last");
+                                                                    lDateLabel.innerHTML = "Date of last use of the given type of contraception: ";
+                                                                    lDateLabel.style.fontWeight = "bold";
+                                                                    lDateLabel.style.display = "inline-block";
+                                                                    lDateLabel.style.width = "430px";
+                                                                    parent.append(lDateLabel);
                                                                     var lDate = document.createElement("div");
                                                                     lDate.setAttribute('id', 'last');
                                                                     lDate.innerHTML = last;
+                                                                    lDate.style.display = "inline-block";
                                                                     parent.append(lDate);
+
 
                                                                 }
 
                                                             }
-
-                                                            console.log(time_commited);
-                                                            console.log(doctor);
-                                                            console.log(bmi);
-                                                            console.log(period);
-                                                            console.log(description);
-
-
+                                                            parent.append(document.createElement("BR"));
+                                                            var hr = document.createElement("hr");
+                                                            hr.style.borderTop = "1px solid slategrey";
+                                                            parent.append(hr);
+                                                            parent.append(document.createElement("BR"));
+                                                            parent.append(document.createElement("BR"));
                                                         }
                                                     )
                                                 })
