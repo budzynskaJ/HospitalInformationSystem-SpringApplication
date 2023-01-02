@@ -273,10 +273,21 @@ fetch("/patients").then(
                     $(document).ready(function () {
                         let tableP = $('.patient-table').DataTable({
                             dom: 'Bfrtip',
-                            oSearch: {
-                                bRegex: false,
-                                bSmart: false
-                            },
+                            responsive: true,
+                            columnDefs: [
+                                { width: "57px", targets: 0 },
+                                { width: "113px", targets: 1 },
+                                { width: "113px", targets: 2 },
+                                { width: "120px", targets: 3 },
+                                { width: "115px", targets: 4 },
+                                { width: "128px", targets: 5 },
+                                { width: "65px", targets: 6 },
+                                { width: "113px", targets: 7 },
+                                { width: "140px", targets: 8 },
+                                { width: "200px", targets: 9 },
+                                { width: "87px", targets: 10 },
+                                { width: "98px", targets: 11 },
+                            ],
                             buttons: [
                                 {
                                     text: '<i class="fas fa-plus fa-2x" style="color: #228B22;"></i>',

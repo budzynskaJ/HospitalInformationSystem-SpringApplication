@@ -204,6 +204,7 @@ fetch("/admin/admin_users/users").then(
                 $(document).ready(function () {
                     $('.user-table').DataTable({
                         dom: 'Bfrtip',
+                        responsive: true,
                         buttons: [
                             {
                                 text: '<i class="fas fa-plus fa-2x" style="color: #228B22;"></i>',
