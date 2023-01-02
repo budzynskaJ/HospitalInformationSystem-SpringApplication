@@ -335,7 +335,7 @@ fetch("/patients").then(
                                     }).then((response) => {
                                         if(response.ok) {
                                             Swal.fire({
-                                                title: 'Patient status has benn successfully changed!',
+                                                title: 'Patient status has been successfully changed!',
                                                 icon: 'success',
                                                 showConfirmButton: false,
                                                 showCloseButton: false,
@@ -385,7 +385,7 @@ fetch("/patients").then(
                             $('#address').text(address);
                             $('#addressID').text(addressID);
 
-                            if(status == 'inactive') {
+                            if(status == 'archived') {
                                 Swal.fire({
                                     title: 'You cannot edit patient that is inactive!',
                                     icon: 'error',
