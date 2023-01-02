@@ -86,7 +86,6 @@ let last = "";
 let period = "";
 let unregular = "";
 let description = "";
-let message = "";
 
 var parent = document.getElementById("data");
 
@@ -225,74 +224,77 @@ function getEHRbySubjectUid() {
                                                             descr.innerHTML = description;
                                                             parent.append(descr);
 
-                                                            contraception = data3.version.data.content[2].data.items[0].value.value;
+                                                            if(data3.version.data.content[2].data.items.length>1) {
+                                                                contraception = data3.version.data.content[2].data.items[0].value.value;
+
+                                                                if (contraception != "never used") {
+                                                                    for (let i = 1; i < data3.version.data.content[2].data.items.length; i++) {
+                                                                        parent.append(document.createElement("BR"));
+                                                                        parent.append(document.createElement("BR"));
+                                                                        contraceptionType = data3.version.data.content[2].data.items[i].items[0].value.value;
+                                                                        var cTLabel = document.createElement("label");
+                                                                        cTLabel.setAttribute("for", "type");
+                                                                        cTLabel.innerHTML = "Type of contraception: ";
+                                                                        cTLabel.style.fontWeight = "bold";
+                                                                        cTLabel.style.display = "inline-block";
+                                                                        cTLabel.style.width = "195px";
+                                                                        parent.append(cTLabel);
+                                                                        var cT = document.createElement("div");
+                                                                        cT.setAttribute('id', 'type');
+                                                                        cT.innerHTML = contraceptionType;
+                                                                        cT.style.display = "inline-block";
+                                                                        parent.append(cT);
+
+                                                                        status = data3.version.data.content[2].data.items[i].items[1].value.value;
+                                                                        var statLabel = document.createElement("label");
+                                                                        statLabel.setAttribute("for", "status");
+                                                                        statLabel.innerHTML = "Status of using a given type of contraception: ";
+                                                                        statLabel.style.fontWeight = "bold";
+                                                                        statLabel.style.display = "inline-block";
+                                                                        statLabel.style.width = "390px";
+                                                                        parent.append(statLabel);
+                                                                        var stat = document.createElement("div");
+                                                                        stat.setAttribute('id', 'status');
+                                                                        stat.innerHTML = status;
+                                                                        stat.style.display = "inline-block";
+                                                                        parent.append(stat);
+
+                                                                        date = data3.version.data.content[2].data.items[i].items[2].value.value;
+                                                                        date = date.toString().replace('T', ' ');
+                                                                        var fDateLabel = document.createElement("label");
+                                                                        fDateLabel.setAttribute("for", "date");
+                                                                        fDateLabel.innerHTML = "Date of the first use of the given type of contraception: ";
+                                                                        fDateLabel.style.fontWeight = "bold";
+                                                                        fDateLabel.style.display = "inline-block";
+                                                                        fDateLabel.style.width = "470px";
+                                                                        parent.append(fDateLabel);
+                                                                        var fDate = document.createElement("div");
+                                                                        fDate.setAttribute('id', 'date');
+                                                                        fDate.innerHTML = date;
+                                                                        fDate.style.display = "inline-block";
+                                                                        parent.append(fDate);
+
+                                                                        last = data3.version.data.content[2].data.items[i].items[3].value.value;
+                                                                        last = last.toString().replace('T', ' ');
+                                                                        var lDateLabel = document.createElement("label");
+                                                                        lDateLabel.setAttribute("for", "last");
+                                                                        lDateLabel.innerHTML = "Date of the last use of the given type of contraception: ";
+                                                                        lDateLabel.style.fontWeight = "bold";
+                                                                        lDateLabel.style.display = "inline-block";
+                                                                        lDateLabel.style.width = "465px";
+                                                                        parent.append(lDateLabel);
+                                                                        var lDate = document.createElement("div");
+                                                                        lDate.setAttribute('id', 'last');
+                                                                        lDate.innerHTML = last;
+                                                                        lDate.style.display = "inline-block";
+                                                                        parent.append(lDate);
 
 
-                                                            if (contraception != "never used") {
-                                                                for (let i = 1; i < data3.version.data.content[2].data.items.length; i++) {
-                                                                    parent.append(document.createElement("BR"));
-                                                                    parent.append(document.createElement("BR"));
-                                                                    contraceptionType = data3.version.data.content[2].data.items[i].items[0].value.value;
-                                                                    var cTLabel = document.createElement("label");
-                                                                    cTLabel.setAttribute("for", "type");
-                                                                    cTLabel.innerHTML = "Type of contraception: ";
-                                                                    cTLabel.style.fontWeight = "bold";
-                                                                    cTLabel.style.display = "inline-block";
-                                                                    cTLabel.style.width = "195px";
-                                                                    parent.append(cTLabel);
-                                                                    var cT = document.createElement("div");
-                                                                    cT.setAttribute('id', 'type');
-                                                                    cT.innerHTML = contraceptionType;
-                                                                    cT.style.display = "inline-block";
-                                                                    parent.append(cT);
+                                                                    }
 
-                                                                    status = data3.version.data.content[2].data.items[i].items[1].value.value;
-                                                                    var statLabel = document.createElement("label");
-                                                                    statLabel.setAttribute("for", "status");
-                                                                    statLabel.innerHTML = "Status of using a given type of contraception: ";
-                                                                    statLabel.style.fontWeight = "bold";
-                                                                    statLabel.style.display = "inline-block";
-                                                                    statLabel.style.width = "390px"
-                                                                    parent.append(statLabel);
-                                                                    var stat = document.createElement("div");
-                                                                    stat.setAttribute('id', 'status');
-                                                                    stat.innerHTML = status;
-                                                                    stat.style.display = "inline-block";
-                                                                    parent.append(stat);
-
-                                                                    date = data3.version.data.content[2].data.items[i].items[2].value.value;
-                                                                    date = date.toString().replace('T', ' ');
-                                                                    var fDateLabel = document.createElement("label");
-                                                                    fDateLabel.setAttribute("for", "date");
-                                                                    fDateLabel.innerHTML = "Date of first use of the given type of contraception: ";
-                                                                    fDateLabel.style.fontWeight = "bold";
-                                                                    fDateLabel.style.display = "inline-block";
-                                                                    fDateLabel.style.width = "435px";
-                                                                    parent.append(fDateLabel);
-                                                                    var fDate = document.createElement("div");
-                                                                    fDate.setAttribute('id', 'date');
-                                                                    fDate.innerHTML = date;
-                                                                    fDate.style.display = "inline-block";
-                                                                    parent.append(fDate);
-
-                                                                    last = data3.version.data.content[2].data.items[i].items[3].value.value;
-                                                                    last = last.toString().replace('T', ' ');
-                                                                    var lDateLabel = document.createElement("label");
-                                                                    lDateLabel.setAttribute("for", "last");
-                                                                    lDateLabel.innerHTML = "Date of last use of the given type of contraception: ";
-                                                                    lDateLabel.style.fontWeight = "bold";
-                                                                    lDateLabel.style.display = "inline-block";
-                                                                    lDateLabel.style.width = "430px";
-                                                                    parent.append(lDateLabel);
-                                                                    var lDate = document.createElement("div");
-                                                                    lDate.setAttribute('id', 'last');
-                                                                    lDate.innerHTML = last;
-                                                                    lDate.style.display = "inline-block";
-                                                                    parent.append(lDate);
-
-
+                                                                } else {
+                                                                    console.log("nth");
                                                                 }
-
                                                             }
                                                             parent.append(document.createElement("BR"));
                                                             var hr = document.createElement("hr");
