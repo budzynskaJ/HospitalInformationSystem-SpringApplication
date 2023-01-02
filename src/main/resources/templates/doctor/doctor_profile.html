@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor's Profile Page</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../Hospital Information System - mini.png" />
+    <link th:rel="stylesheet" th:href="@{/css/base.css}">
+
+
+</head>
+<style>
+    #first{
+        color: rgba(24,31,151,0.93);
+    }
+
+    .invalid input:required:invalid {
+        background: #BE4C54;
+    }
+
+    .card {
+        border-radius: 18px;
+        box-shadow: 1px 1px 8px 0 grey;
+        height: auto;
+        width: 850px;
+        background-color: #f2f5f9;
+    }
+    .card table {
+        margin-left: 15px;
+        border: none;
+        font-size: 20px;
+        height: 170px;
+        width: 80%;
+    }
+    .card table tr td:nth-child(2) {
+        width: 300px;
+    }
+    .card table tr td:nth-child(3) {
+        width: 200px;
+        horiz-align: right;
+    }
+    .title {
+        font-weight: bold;
+    }
+    .label-pass {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    #info {
+        padding-left: 15px;
+        color: #3C4553;
+        font-size: 14px;
+    }
+
+</style>
+<body>
+<nav class="navbar fixed-top navbar-expand-sm" id="nav1">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/main_doctor}">
+            <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i><span class="material-symbols-rounded">menu</span></i>
+        </button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav2">
+            <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
+            vertical-align: middle; display: inline-block">
+
+                <li class="nav-item" >
+                    <a class="nav-link" th:inline="text">
+                        <img src="../doctor.png" alt="" style="height: 30px;">
+                        <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
+                        <b style="text-transform:capitalize; padding: 10px 10px;
+            vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">
+                        <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
+                    </a>
+
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<input type="checkbox" id="check">
+<label for="check">
+    <i><span class="material-symbols-rounded" id="btn">menu</span></i>
+    <i></i><span class="material-symbols-rounded" id="close">close</span></i>
+</label>
+<div class="sidebar">
+    <div title="Check your profile">
+        <header>
+            <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
+            <br><br>
+            <b id="first" style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+        </header>
+    </div>
+    <br>
+    <ul>
+        <li class="list" id="patient-list">
+            <a class="active" id="pl" th:href="@{/doctor/doctor_patients}">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >patient_list</span>
+                Patient list
+            </a>
+        </li>
+        <li class="list" id="appointments-list">
+            <a href="#" th:href="@{/doctor/doctor_appointments}">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >clinical_notes</span>
+                History of appointments
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col mb-3" id="profile-page" >
+            <div class="prof" style="padding-top: 110px; padding-left: 150px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right" style="font-weight: bold">My profile</h3>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td class="title">First name: </td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.firstname}]]</td>
+                                <td class="address" style="font-weight: bold">Address </td>
+                            </tr>
+                            <tr>
+                                <td class="title">Middle name:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.middlename}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.street}]]
+                                [[${#httpServletRequest.userPrincipal.principal.address.house_number}]]
+                                     [[${#httpServletRequest.userPrincipal.principal.address.apartment_number}]]</td>
+                            </tr>
+                            <tr>
+                                <td class="title">Surname:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.surname}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.postcode}]]
+                                [[${#httpServletRequest.userPrincipal.principal.address.city}]]</td>
+                            </tr>
+                            <tr>
+                                <td class="title">Username:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.username}]]</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.address.country}]]</td>
+                            </tr>
+                            <tr>
+                                <td class="title">E-mail:</td>
+                                <td>[[${#httpServletRequest.userPrincipal.principal.email}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <br>
+                <label id="info">If you want to change some of your data, please contact the administrator.</label>
+                <br>
+                <br>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right" style="font-weight: bold">Password change</h3>
+                </div>
+                <div class="card">
+                    <div class="card-body" style=" max-height: 400px; height: 370px !important;">
+                        <form class="needs-validation" novalidate>
+                            <div class="form-group">
+                            <tbody>
+                                <tr>
+                                    <td class="label-pass">Enter your current password:</td>
+                                    <td><input id="pass" type="password" class="form-control" required="required"></td>
+                                </tr>
+                                <div class="invalid-feedback">
+                                    Please fill in this field.
+                                </div>
+                                <div>
+                                    <span id="message0" style="color: red"> </span>
+                                </div>
+                                <br>
+                                <tr>
+                                    <td class="label-pass">Enter your new password:</td>
+                                    <td><input id="newpass" type="password" class="form-control" required="required"></td>
+                                </tr>
+                                <div class="invalid-feedback">
+                                    Please fill in this field.
+                                </div>
+                                <br>
+                                <tr>
+                                    <td class="label-pass">Reenter your new password:</td>
+                                    <td><input id="newpass2" type="password" class="form-control" required="required"></td>
+                                </tr>
+                                <div class="invalid-feedback">
+                                    Please fill in this field.
+                                </div>
+                                <div>
+                                    <span id="message" style="color: red"> </span>
+                                </div>
+                                <br>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-success" id="savebtn" onclick="password()"
+                                        style="position: absolute; bottom: 20px; right: 30px">Confirm</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/doctorProfileScript.js}"></script>
+
+
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

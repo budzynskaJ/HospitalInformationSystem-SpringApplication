@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patients</title>
+
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+  <link rel="icon" type="image/png" href="../Hospital Information System - mini.png" />
+  <link th:rel="stylesheet" th:href="@{/css/base.css}">
+
+</head>
+<style>
+
+  #pp{
+    background-color: rgba(24,31,151,0.10);
+    color: rgba(24,31,151,0.93);
+  }
+
+  .table-container{
+    padding-top: 100px;
+    width: 110%;
+  }
+
+  .invalid input:required:invalid {
+    background: #BE4C54;
+  }
+
+  #patient-head tr th {
+    text-align: center;
+  }
+  .patient-table tr td {
+    text-align: center;
+  }
+
+
+  .modal-90p {
+    width:90%;
+  }
+
+  .modal-title {
+    font-weight: bold;
+  }
+
+  #change-address {
+    border: none;
+    outline: none;
+    border-radius: 5%;
+    /*background-color: #89CFF0;*/
+    text-align: center;
+    height: 40px;
+    width: 150px;
+    color: white;
+    background-color: rgb(25, 159, 239);
+  }
+
+  .lead {
+    color: steelblue;
+  }
+
+
+</style>
+<body>
+<nav class="navbar navbar-expand-sm fixed-top" id="nav1">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/main_admin}">
+      <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <i><span class="material-symbols-rounded">menu</span></i>
+    </button>
+    <div class="collapse navbar-collapse" id="nav2">
+      <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
+                vertical-align: middle; display: inline-block">
+        <li class="nav-item">
+          <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{/admin/admin_profile}">
+            <span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 32px">admin_panel_settings</span>
+            <b style="text-transform:capitalize; padding: 10px 10px;
+                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-danger" th:href="@{/login}">
+            <i class="material-symbols-rounded" id="logout" title="Log out" onclick="successfullyLogout()">logout</i>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<input type="checkbox" id="check">
+<label for="check">
+  <i><span class="material-symbols-rounded" id="btn">menu</span></i>
+  <i></i><span class="material-symbols-rounded" id="close">close</span></i>
+</label>
+<div class="sidebar">
+  <a class="prof" title="Check your profile" th:href="@{/admin/admin_profile}">
+    <header>
+      <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
+      <br><br>
+      <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+    </header>
+  </a>
+  <br>
+  <ul>
+    <li class="list">
+      <a class="active" th:href="@{/admin/admin_users}">
+        <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">group</span>
+        Users
+      </a>
+    </li>
+    <li class="list">
+      <a class="active" id="pp">
+        <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">patient_list</span>
+        Patients
+      </a>
+    </li>
+    <li class="list" id="ad">
+      <a class="active" th:href="@{/admin/admin_addresses}">
+        <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">location_city</span>
+        Addresses
+      </a>
+    </li>
+  </ul>
+
+</div>
+
+<div class="container">
+  <div class="table-container" id="patients" style="display: block">
+    <div class="table-responsive">
+      <table class="table table-striped th-sm patient-table" style="border-spacing: 0">
+        <thead id="patient-head">
+        <tr>
+          <th>ID</th>
+          <th>First name</th>
+          <th>Middle name</th>
+          <th>Surname</th>
+          <th>Birth date</th>
+          <th>PESEL</th>
+          <th>Sex</th>
+          <th>Phone number</th>
+          <th>Address</th>
+          <th>UID</th>
+          <th>Status</th>
+          <th class="text-right" style="width: 102%">Actions</th>
+        </tr>
+        </thead>
+        <tbody id="patientsData">
+
+        </tbody>
+      </table>
+    </div>
+    <div class="modal fade" id="editPatient" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editPatientLabel">Edit Patient</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="EditPatientForm">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <p class="lead">Patients data</p>
+                      <label>ID</label>
+                      <input type="text" name="name_id" class="form-control" id="idp" readonly="readonly">
+                      <br>
+                      <label for="fn">First name</label>
+                      <input type="text" class="form-control" required="required" id="fn">
+                      <br>
+                      <label>Middle name</label>
+                      <input type="text" class="form-control" id="middlename">
+                      <br>
+                      <label for="surname">Surname</label>
+                      <input type="text" class="form-control" required="required" id="surname">
+                      <br>
+                      <label for="birthdate">Birth date</label>
+                      <input type="date" class="form-control" required="required" id="birthdate" readonly="readonly"
+                      style="width: 180px">
+                      <br>
+                      <label>PESEL</label>
+                      <input type="number" class="form-control" id="pesel" readonly= "readonly"; pattern=".{0}|.{11}" title="incorrect PESEL length">
+                      <br>
+                      <label>Sex</label>
+                      <br>
+                      <form id="sex">
+                        <label><input type="radio" name="sex" value="F" checked> Female</label>
+                        <br>
+                        <label><input type="radio" name="sex" value="M"> Male</label>
+                      </form>
+                      <br>
+                      <label for="phonenumber">Phone number</label>
+                      <input type="number" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                      <br>
+                      <label>UID</label>
+                      <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <p class="lead">Address</p>
+                      <div id="addressID" style="display: none"></div>
+                      <div id="address" style="width: 200px"></div>
+                      <br>
+                      <button type="button" id="change-address" onclick="showPatientAddress()">Change address</button>
+                      <div id="addressForm" style="visibility: hidden">
+                        <label for="street">Street</label>
+                        <input type="text" class="form-control" id="street">
+                        <br>
+                        <div class="row">
+                          <div class="col">
+                            <br>
+                            <label for="housenumber">House number</label>
+                            <input type="text" class="form-control" id="housenumber" style="width: 120px">
+                          </div>
+                          <div class="col">
+                            <label for="apartmentnumber">Apartment number</label>
+                            <input type="text" class="form-control" id="apartmentnumber" style="width: 120px">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city">
+                          </div>
+                          <div class="col">
+                            <label for="postcode">Postcode</label>
+                            <input type="text" class="form-control" id="postcode" style="width: 120px">
+                          </div>
+                        </div>
+                        <br>
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" id="country" style="width: 270px">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="savebtn" onclick="editData()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="New" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addPatientLabel">Add new patient</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="PatientForm">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <p class="lead">Patients data</p>
+                    <label for="newfn">First name</label>
+                    <input type="text" class="form-control" required="required" id="newfn">
+                    <br>
+                    <label>Middle name</label>
+                    <input type="text" class="form-control" id="newmiddlename">
+                    <br>
+                    <label for="newsurname">Surname</label>
+                    <input type="text" class="form-control" required="required" id="newsurname">
+                    <br>
+                    <label for="newbirthdate">Birth date</label>
+                    <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
+                    <br>
+                    <label>PESEL</label>
+                    <input type="number" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
+                    <br>
+                    <label>Sex</label>
+                    <br>
+                    <form id="newsex">
+                      <label><input type="radio" name="newsex" value="F" checked> Female</label>
+                      <br>
+                      <label><input type="radio" name="newsex" value="M"> Male</label>
+                    </form>
+                    <br>
+                    <label for="newphonenumber">Phone number</label>
+                    <input type="number" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                    <br>
+                    <label for="newuid">UID</label>
+                    <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
+                    <br>
+                    <input type="checkbox" id="checkUID" onclick="createehruid()">
+                    <label for="checkUID">Create an ehr UID for this patient</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <p class="lead">Address</p>
+                    <label for="newstreet">Street</label>
+                    <input type="text" class="form-control" required="required" id="newstreet">
+                    <br>
+                    <div class="row">
+                      <div class="col">
+                        <br>
+                        <label for="newhousenumber">House number</label>
+                        <input type="text" class="form-control" required="required" id="newhousenumber" style="width: 120px;">
+                      </div>
+                      <div class="col">
+                        <label for="newapartmentnumber">Apartment number</label>
+                        <input type="text" class="form-control" id="newapartmentnumber" style="width: 120px">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col">
+                        <label for="newcity">City</label>
+                        <input type="text" class="form-control" required="required" id="newcity">
+                      </div>
+                      <div class="col">
+                        <label for="newpostcode">Postcode</label>
+                        <input type="text" class="form-control" required="required" id="newpostcode" style="width: 120px;">
+                      </div>
+                    </div>
+                    <br>
+                    <label for="newcountry">Country</label>
+                    <input type="text" class="form-control" required="required" id="newcountry" style="width: 270px;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="newsavebtn" onclick="newData()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/patientScript.js}"></script>
+
+
+<script>
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+<script>
+  function showPatientAddress() {
+    document.getElementById('addressForm').style.visibility = "visible";
+    document.getElementById('street').required = true;
+    document.getElementById('housenumber').required = true;
+    document.getElementById('city').required = true;
+    document.getElementById('postcode').required = true;
+    document.getElementById('country').required = true;
+  }
+</script>
+
+
+</body>
+</html>

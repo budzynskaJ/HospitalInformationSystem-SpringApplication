@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link rel="icon" type="image/png" href="../Hospital Information System - mini.png" />
+    <link th:rel="stylesheet" th:href="@{/css/base.css}">
+
+</head>
+<style>
+    #first{
+        background-color: rgba(24,31,151,0.10);
+        color: rgba(24,31,151,0.93);
+    }
+    .table-container{
+        padding-top: 100px;
+    }
+
+    .invalid input:required:invalid {
+        background: #BE4C54;
+    }
+
+    .values .val-box i {
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        margin-right: 15px;
+    }
+    .values .val-box:nth-child(1) i {
+        background: #b24242;
+    }
+    .values .val-box:nth-child(2) i {
+        background: #c66262;
+    }
+    .values .val-box:nth-child(3) i {
+        background: #da7a7a;
+    }
+    .values .val-box h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .values .val-box span {
+        font-size: 15px;
+        color: #828997;
+    }
+    #user-head tr th {
+        text-align: center;
+    }
+    .user-table tr td {
+        text-align: center;
+    }
+
+    .modal-90p {
+        width:90%; /* 80% of page to provide space for labels */
+    }
+    .modal-title {
+        font-weight: bold;
+    }
+
+    #change-address {
+        border: none;
+        outline: none;
+        border-radius: 5%;
+        /*background-color: #89CFF0;*/
+        text-align: center;
+        height: 40px;
+        width: 150px;
+        color: white;
+        background-color: rgb(25, 159, 239);
+    }
+    .lead {
+        color: steelblue;
+    }
+
+
+
+</style>
+<body>
+<nav class="navbar navbar-expand-sm fixed-top" id="nav1">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/main_admin}">
+            <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i><span class="material-symbols-rounded">menu</span></i>
+        </button>
+        <div class="collapse navbar-collapse" id="nav2">
+            <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
+                vertical-align: middle; display: inline-block">
+                <li class="nav-item">
+                    <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{admin/admin_profile}">
+                        <span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 32px">admin_panel_settings</span>
+                        <b style="text-transform:capitalize; padding: 10px 10px;
+                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-danger" th:href="@{/login}">
+                        <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<input type="checkbox" id="check">
+<label for="check">
+    <i><span class="material-symbols-rounded" id="btn">menu</span></i>
+    <i></i><span class="material-symbols-rounded" id="close">close</span></i>
+</label>
+<div class="sidebar">
+    <a class="prof" title="Check your profile" th:href="@{/admin/admin_profile}">
+        <header>
+            <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
+            <br><br>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+        </header>
+    </a>
+    <br>
+    <ul>
+        <li class="list">
+            <a class="active" id="first">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">group</span>
+                Users
+            </a>
+        </li>
+        <li class="list" id="pp">
+            <a class="active" th:href="@{/admin/admin_patients}">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">patient_list</span>
+                Patients
+            </a>
+        </li>
+        <li class="list" id="ad">
+            <a class="active" th:href="@{/admin/admin_addresses}">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">location_city</span>
+                Addresses
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<div class="container">
+    <div class="table-container" id="users" style="display: block; width: 100%">
+        <table class="table table-striped user-table" style="border-spacing: 0">
+            <thead id="user-head">
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Middle name</th>
+                <th>Surname</th>
+                <th>Username</th>
+                <th>E-mail</th>
+                <th>Role</th>
+                <th>Address</th>
+                <th class="text-right" >Actions</th>
+            </tr>
+            </thead>
+            <tbody id="usersData">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" style="max-height: 100vh">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserLabel">Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="EditUserForm">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">User data</p>
+                                        <label for="idu">ID</label>
+                                        <input type="text" class="form-control" required="required" id="idu" readonly="readonly"
+                                        style="width: 100px">
+
+                                        <label for="fnu">First name</label>
+                                        <input type="text" class="form-control" required="required" id="fnu">
+                                        <br>
+                                        <label>Middle name</label>
+                                        <input type="text" class="form-control" id="middlenameu">
+                                        <br>
+                                        <label for="surnameu">Surname</label>
+                                        <input type="text" class="form-control" required="required" id="surnameu">
+                                        <br>
+                                        <label>Username</label>
+                                        <input type="text" class="form-control" required="required" id="username" readonly="readonly">
+                                        <br>
+                                        <label>E-mail</label>
+                                        <input type="email" class="form-control" required="required" id="email" readonly="readonly">
+                                        <br>
+                                        <label>Role</label>
+                                        <input type="text" class="form-control" id="role" readonly="readonly" style="width: 170px">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">Address</p>
+                                        <div id="addressID" style="display: none"></div>
+                                        <div id="address" style="width: 200px;"></div>
+                                        <br>
+                                        <button type="button" id="change-address" onclick="showUserAddress()">Change address</button>
+                                        <div id="addressForm" style="visibility: hidden">
+                                            <label for="streetu">Street</label>
+                                            <input type="text" class="form-control" id="streetu">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <br>
+                                                    <label for="housenumberu">House number</label>
+                                                    <input type="text" class="form-control" id="housenumberu" style="width: 120px;">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="apartmentnumberu">Apartment number</label>
+                                                    <input type="text" class="form-control" id="apartmentnumberu" style="width: 120px;">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="cityu">City</label>
+                                                    <input type="text" class="form-control" id="cityu">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="postcodeu">Postcode</label>
+                                                    <input type="text" class="form-control" id="postcodeu" style="width: 120px">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <label for="countryu">Country</label>
+                                            <input type="text" class="form-control" id="countryu" style="width: 270px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="savebtnu" onclick="editUser()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-90p" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserLabel">Add new user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="UserForm">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">User data</p>
+                                        <label for="newfnu">First name</label>
+                                        <input type="text" class="form-control" required="required" id="newfnu">
+                                        <br>
+                                        <label>Middle name</label>
+                                        <input type="text" class="form-control" id="newmiddlenameu">
+                                        <br>
+                                        <label for="newsurnameu">Surname</label>
+                                        <input type="text" class="form-control" required="required" id="newsurnameu">
+                                        <br>
+                                        <label for="newusername">Username</label>
+                                        <input type="text" class="form-control" required="required" id="newusername">
+                                        <br>
+                                        <label for="newemail">E-mail</label>
+                                        <input type="email" class="form-control" id="newemail">
+                                        <br>
+                                        <label>Role</label>
+                                        <select name = "newrole" id="newrole" class="form-control" style="width: 170px">
+                                            <option value="ADMIN">ADMIN</option>
+                                            <option value="USER">USER</option>
+                                        </select>
+                                        <br>
+                                        <label for="password">Password</label>
+                                        <input type="text" class="form-control" required="required" id="password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="lead">Address</p>
+                                        <label for="newstreetu">Street</label>
+                                        <input type="text" class="form-control" required="required" id="newstreetu">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col">
+                                                <br>
+                                                <label for="newhousenumberu">House number</label>
+                                                <input type="text" class="form-control" required="required" id="newhousenumberu" style="width: 120px;">
+                                            </div>
+                                            <div class="col">
+                                                <label for="newapartmentnumberu">Apartment number</label>
+                                                <input type="text" class="form-control" id="newapartmentnumberu" style="width: 120px">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="newcityu">City</label>
+                                                <input type="text" class="form-control" required="required" id="newcityu">
+                                            </div>
+                                            <div class="col">
+                                                <label for="newpostcodeu">Postcode</label>
+                                                <input type="text" class="form-control" required="required" id="newpostcodeu"
+                                                style="width: 120px;">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <label for="newcountryu">Country</label>
+                                        <input type="text" class="form-control" required="required" id="newcountryu" style="width: 270px">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="newsavebtnu" onclick="newUser()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/userScript.js}"></script>
+
+<script>
+    function showUserAddress() {
+        document.getElementById('addressForm').style.visibility = "visible";
+        document.getElementById('streetu').required = true;
+        document.getElementById('housenumberu').required = true;
+        document.getElementById('cityu').required = true;
+        document.getElementById('postcodeu').required = true;
+        document.getElementById('countryu').required = true;
+    }
+</script>
+
+
+</body>
+</html>

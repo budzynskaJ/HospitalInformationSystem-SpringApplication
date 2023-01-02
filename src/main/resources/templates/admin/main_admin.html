@@ -2,170 +2,79 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main Admin Page</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <link rel="icon" type="image/png" href="webapp-hospital(2).png" sizes="50x50" />
+    <link rel="icon" type="image/png" href="Hospital Information System - mini.png" />
+    <link th:rel="stylesheet" th:href="@{/css/base.css}">
 </head>
 
 <style>
-    *{
-        margin: 0;
-        list-style: none;
-        box-sizing: border-box;
-        font-family: 'Montserrat', sans-serif;
+    .i-name {
+        color: #3C4553;
+        padding: 30px 30px 0 30px;
+        font-size: 32px;
+        font-weight: 900;
     }
-    body{
-        background: #e1ecf2;
-    }
-    .navbar-brand{
-        color: white;
-        font-size: 30px;
-        font-weight: bold;
-    }
-    .navbar-brand:hover{
-        color: #CE2020;
-    }
-
-    .nav-item{
-        color: white;
-        font-size: 18px;
-        padding: 10px 10px;
-        vertical-align: middle;
-        display: inline-block;
-    }
-
-    .nav-link{
-        color: white;
-    }
-    .nav-link:hover{
-        color: #CE2020;
-    }
-
-    #nav1{
-        background-color: rgba(24,31,151,0.93) !important;
-        padding-right: 35px;
-        padding-left: 35px;
-        height: 80px;
-    }
-
-    #logout{
-        color: white;
-        font-size: 30px;
+    .values {
+        padding: 30px 30px 0 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
         align-items: center;
-        margin-top: 10px;
-        padding-left: 25px;
-    }
 
-    #logout:hover{
-        color: grey;
     }
-
-    .sidebar{
-        position: fixed;
-        top: 80px;
-        left: -300px;
-        width: 300px;
-        height: 100%;
-        background: #DAE9F1;
-        transition: all .5s ease;
-    }
-
-    .sidebar header {
-        text-align: center;
-        font-size: 20px;
-        position: relative;
-        width: 100%;
-        height: 110px;
-        padding-top: 1em;
-        display: inline-block;
-        font-weight: bolder;
-        border-bottom: 1px inset;
-    }
-
-    .sidebar ul li a:first-child{
-        padding: 6px 0 6px;
-    }
-
-    .sidebar ul li{
-        padding: 7px 0 7px;
-        position: relative;
-        border-radius: 23px;
-        width: 100%;
-        margin: 0 5px 0 -20px;
-        list-style: none;
-    }
-
-    .sidebar ul li a{
+    .values .val-box {
+        background: #fff;
+        width: 250px;
+        padding: 16px 20px;
+        border-radius: 20px;
         display: flex;
+        justify-content: flex-start;
         align-items: center;
-        font-size: 15px;
-        font-weight: bold;
-        text-decoration: none;
-        color: dimgrey;
-        transition: all 0.4s ease;
-        border-radius: 23px;
-        line-height: 40px;
     }
-
-    .sidebar ul li a:hover{
-        color: rgba(24,31,151,0.93);
-        background-color: rgba(24,31,151,0.10);
-    }
-
-    .sidebar ul li.active a{
-        background-color: rgba(24,31,151,0.10);
-        color: rgba(24,31,151,0.93);
-    }
-
-    .sidebar ul li a span{
-        height: 35px;
-        min-width: 35px;
-        border-radius: 15px;
+    .values .val-box i {
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        border-radius: 50%;
         text-align: center;
-        margin-right: 5px;
+        color: #fff;
+        margin-right: 15px;
+    }
+    .values .val-box:nth-child(1) i {
+        background: rgb(0, 0, 130);
+    }
+    .values .val-box:nth-child(2) i {
+        background: rgba(25,30,151);
+    }
+    .values .val-box:nth-child(3) i {
+        background: #b20004;
+    }
+    .values .val-box:nth-child(4) i {
+        background: #8C0000;
+    }
+    .values .val-box h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .values .val-box span {
+        font-size: 15px;
+        color: #828997;
     }
 
-    #check{
-        display: none;
-    }
-    label #btn, label #close{
-        position: absolute;
-        cursor: pointer;
-        border-radius: 3px;
-    }
-    label #btn{
-        left: 40px;
-        top: 85px;
-        font-size: 35px;
-        color: rgba(24,31,151,0.93);
-        padding: 6px 12px;
-        transition: all .5s;
-    }
-    label #close{
-        z-index: 1111;
-        left: -250px;
-        top: 85px;
-        font-size: 30px;
-        color: rgba(24,31,151,0.93);
-        padding: 4px 9px;
-        transition: all .5s ease;
-    }
 
-    #check:checked ~ .sidebar{
-        left: 0;
-    }
-    #check:checked ~ label #btn{
-        left: 300px;
-        opacity: 0;
-        pointer-events: none;
-    }
-    #check:checked ~ label #close{
-        left: 250px;
-    }
+
 </style>
 <body>
 
@@ -173,32 +82,25 @@
 <nav class="navbar navbar-expand-sm fixed-top" id="nav1">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-            <img src="webapp-hospital(2).png" alt="" style="height: 60px">
-            Hospital</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <img src="Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i><span class="material-symbols-rounded">menu</span></i>
         </button>
         <div class="collapse navbar-collapse" id="nav2">
             <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
                 vertical-align: middle; display: inline-block">
-
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Main
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-
                 <li class="nav-item">
-                    <a class="nav-link" th:inline="text">
+                    <a class="nav-link" th:inline="text" title="Check your profile" th:href="@{/admin/admin_profile}">
+                        <span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 32px">admin_panel_settings</span>
                         <b style="text-transform:capitalize; padding: 10px 10px;
-                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.remoteUser}]]</b></a>
+                            vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link text-danger" th:href="@{/login}">
-                        <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
+                    <a class="nav-link" th:href="@{/login}">
+                        <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
                     </a>
                 </li>
 
@@ -212,48 +114,117 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <header><b style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></header>
+    <a class="prof" title="Check your profile" th:href="@{/admin/admin_profile}">
+        <header>
+            <b><img src="undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
+            <br><br>
+            <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+        </header>
+    </a>
+    <br>
     <ul>
-        <li class="list">
-            <a href="#">
-                <span class="material-symbols-rounded" style="font-size: 30px; padding-bottom: -10px">list</span>
+        <li class="list" id="up">
+            <a class="active" th:href="@{/admin/admin_users}">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">group</span>
+                Users
+            </a>
+        </li>
+        <li class="list" id="pp">
+            <a class="active" th:href="@{/admin/admin_patients}">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">patient_list</span>
                 Patients
             </a>
         </li>
-        <li class="list">
-            <a href="#">
-                <span class="material-symbols-rounded" style="font-size: 28px">assignment</span>
-                Appointments
+        <li class="list" id="ad">
+            <a class="active" th:href="@{/admin/admin_addresses}">
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">location_city</span>
+                Addresses
             </a>
         </li>
     </ul>
 
 </div>
+
 <div class="container">
     <div class="row">
-
-
+        <div id="dashboard" style="display: block; width: 100%; padding-top: 80px">
+            <h3 class="i-name">Dashboard</h3>
+            <div class="values">
+                <div class="val-box">
+                    <i class="fas fa-user-shield"></i>
+                    <div>
+                        <h3 id="numberOfAdmins"></h3>
+                        <span>Admins</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fa fa-user-md"></i>
+                    <div>
+                        <h3 id="numberOfD"></h3>
+                        <span>Doctors</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fa fa-users"></i>
+                    <div>
+                        <h3 id="numberOfP"></h3>
+                        <span>Active patients</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fa fa-home"></i>
+                    <div>
+                        <h3 id="numberOfA"></h3>
+                        <span>Addresses</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/userScript.js}"></script>
+<script th:src="@{/js/adminScript.js}"></script>
+<script th:src="@{/js/patientScript.js}"></script>
+<script th:src="@{/js/addressScript.js}"></script>
 
 <script>
-    let list = document.querySelectorAll('.list');
-    for(let i = 0; i<list.length; i++){
-        list[i].onclick = function (){
-            let j = 0;
-            while(j<list.length){
-                list[j++].className = 'list';
-            }
-            list[i].className = 'list active';
-        }
-    }
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 </script>
+
+
+
+
+
 
 </body>
 </html>

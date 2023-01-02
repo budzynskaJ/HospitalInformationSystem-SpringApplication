@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Appointments Page</title>
+
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+
+  <link rel="icon" type="image/png" href="../Hospital Information System - mini.png" />
+  <link th:rel="stylesheet" th:href="@{/css/base.css}">
+
+</head>
+
+<style>
+
+  .table-container{
+    padding-top: 100px;
+  }
+  #al{
+    background-color: rgba(24,31,151,0.10);
+    color: rgba(24,31,151,0.93);
+  }
+  .modal-title {
+    font-weight: bold;
+  }
+  #patient-head tr th {
+    text-align: center;
+  }
+  .patient-table tr td {
+    text-align: center;
+  }
+  #patient-info tr td:nth-child(1) {
+    font-weight: bold;
+  }
+  .lead {
+    color: steelblue;
+  }
+
+
+
+</style>
+<body>
+<nav class="navbar fixed-top navbar-expand-sm" id="nav1">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/main_doctor}">
+      <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <i><span class="material-symbols-rounded">menu</span></i>
+    </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav2">
+      <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
+            vertical-align: middle; display: inline-block">
+
+        <li class="nav-item" >
+          <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{/doctor/doctor_profile}">
+            <img src="../doctor.png" alt="" style="height: 30px;">
+            <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
+            <b style="text-transform:capitalize; padding: 10px 10px;
+            vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/login}">
+            <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
+          </a>
+
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<input type="checkbox" id="check">
+<label for="check">
+  <i><span class="material-symbols-rounded" id="btn">menu</span></i>
+  <i></i><span class="material-symbols-rounded" id="close">close</span></i>
+</label>
+<div class="sidebar">
+  <a class="prof" title="Check your profile" th:href="@{/doctor/doctor_profile}">
+    <header>
+      <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 40%"></b>
+      <br><br>
+      <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+    </header>
+  </a>
+  <br>
+  <ul>
+    <li class="list" id="patient-list">
+      <a class="active" th:href="@{/doctor/doctor_patients}">
+        <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >patient_list</span>
+        Patient list
+      </a>
+    </li>
+    <li class="list" id="appointments-list">
+      <a class="active" id="al">
+        <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >clinical_notes</span>
+        History of appointments
+      </a>
+    </li>
+  </ul>
+
+</div>
+
+<div class="container">
+  <div class="table-container" id="patients" style="display: block;">
+    <table class="table table-striped patient-table" style="border-spacing: 0">
+      <thead id="patient-head">
+      <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Middle name</th>
+        <th>Surname</th>
+        <th>Birth date</th>
+        <th>UID</th>
+        <th style="width: 102%">Actions</th>
+      </tr>
+      </thead>
+      <tbody id="patientsData">
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade" id="medicalData" tabindex="-1" role="dialog" aria-labelledby="Query data" aria-hidden="true" style="max-height: 100vh">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-80p" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="medical">History of medical appointments</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="needs-validation" novalidate>
+            <div class="row" style="align-items:center; padding-left: 15px">
+              <div class="col-sm-11">
+                <div class="form-group">
+                  <p class="lead">Patient</p>
+                  <table id="patient-info" class="table">
+                    <tbody>
+                    <tr>
+                      <td>Full name</td>
+                      <td id="name"></td>
+                    </tr>
+                    <tr>
+                      <td>Birth date</td>
+                      <td id="birth"></td>
+                    </tr>
+                    <tr>
+                      <td>Age</td>
+                      <td id="age"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col" id="data">
+                      <p class="lead">Appointments</p>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/doctorAppointmentScript.js}"></script>
+
+
+</body>
+
+</html>

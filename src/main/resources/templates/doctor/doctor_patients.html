@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patients</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link rel="icon" type="image/png" href="../Hospital Information System - mini.png" />
+    <link th:rel="stylesheet" th:href="@{/css/base.css}">
+
+</head>
+<style>
+    #pl{
+        background-color: rgba(24,31,151,0.10);
+        color: rgba(24,31,151,0.93);
+    }
+    .table-container{
+        padding-top: 100px;
+    }
+
+    .invalid input:required:invalid {
+        background: #BE4C54;
+    }
+
+    #patient-head tr th {
+        text-align: center;
+    }
+    .patient-table tr td {
+        text-align: center;
+    }
+
+    #patient-info tr td:nth-child(1) {
+        font-weight: bold;
+    }
+
+    .modal-80p {
+        width:80%;
+    }
+
+    .modal-title {
+        font-weight: bold;
+    }
+    .lead {
+        color: steelblue;
+    }
+
+
+
+
+</style>
+<body>
+<nav class="navbar navbar-expand-sm fixed-top" id="nav1">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/main_doctor}">
+            <img src="../Hospital Information System3.png" alt="" class="img-responsive" style="height: 80px"></a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i><span class="material-symbols-rounded">menu</span></i>
+        </button>
+        <div class="collapse navbar-collapse" id="nav2">
+            <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
+                vertical-align: middle; display: inline-block">
+                <li class="nav-item">
+                    <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{doctor/doctor_profile}">
+                        <img src="../doctor.png" alt="" style="height: 30px;">
+                        <b style="text-transform:capitalize; padding: 10px 10px;
+                            vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-danger" th:href="@{/login}">
+                        <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<input type="checkbox" id="check">
+<label for="check">
+    <i><span class="material-symbols-rounded" id="btn">menu</span></i>
+    <i></i><span class="material-symbols-rounded" id="close">close</span></i>
+</label>
+<div class="sidebar">
+    <a class="prof" title="Check your profile" th:href="@{/doctor/doctor_profile}">
+        <header>
+            <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
+            <br><br>
+            <b style="text-transform:capitalize">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
+        </header>
+    </a>
+    <br>
+    <ul>
+        <li class="list" id="patient-list">
+            <a href="#" class="active" id="pl">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >patient_list</span>
+                Patient list
+            </a>
+        </li>
+        <li class="list" id="appointments-list">
+            <a href="#" th:href="@{/doctor/doctor_appointments}">
+                <span class="material-symbols-rounded" style="font-size: 28px; vertical-align: middle !important" >clinical_notes</span>
+                History of appointments
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<div class="container">
+    <div class="table-container" id="patients" style="display: block; width: 100%">
+        <table class="table table-striped patient-table" style="border-spacing: 0">
+            <thead id="patient-head">
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Middle name</th>
+                <th>Surname</th>
+                <th>Birth date</th>
+                <th>PESEL</th>
+                <th>Sex</th>
+                <th>UID</th>
+                <th style="width: 102%">Actions</th>
+            </tr>
+            </thead>
+            <tbody id="patientsData">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="queryData" tabindex="-1" role="dialog" aria-labelledby="Query data" aria-hidden="true" style="max-height: 100vh">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-80p" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserLabel">Gynecology appointment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate>
+                        <div class="row" style="align-items:center; padding-left: 15px">
+                            <div class="col-sm-11">
+                                <div class="form-group">
+                                    <p class="lead">Patient</p>
+                                    <table id="patient-info" class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>Full name</td>
+                                            <td id="name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Birth date</td>
+                                            <td id="birth"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Age</td>
+                                            <td id="age"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <p class="lead">Body mass index</p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="weight">Weight</label>
+                                            <div class="input-group" style="width: 200px">
+                                                <input type="number" class="form-control" required="required" id="weight" min="0" max="1000" step="0.1">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">kg</span>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Weight is required.
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <label for="height">Height</label>
+                                            <div class="input-group" style="width: 200px">
+                                                <input type="number" class="form-control" required="required" id="height" min="0" max="2.30" step="0.01">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">m</span>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Height is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col" style="align-items: center">
+                                            <br>
+                                            <br>
+                                            <label for="bmi">Body mass index</label>
+                                            <div class="input-group" style="width: 200px">
+                                                <input type="number" class="form-control" required="required" id="bmi" readonly="readonly">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">kg/m<sup>2</sup></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p class="lead">Last menstrual period</p>
+                                    <label for="lastUpdated">Date when the last menstrual period started</label>
+                                    <input type="datetime-local" class="form-control" required="required" id="lastUpdated" style="width: 200px">
+                                    <br>
+                                    <label for="lmp">Date of onset of menstrual bleeding</label>
+                                    <p style="font-size: 12px; color: grey">Useful to persist for calculations including estimated date of delivery in pregnancy, or to distinguish the latest
+                                    typical menstrual cycle when there is an irregular menstrual pattern.</p>
+                                    <input type="date" class="form-control" required="required" id="lmp" style="width: 180px;">
+                                    <br>
+                                    <br>
+                                    <label>Description</label>
+                                    <textarea class="form-control" id="description" rows="5" cols="60"></textarea>
+
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <div id="summary">
+                                        <p class="lead">Summary and persistent information about use of the methods to prevent pregnancy</p>
+                                        <label for="contraception">Statement about regular use of any type of contraception</label>
+                                        <select id="contraception" name="contraception">
+                                            <option value="never used">Never used</option>
+                                            <option value="current user">Current user</option>
+                                            <option value="not current user">Not current user</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="savebtnu" onclick="queryData()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+
+<script>
+    var contraception = document.getElementById("contraception");
+    var parent = document.getElementById("summary");
+    contraception.addEventListener("change" ,() => {
+        if (contraception.value != "never used") {
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute('id', 'contraceptionSummary');
+            parent.append(newDiv);
+
+            var controlsDiv = document.createElement("div");
+            controlsDiv.setAttribute('class', 'controls');
+
+            var a = document.createElement("a");
+            a.setAttribute('href', '#');
+            a.setAttribute('id', 'add_more');
+
+            var span = document.createElement("span");
+            span.setAttribute('className', 'material-symbols-rounded');
+            span.innerHTML = 'add';
+            a.append(span);
+            a.innerHTML = 'Add another type';
+            controlsDiv.append(a);
+            newDiv.append(controlsDiv);
+
+            newDiv.append(document.createElement("BR"));
+            newDiv.append(document.createElement("BR"));
+
+            var newLabel = document.createElement("label");
+            newLabel.setAttribute('for', 'contraceptionType');
+            newLabel.innerHTML = "The type of contraception used by patient&nbsp;";
+            var newSelect = document.createElement("select");
+            newSelect.setAttribute('id', 'contraceptionType');
+            newSelect.setAttribute('name', 'contraceptionType');
+
+            var cP = document.createElement("option");
+            cP.value = "combination pill";
+            cP.innerHTML = "Combination pill";
+            var progestrogenOnlyP = document.createElement("option");
+            progestrogenOnlyP.value = "progestrogen-only pill";
+            progestrogenOnlyP.innerHTML = "Progestrogen-only pill";
+            var patch = document.createElement("option");
+            patch.value = "combination skin patch";
+            patch.innerHTML = "Combination skin patch";
+            var depot = document.createElement("option");
+            depot.value = "depot progesstrogen";
+            depot.innerHTML = "Depot progesstrogen";
+            var implant = document.createElement("option");
+            implant.value = "hormone implant";
+            implant.innerHTML = "Hormone implant";
+            var ring = document.createElement("option");
+            ring.value = "vaginal ring"
+            ring.innerHTML = "Vaginal ring";
+            var IUD1 = document.createElement("option");
+            IUD1.value = "IUD with hormone";
+            IUD1.innerHTML = "IUD with hormone";
+            var IUD2 = document.createElement("option");
+            IUD2.value = "IUD without hormone";
+            IUD2.innerHTML = "IUD without hormone";
+            var fSter = document.createElement("option");
+            fSter.value = "female sterilisation";
+            fSter.innerHTML = "Female sterilisation";
+            var mSter = document.createElement("option");
+            mSter.value = "male sterilisation";
+            mSter.innerHTML = "Male sterilisation";
+            var diaph = document.createElement("option");
+            diaph.value = "diaphragm";
+            diaph.innerHTML = "Diaphragm";
+            var douching = document.createElement("option");
+            douching.value = "vaginal douching";
+            douching.innerHTML = "Vaginal douching";
+            var fCon = document.createElement("option");
+            fCon.value = "female condom";
+            fCon.innerHTML = "Female condom";
+            var mCon = document.createElement("option");
+            mCon.value = "male condom";
+            mCon.innerHTML = "Male condom";
+            var withd = document.createElement("option");
+            withd.value = "withdrawal";
+            withd.innerHTML = "Withdrawal";
+            var awereness = document.createElement("option");
+            awereness.value = "fertilty awereness method";
+            awereness.innerHTML = "Fertilty awereness method";
+            var abst = document.createElement("option");
+            abst.value = "abstinence";
+            abst.innerHTML = "Abstinence";
+
+            newSelect.add(cP);
+            newSelect.add(progestrogenOnlyP);
+            newSelect.add(patch);
+            newSelect.add(depot);
+            newSelect.add(implant);
+            newSelect.add(ring);
+            newSelect.add(IUD1);
+            newSelect.add(IUD2);
+            newSelect.add(fSter);
+            newSelect.add(mSter);
+            newSelect.add(diaph);
+            newSelect.add(douching);
+            newSelect.add(fCon);
+            newSelect.add(mCon);
+            newSelect.add(withd);
+            newSelect.add(awereness);
+            newSelect.add(abst);
+
+            newDiv.append(newLabel);
+            newDiv.append(newSelect);
+            newDiv.append(document.createElement("BR"));
+            newDiv.append(document.createElement("BR"));
+
+            var label1 = document.createElement("label");
+            label1.setAttribute('for', 'status');
+            label1.innerHTML = "Statement about current use of specified type of contraception&nbsp;";
+
+            var select1 = document.createElement("select");
+            select1.setAttribute('id', 'status');
+            select1.setAttribute('name', 'status');
+
+            var currentUser = document.createElement("option");
+            var notCurrentUser = document.createElement("option");
+            var neverUsed = document.createElement("option");
+
+            currentUser.value = "current user";
+            currentUser.innerHTML = "Current user";
+            notCurrentUser.value = "not current user";
+            notCurrentUser.innerHTML = "Not current user";
+            neverUsed.value = "never used";
+            neverUsed.innerHTML = "Never used";
+            select1.add(currentUser);
+            select1.add(notCurrentUser);
+            select1.add(neverUsed);
+            newDiv.append(label1);
+            newDiv.append(select1);
+            newDiv.append(document.createElement("BR"));
+            newDiv.append(document.createElement("BR"));
+
+            var label2 = document.createElement("label");
+            label2.setAttribute('for', 'dateContraception');
+            label2.innerHTML = "Date of first use of the specific type of contraception";
+
+            var input2 = document.createElement("input");
+            input2.setAttribute('type', 'datetime-local');
+            input2.setAttribute('className', 'form-control');
+            input2.setAttribute('id', 'dateContraception');
+            input2.required;
+            input2.style.width = "200px";
+
+            newDiv.append(label2);
+            newDiv.append(document.createElement("BR"));
+            newDiv.append(input2);
+            newDiv.append(document.createElement("BR"));
+            newDiv.append(document.createElement("BR"));
+
+            var label3 = document.createElement("label");
+            label3.setAttribute('for', 'dateLast');
+            label3.innerHTML = "Date when patient last used the specified type of contraception";
+
+            var input3 = document.createElement("input");
+            input3.setAttribute('type', 'datetime-local');
+            input3.setAttribute('className', 'form-control');
+            input3.setAttribute('id', 'dateLast');
+            input3.required;
+            input3.style.width = "200px";
+
+            newDiv.append(label3);
+            newDiv.append(document.createElement("BR"));
+            newDiv.append(input3);
+        }
+
+
+            let i = 0;
+            a.onclick = function () {
+                if (i != 4) {
+                    i = i + 1;
+                    newDiv.append(document.createElement("BR"));
+                    newDiv.append(document.createElement("BR"));
+                    newDiv.append(document.createElement("BR"));
+
+                    var newLabel2 = document.createElement("label");
+                    newLabel2.setAttribute('for', 'contraceptionType' + i);
+                    newLabel2.innerHTML = "The type of contraception used by patient&nbsp;";
+                    var newSelect2 = document.createElement("select");
+                    newSelect2.setAttribute('id', 'contraceptionType' + i);
+                    newSelect2.setAttribute('name', 'contraceptionType' + i);
+
+                    var combinationPill = document.createElement("option");
+                    combinationPill.value = "combination pill";
+                    combinationPill.innerHTML = "Combination pill";
+                    var progestrogenOnlyPill = document.createElement("option");
+                    progestrogenOnlyPill.value = "progestrogen-only pill";
+                    progestrogenOnlyPill.innerHTML = "Progestrogen-only pill";
+                    var combinationSkinPatch = document.createElement("option");
+                    combinationSkinPatch.value = "combination skin patch";
+                    combinationSkinPatch.innerHTML = "Combination skin patch";
+                    var depotProgesstrogen = document.createElement("option");
+                    depotProgesstrogen.value = "depot progesstrogen";
+                    depotProgesstrogen.innerHTML = "Depot progesstrogen";
+                    var hormoneImplant = document.createElement("option");
+                    hormoneImplant.value = "hormone implant";
+                    hormoneImplant.innerHTML = "Hormone implant";
+                    var vaginalRing = document.createElement("option");
+                    vaginalRing.value = "vaginal ring"
+                    vaginalRing.innerHTML = "Vaginal ring";
+                    var IUDwith = document.createElement("option");
+                    IUDwith.value = "IUD with hormone";
+                    IUDwith.innerHTML = "IUD with hormone";
+                    var IUDwithout = document.createElement("option");
+                    IUDwithout.value = "IUD without hormone";
+                    IUDwithout.innerHTML = "IUD without hormone";
+                    var fSterilisation = document.createElement("option");
+                    fSterilisation.value = "female sterilisation";
+                    fSterilisation.innerHTML = "Female sterilisation";
+                    var mSterilisation = document.createElement("option");
+                    mSterilisation.value = "male sterilisation";
+                    mSterilisation.innerHTML = "Male sterilisation";
+                    var diaphragm = document.createElement("option");
+                    diaphragm.value = "diaphragm";
+                    diaphragm.innerHTML = "Diaphragm";
+                    var vaginalDouching = document.createElement("option");
+                    vaginalDouching.value = "vaginal douching";
+                    vaginalDouching.innerHTML = "Vaginal douching";
+                    var fCondom = document.createElement("option");
+                    fCondom.value = "female condom";
+                    fCondom.innerHTML = "Female condom";
+                    var mCondom = document.createElement("option");
+                    mCondom.value = "male condom";
+                    mCondom.innerHTML = "Male condom";
+                    var withdrawal = document.createElement("option");
+                    withdrawal.value = "withdrawal";
+                    withdrawal.innerHTML = "Withdrawal";
+                    var fertiltyyAwereness = document.createElement("option");
+                    fertiltyyAwereness.value = "fertilty awereness method";
+                    fertiltyyAwereness.innerHTML = "Fertilty awereness method";
+                    var abstinence = document.createElement("option");
+                    abstinence.value = "abstinence";
+                    abstinence.innerHTML = "Abstinence";
+
+                    newSelect2.add(combinationPill);
+                    newSelect2.add(progestrogenOnlyPill);
+                    newSelect2.add(combinationSkinPatch);
+                    newSelect2.add(depotProgesstrogen);
+                    newSelect2.add(hormoneImplant);
+                    newSelect2.add(vaginalRing);
+                    newSelect2.add(IUDwith);
+                    newSelect2.add(IUDwithout);
+                    newSelect2.add(fSterilisation);
+                    newSelect2.add(mSterilisation);
+                    newSelect2.add(diaphragm);
+                    newSelect2.add(vaginalDouching);
+                    newSelect2.add(fCondom);
+                    newSelect2.add(mCondom);
+                    newSelect2.add(withdrawal);
+                    newSelect2.add(fertiltyyAwereness);
+                    newSelect2.add(abstinence);
+
+                    newDiv.append(newLabel2);
+                    newDiv.append(newSelect2);
+                    newDiv.append(document.createElement("BR"));
+                    newDiv.append(document.createElement("BR"));
+
+                    var newLabel3 = document.createElement("label");
+                    newLabel3.setAttribute('for', 'status' + i);
+                    newLabel3.innerHTML = "Statement about current use of specified type of contraception&nbsp;";
+
+                    var newSelect3 = document.createElement("select");
+                    newSelect3.setAttribute('id', 'status' + i);
+                    newSelect3.setAttribute('name', 'status' + i);
+
+                    var currentUser2 = document.createElement("option");
+                    var notCurrentUser2 = document.createElement("option");
+                    var neverUsed2 = document.createElement("option");
+
+                    currentUser2.value = "current user";
+                    currentUser2.innerHTML = "Current user";
+                    notCurrentUser2.value = "not current user";
+                    notCurrentUser2.innerHTML = "Not current user";
+                    neverUsed2.value = "never used";
+                    neverUsed2.innerHTML = "Never used";
+                    newSelect3.add(currentUser2);
+                    newSelect3.add(notCurrentUser2);
+                    newSelect3.add(neverUsed2);
+                    newDiv.append(newLabel3);
+                    newDiv.append(newSelect3);
+                    newDiv.append(document.createElement("BR"));
+                    newDiv.append(document.createElement("BR"));
+
+                    var newLabel4 = document.createElement("label");
+                    newLabel4.setAttribute('for', 'dateContraception' + i);
+                    newLabel4.innerHTML = "Date of first use of the specific type of contraception";
+
+                    var newInput = document.createElement("input");
+                    newInput.setAttribute('type', 'datetime-local');
+                    newInput.setAttribute('className', 'form-control');
+                    newInput.setAttribute('id', 'dateContraception' + i);
+                    newInput.required;
+                    newInput.style.width = "200px";
+
+                    newDiv.append(newLabel4);
+                    newDiv.append(document.createElement("BR"));
+                    newDiv.append(newInput);
+                    newDiv.append(document.createElement("BR"));
+                    newDiv.append(document.createElement("BR"));
+
+                    var newLabel5 = document.createElement("label");
+                    newLabel5.setAttribute('for', 'dateLast' + i);
+                    newLabel5.innerHTML = "Date when patient last used the specified type of contraception";
+
+                    var newInput2 = document.createElement("input");
+                    newInput2.setAttribute('type', 'datetime-local');
+                    newInput2.setAttribute('className', 'form-control');
+                    newInput2.setAttribute('id', 'dateLast' + i);
+                    newInput2.required;
+                    newInput2.style.width = "200px";
+
+                    newDiv.append(newLabel5);
+                    newDiv.append(document.createElement("BR"));
+                    newDiv.append(newInput2);
+                } else {
+                    alert("You cannot add more than 5 types of contraception")
+
+                }
+
+            }
+
+
+    })
+
+
+
+</script>
+
+<script>
+    const w = document.getElementById("weight");
+    const h = document.getElementById("height");
+    let BMI = document.getElementById("bmi");
+    let bmi_h = 0;
+    let bmi = 0;
+
+    w.addEventListener("input" ,() => {
+        h.addEventListener("input", () => {
+            w.value;
+            h.value;
+
+            bmi_h = h.value**2;
+            bmi_h = bmi_h.toFixed(2);
+            bmi = w.value/bmi_h;
+
+            bmi = bmi.toFixed(2);
+
+            console.log(bmi);
+            BMI.setAttribute('value', bmi);
+        })
+    })
+</script>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/doctorScript.js}"></script>
+
+
+</body>
