@@ -83,6 +83,10 @@
         color: white;
         background-color: rgb(25, 159, 239);
     }
+    .lead {
+        color: steelblue;
+    }
+
 
 
 </style>
@@ -100,7 +104,7 @@
             <ul class="navbar-nav ml-auto" style="padding-left: 25px; padding-right: 25px; padding: 10px 10px;
                 vertical-align: middle; display: inline-block">
                 <li class="nav-item">
-                    <a class="nav-link" th:inline="text">
+                    <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{admin/admin_profile}">
                         <span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 32px">admin_panel_settings</span>
                         <b style="text-transform:capitalize; padding: 10px 10px;
                             vertical-align: middle; margin-left: 0">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
@@ -108,7 +112,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link text-danger" th:href="@{/login}">
-                        <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
+                        <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
                     </a>
                 </li>
 
@@ -122,30 +126,30 @@
     <i></i><span class="material-symbols-rounded" id="close">close</span></i>
 </label>
 <div class="sidebar">
-    <div id="mp" class="active" title="Check your profile" th:href="@{/admin/admin_profile}">
+    <a class="prof" title="Check your profile" th:href="@{/admin/admin_profile}">
         <header>
             <b><img src="../undraw_pic_profile_re_7g2h.svg" alt="" style="height: 45%"></b>
             <br><br>
             <b style="text-transform:capitalize">[[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b>
         </header>
-    </div>
+    </a>
     <br>
     <ul>
         <li class="list">
             <a class="active" id="first">
-                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">list</span>
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important; ">group</span>
                 Users
             </a>
         </li>
         <li class="list" id="pp">
             <a class="active" th:href="@{/admin/admin_patients}">
-                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">patient_list</span>
                 Patients
             </a>
         </li>
         <li class="list" id="ad">
             <a class="active" th:href="@{/admin/admin_addresses}">
-                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">list</span>
+                <span class="material-symbols-rounded" style="font-size: 30px; vertical-align: middle !important;">location_city</span>
                 Addresses
             </a>
         </li>
@@ -370,44 +374,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/userScript.js}"></script>
-
-
-<script>
-    let list = document.querySelectorAll('.list');
-    for(let i = 0; i<list.length; i++){
-        list[i].onclick = function (){
-            let j = 0;
-            while(j<list.length){
-                list[j++].className = 'list';
-            }
-            list[i].className = 'list active';
-
-
-        }
-    };
-
-
-</script>
-<!--<script>
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-
-            var forms = document.getElementsByClassName('needs-validation');
-
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                    document.getElementById("savebtnu").onsubmit = editUser();
-                }, false);
-            });
-        }, false);
-    })();
-</script>-->
 
 <script>
     function showUserAddress() {

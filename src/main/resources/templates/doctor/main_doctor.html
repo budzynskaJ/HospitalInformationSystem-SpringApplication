@@ -96,7 +96,7 @@
             vertical-align: middle; display: inline-block">
 
                 <li class="nav-item" >
-                    <a class="nav-link" th:inline="text">
+                    <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{/doctor/doctor_profile}">
                         <img src="doctor.png" alt="" style="height: 30px;">
                         <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
                         <b style="text-transform:capitalize; padding: 10px 10px;
@@ -104,7 +104,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/login}">
-                        <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
+                        <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
                     </a>
 
                 </li>
@@ -194,21 +194,6 @@
 <script th:src="@{/js/doctorMainScript.js}"></script>
 
 
-<script>
-    let list = document.querySelectorAll('.list');
-    for(let i = 0; i<list.length; i++){
-        list[i].onclick = function () {
-            let j = 0;
-            while (j < list.length) {
-                list[j++].className = 'list';
-            }
-            list[i].className = 'list active';
-        }
-
-    };
-
-
-</script>
 
 
 </body>

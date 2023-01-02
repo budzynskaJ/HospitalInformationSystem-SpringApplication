@@ -29,6 +29,21 @@
     background-color: rgba(24,31,151,0.10);
     color: rgba(24,31,151,0.93);
   }
+  .modal-title {
+    font-weight: bold;
+  }
+  #patient-head tr th {
+    text-align: center;
+  }
+  .patient-table tr td {
+    text-align: center;
+  }
+  #patient-info tr td:nth-child(1) {
+    font-weight: bold;
+  }
+  .lead {
+    color: steelblue;
+  }
 
 
 
@@ -53,7 +68,7 @@
             vertical-align: middle; display: inline-block">
 
         <li class="nav-item" >
-          <a class="nav-link" th:inline="text">
+          <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{/doctor/doctor_profile}">
             <img src="../doctor.png" alt="" style="height: 30px;">
             <!--<span class="material-symbols-rounded" id="doctor">person</span>-->
             <b style="text-transform:capitalize; padding: 10px 10px;
@@ -61,7 +76,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/login}">
-            <i class="material-symbols-rounded" id="logout" onclick="successfullyLogout()">logout</i>
+            <i class="material-symbols-rounded" title="Log out" id="logout" onclick="successfullyLogout()">logout</i>
           </a>
 
         </li>
@@ -113,7 +128,7 @@
         <th>Middle name</th>
         <th>Surname</th>
         <th>Birth date</th>
-        <th>uid</th>
+        <th>UID</th>
         <th style="width: 102%">Actions</th>
       </tr>
       </thead>
@@ -127,7 +142,7 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg modal-80p" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="medical">Patients data</h5>
+          <h5 class="modal-title" id="medical">History of medical appointments</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -137,8 +152,30 @@
             <div class="row" style="align-items:center; padding-left: 15px">
               <div class="col-sm-11">
                 <div class="form-group">
+                  <p class="lead">Patient</p>
+                  <table id="patient-info" class="table">
+                    <tbody>
+                    <tr>
+                      <td>Full name</td>
+                      <td id="name"></td>
+                    </tr>
+                    <tr>
+                      <td>Birth date</td>
+                      <td id="birth"></td>
+                    </tr>
+                    <tr>
+                      <td>Age</td>
+                      <td id="age"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
                   <div class="row">
                     <div class="col" id="data">
+                      <p class="lead">Appointments</p>
 
 
                     </div>
@@ -148,9 +185,7 @@
             </div>
           </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Close</button>
-        </div>
+
       </div>
     </div>
   </div>
@@ -172,23 +207,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/script.js}"></script>
 <script th:src="@{/js/doctorAppointmentScript.js}"></script>
-
-
-<script>
-  let list = document.querySelectorAll('.list');
-  for(let i = 0; i<list.length; i++){
-    list[i].onclick = function () {
-      let j = 0;
-      while (j < list.length) {
-        list[j++].className = 'list';
-      }
-      list[i].className = 'list active';
-    }
-
-  };
-
-
-</script>
 
 
 </body>
