@@ -180,20 +180,22 @@
                       <input type="text" name="name_id" class="form-control" id="idp" readonly="readonly">
                       <br>
                       <label for="fn">First name</label>
-                      <input type="text" class="form-control" required="required" id="fn">
+                      <input type="text" class="form-control" id="fn" pattern="[A-Ża-ż]{1,20}" title="max length: 20, letters only"
+                             required="required">
                       <br>
                       <label>Middle name</label>
-                      <input type="text" class="form-control" id="middlename">
+                      <input type="text" class="form-control" pattern="[A-Ża-Ż]{0,20}" title="max length: 20, letters only" id="middlename">
                       <br>
                       <label for="surname">Surname</label>
-                      <input type="text" class="form-control" required="required" id="surname">
+                      <input type="text" class="form-control" id="surname" pattern="[A-Ża-ż]{1,60}" title="max length: 60, letters only"
+                             required="required">
                       <br>
                       <label for="birthdate">Birth date</label>
                       <input type="date" class="form-control" required="required" id="birthdate" readonly="readonly"
                       style="width: 180px">
                       <br>
                       <label>PESEL</label>
-                      <input type="number" class="form-control" id="pesel" readonly= "readonly"; pattern=".{0}|.{11}" title="incorrect PESEL length">
+                      <input type="number" class="form-control" id="pesel" readonly= "readonly"; pattern=".{0}|.{11}" title="length must equal 11">
                       <br>
                       <label>Sex</label>
                       <br>
@@ -204,7 +206,7 @@
                       </form>
                       <br>
                       <label for="phonenumber">Phone number</label>
-                      <input type="number" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                      <input type="number" class="form-control" required="required" id="phonenumber" pattern=".{9,15}" title="min length: 9, max length: 15">
                       <br>
                       <label>UID</label>
                       <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
@@ -231,7 +233,8 @@
                           </div>
                           <div class="col">
                             <label for="apartmentnumber">Apartment number</label>
-                            <input type="text" class="form-control" id="apartmentnumber" style="width: 120px">
+                            <input type="text" class="form-control" pattern="{0,8}" title="max length: 8"
+                                   id="apartmentnumber" style="width: 120px">
                           </div>
                         </div>
                         <br>
@@ -279,19 +282,22 @@
                   <div class="col-sm-12">
                     <p class="lead">Patients data</p>
                     <label for="newfn">First name</label>
-                    <input type="text" class="form-control" required="required" id="newfn">
+                    <input type="text" class="form-control" pattern="[A-Ża-ż]{1,20}" title="max length: 20, letters only"
+                           required="required" id="newfn">
                     <br>
                     <label>Middle name</label>
-                    <input type="text" class="form-control" id="newmiddlename">
+                    <input type="text" class="form-control" pattern="[A-Ża-ż]{0,20}" title="max lendth: 20, letters only"
+                           id="newmiddlename">
                     <br>
                     <label for="newsurname">Surname</label>
-                    <input type="text" class="form-control" required="required" id="newsurname">
+                    <input type="text" class="form-control" pattern="[A-Ża-ż]{1,60}" title="max length: 60, letters only"
+                           required="required" id="newsurname">
                     <br>
                     <label for="newbirthdate">Birth date</label>
                     <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
                     <br>
                     <label>PESEL</label>
-                    <input type="number" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="incorrect PESEL length">
+                    <input type="number" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="length must equal 11">
                     <br>
                     <label>Sex</label>
                     <br>
@@ -302,7 +308,8 @@
                     </form>
                     <br>
                     <label for="newphonenumber">Phone number</label>
-                    <input type="number" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}" title="incorrect phone number length">
+                    <input type="number" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}"
+                           title="min length: 9, max length: 15">
                     <br>
                     <label for="newuid">UID</label>
                     <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
@@ -318,33 +325,39 @@
                   <div class="col-sm-12">
                     <p class="lead">Address</p>
                     <label for="newstreet">Street</label>
-                    <input type="text" class="form-control" required="required" id="newstreet">
+                    <input type="text" class="form-control" pattern=".{1,60}" title="max length: 60"
+                           required="required" id="newstreet">
                     <br>
                     <div class="row">
                       <div class="col">
                         <br>
                         <label for="newhousenumber">House number</label>
-                        <input type="text" class="form-control" required="required" id="newhousenumber" style="width: 120px;">
+                        <input type="text" class="form-control" pattern=".{1,8}" title="max length: 8"
+                               required="required" id="newhousenumber" style="width: 120px;">
                       </div>
                       <div class="col">
                         <label for="newapartmentnumber">Apartment number</label>
-                        <input type="text" class="form-control" id="newapartmentnumber" style="width: 120px">
+                        <input type="text" class="form-control" pattern=".{0,8}" title="max length: 8"
+                               id="newapartmentnumber" style="width: 120px">
                       </div>
                     </div>
                     <br>
                     <div class="row">
                       <div class="col">
                         <label for="newcity">City</label>
-                        <input type="text" class="form-control" required="required" id="newcity">
+                        <input type="text" class="form-control" pattern=".{1,190}" title="max length: 190"
+                               required="required" id="newcity">
                       </div>
                       <div class="col">
                         <label for="newpostcode">Postcode</label>
-                        <input type="text" class="form-control" required="required" id="newpostcode" style="width: 120px;">
+                        <input type="text" class="form-control" pattern=".{1,12}" title="max length: 12"
+                               required="required" id="newpostcode" style="width: 120px;">
                       </div>
                     </div>
                     <br>
                     <label for="newcountry">Country</label>
-                    <input type="text" class="form-control" required="required" id="newcountry" style="width: 270px;">
+                    <input type="text" class="form-control" pattern=".{1,50}" title="max length: 50"
+                           required="required" id="newcountry" style="width: 270px;">
                   </div>
                 </div>
               </div>
@@ -398,10 +411,20 @@
 <script>
   function showPatientAddress() {
     document.getElementById('addressForm').style.visibility = "visible";
+    document.getElementById('street').setAttribute('pattern', '.{1,60}');
+    document.getElementById('street').setAttribute('title', 'max length: 60');
     document.getElementById('street').required = true;
+    document.getElementById('housenumber').setAttribute('pattern', '.{1,8}');
+    document.getElementById('housenumber').setAttribute('title', 'max length: 8');
     document.getElementById('housenumber').required = true;
+    document.getElementById('city').setAttribute('pattern', '.{1,190}');
+    document.getElementById('city').setAttribute('title', 'max length: 190');
     document.getElementById('city').required = true;
+    document.getElementById('postcode').setAttribute('pattern', '.{1,12}');
+    document.getElementById('postcode').setAttribute('title', 'max length: 12');
     document.getElementById('postcode').required = true;
+    document.getElementById('country').setAttribute('pattern', '.{1,50}');
+    document.getElementById('country').setAttribute('title', 'max length: 50');
     document.getElementById('country').required = true;
   }
 </script>

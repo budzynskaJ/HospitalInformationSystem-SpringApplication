@@ -65,7 +65,7 @@ setTimeout(function getEHR() {
             }
         )
     })
-}, 1020)
+}, 1050)
 
 let contributions = document.getElementById("numberOfC");
 setTimeout(function getContributions() {
@@ -85,4 +85,4 @@ setTimeout(function getContributions() {
             }
         )
     })
-}, 1150)
+}, 1180)

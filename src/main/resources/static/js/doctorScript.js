@@ -282,8 +282,8 @@ function queryData() {
         let description = document.getElementById('description').value;
         let contraception = document.getElementById('contraception').value;
 
-        const letters     = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż'];
-        const replacement = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z'];
+        const letters     = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż']; //nie zamienia Ż na Z
+        const replacement = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z', 'A', 'C', 'E', 'L', 'N', 'O', 'S', 'Z', 'Z'];
         current_doctor = current_doctor.toLowerCase();
         name = name.toLowerCase();
         surname = surname.toLowerCase();
@@ -299,6 +299,10 @@ function queryData() {
         current_doctor = data.join(" ");
         name = name.charAt(0).toUpperCase() + name.slice(1);
         surname = surname.charAt(0).toUpperCase() + surname.slice(1);
+
+        for (let d = 0; d<description.length; ++d) {
+            description = description.replaceAll(letters[d], replacement[d]);
+        }
 
 
 

@@ -74,7 +74,7 @@
                     <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{doctor/doctor_profile}">
                         <img src="../doctor.png" alt="" style="height: 30px;">
                         <b style="text-transform:capitalize; padding: 10px 10px;
-                            vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+                            vertical-align: middle; margin-left: 0" id="doctorsData">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
 
                 <li class="nav-item">

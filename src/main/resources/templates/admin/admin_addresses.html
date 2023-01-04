@@ -153,33 +153,39 @@
                                        readonly= readonly id="addressidu" style="width: 100px;">
                                 <br>
                                 <label for="streetu">Street</label>
-                                <input type="text" class="form-control" required="required" id="streetu" style="width: 370px;">
+                                <input type="text" class="form-control" id="streetu" style="width: 370px;"
+                                pattern=".{1,60}" title="max length: 60" required="required">
                                 <br>
                                 <div class="row">
                                     <div class="col">
                                         <label for="housenumberu">House number</label>
-                                        <input type="text" class="form-control" required="required" id="housenumberu" style="width: 150px;">
+                                        <input type="text" class="form-control" id="housenumberu" style="width: 150px;"
+                                        pattern=".{1,8}" title="max length: 8" required="required">
                                     </div>
                                     <div class="col">
                                         <label for="apartmentnumberu">Apartment number</label>
-                                        <input type="text" class="form-control" id="apartmentnumberu" style="width: 150px;">
+                                        <input type="text" class="form-control" id="apartmentnumberu" style="width: 150px;"
+                                        pattern=".{0,8}" title="max length: 8">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col">
                                         <label for="cityu">City</label>
-                                        <input type="text" class="form-control" required="required" id="cityu">
+                                        <input type="text" class="form-control" id="cityu"
+                                        pattern=".{1,190}" title="max length: 190" required="required">
                                     </div>
                                     <div class="col">
                                         <label for="postcodeu">Postcode</label>
-                                        <input type="text" class="form-control" required="required" id="postcodeu" style="width: 150px;">
+                                        <input type="text" class="form-control" id="postcodeu" style="width: 150px;"
+                                        pattern=".{1,12}" title="max length: 12" required="required">
                                     </div>
                                 </div>
                                 <br>
                                 <br>
                                 <label for="countryu">Country</label>
-                                <input type="text" class="form-control" required="required" id="countryu" style="width: 370px">
+                                <input type="text" class="form-control" id="countryu" style="width: 370px"
+                                pattern=".{1,50}" title="max length: 50" required="required">
                             </div>
                         </div>
                     </form>
@@ -205,16 +211,19 @@
                         <div class="row" style="align-items:center; padding-left: 35px">
                             <div class="form-group">
                                 <label for="newstreetu">Street</label>
-                                <input type="text" class="form-control" required="required" id="newstreetu" style="width: 370px;">
+                                <input type="text" class="form-control" id="newstreetu" style="width: 370px;"
+                                pattern=".{1,60}" title="max length: 60"required="required">
                                 <br>
                                 <div class="row">
                                     <div class="col">
                                         <label for="newhousenumberu">House number</label>
-                                        <input type="text" class="form-control" required="required" id="newhousenumberu" style="width: 150px">
+                                        <input type="text" class="form-control" id="newhousenumberu" style="width: 150px"
+                                        pattern=".{1,8}" title="max length: 8" required="required">
                                     </div>
                                     <div class="col">
                                         <label for="newapartmentnumberu">Apartment number</label>
-                                        <input type="text" class="form-control" id="newapartmentnumberu" style="width: 150px">
+                                        <input type="text" class="form-control" id="newapartmentnumberu" style="width: 150px"
+                                        pattern=".{0,8}", title="max length: 8">
                                     </div>
                                     <br>
                                 </div>
@@ -222,17 +231,20 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="newcityu">City</label>
-                                        <input type="text" class="form-control" required="required" id="newcityu">
+                                        <input type="text" class="form-control" id="newcityu"
+                                        pattern=".{1,190}" title="max length: 190" required="required">
                                     </div>
                                     <div class="col">
                                         <label for="newpostcodeu">Postcode</label>
-                                        <input type="text" class="form-control" required="required" id="newpostcodeu" style="width: 150px">
+                                        <input type="text" class="form-control"id="newpostcodeu" style="width: 150px"
+                                        pattern=".{1,12}" title="max length: 12" required="required" >
                                     </div>
                                 </div>
                                 <br>
                                 <br>
                                 <label for="newcountryu">Country</label>
-                                <input type="text" class="form-control" required="required" id="newcountryu" style="width: 370px">
+                                <input type="text" class="form-control" id="newcountryu" style="width: 370px"
+                                pattern=".{1,50}" title="max length: 50" required="required">
                             </div>
 
                         </div>
