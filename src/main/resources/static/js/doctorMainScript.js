@@ -19,18 +19,16 @@ getNumberOfPatients();
 
 let token = "";
 $(document).ready(function (){
-    let email = "admin%40cabolabs.com";
+    let email = "admin@cabolabs.com";
     let password = "admin";
     let organization = "123456";
-    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password + "&organization=" + organization;
+    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password +
+        "&organization=" + organization;
     fetch(url, {
         method: 'POST',
         headers: {
             'Origin': 'http://localhost:8070/doctor/doctor_patients',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
         },
-
     })
         .then(res=>{
             res.json().then(
@@ -38,7 +36,6 @@ $(document).ready(function (){
                     token = res.token;
                 }
             );
-
         }).catch(err => err);
 })
 
@@ -50,8 +47,7 @@ setTimeout(function getEHR() {
         headers: {
             'Origin': 'http://localhost:8070/doctor/doctor_patients',
             Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json; charset=UTF-8'
         },
     }).then(res => {
         res.json().then(
@@ -74,8 +70,7 @@ setTimeout(function getContributions() {
         headers: {
             'Origin': 'http://localhost:8070/doctor/main_doctor',
             Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json; charset=UTF-8',
         },
     }).then(res => {
         res.json().then(

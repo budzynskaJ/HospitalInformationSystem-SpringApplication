@@ -1,6 +1,6 @@
 let token = "";
 $(document).ready(function (){
-    let email = "admin%40cabolabs.com";
+    let email = "admin@cabolabs.com";
     let password = "admin";
     let organization = "123456";
     let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password + "&organization=" + organization;
@@ -8,7 +8,6 @@ $(document).ready(function (){
         method: 'POST',
         headers: {
             'Origin': 'http://localhost:8070/doctor/doctor_appointments',
-            'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
 
@@ -98,8 +97,8 @@ function getEHRbySubjectUid() {
             headers: {
                 'Origin': 'http://localhost:8070/doctor/doctor_appointments',
                 Authorization: 'Bearer ' + token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+                'Content-Type': 'application/json; charset=UTF-8'
             },
         }).then(res => {
                 if(!res.ok) {
@@ -125,8 +124,8 @@ function getEHRbySubjectUid() {
                                 headers: {
                                     'Origin': 'http://localhost:8070/doctor/doctor_appointments',
                                     Authorization: 'Bearer ' + token,
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json; charset=UTF-8',
+                                    'Accept': 'application/json; charset=UTF-8',
+                                    'Content-Type': 'application/json; charset=UTF-8'
                                 },
                             }).then(response => {
                                 response.json().then(
@@ -141,8 +140,9 @@ function getEHRbySubjectUid() {
                                                     headers: {
                                                         'Origin': 'http://localhost:8070/doctor/doctor_appointments',
                                                         Authorization: 'Bearer ' + token,
-                                                        'Accept': 'application/json',
-                                                        'Content-Type': 'application/json; charset=UTF-8',
+                                                        'Accept': 'text/html; charset=UTF-8',
+                                                        'Accept-Language': 'pl',
+                                                        'Content-Type': 'text/html; charset=UTF-8',
                                                     },
                                                 }).then(response1 => {
                                                     response1.json().then(
@@ -153,10 +153,18 @@ function getEHRbySubjectUid() {
                                                             var patient_surname = $(this).parents('tr')[0].cells[3].textContent;
                                                             var patient_birthday = $(this).parents('tr')[0].cells[4].textContent;
 
-                                                            let today = new Date().getFullYear();
+                                                            let today = new Date();
+                                                            console.log(today);
+
                                                             let patient_birth_year = patient_birthday.split("-").at(0);
+                                                            let patient_birth_month = patient_birthday.split("-").at(1);
+                                                            let patient_birth_day = patient_birthday.split("-").at(2);
                                                             console.log(patient_birth_year);
-                                                            let age = today - patient_birth_year;
+                                                            let age = today.getFullYear() - patient_birth_year;
+                                                            let m = today.getMonth() - patient_birth_month;
+                                                            if(m < 0 || m === 0 && today.getDate() < patient_birth_day) {
+                                                                age--;
+                                                            }
 
                                                             $('#name').text(patient_firstname + " " + patient_middlename + " " + patient_surname);
                                                             $('#birth').text(patient_birthday);
@@ -216,7 +224,7 @@ function getEHRbySubjectUid() {
                                                             description = data3.version.data.content[1].data.items[1].value.value;
                                                             var descrLabel = document.createElement("label");
                                                             descrLabel.setAttribute("for", "description");
-                                                            descrLabel.innerHTML = "Description";
+                                                            descrLabel.innerText = "Description";
                                                             descrLabel.style.fontWeight = "bold";
                                                             parent.append(descrLabel);
                                                             var descr = document.createElement("div");
@@ -289,7 +297,6 @@ function getEHRbySubjectUid() {
                                                                         lDate.style.display = "inline-block";
                                                                         parent.append(lDate);
 
-
                                                                     }
 
                                                                 } else {
@@ -302,6 +309,7 @@ function getEHRbySubjectUid() {
                                                             parent.append(hr);
                                                             parent.append(document.createElement("BR"));
                                                             parent.append(document.createElement("BR"));
+
                                                         }
                                                     )
                                                 })

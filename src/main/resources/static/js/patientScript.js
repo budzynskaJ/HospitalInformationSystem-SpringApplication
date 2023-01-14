@@ -23,7 +23,7 @@
 }**/
 let token = "";
 $(document).ready(function (){
-    let email = "admin%40cabolabs.com";
+    let email = "admin@cabolabs.com";
     let password = "admin";
     let organization = "123456";
     let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password + "&organization=" + organization;
@@ -31,8 +31,6 @@ $(document).ready(function (){
         method: 'POST',
         headers: {
             'Origin': 'http://localhost:8070/main_admin',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
         },
 
     })
@@ -138,8 +136,8 @@ function createehruid() {
             headers: {
                 'Origin': 'http://localhost:8070/main_admin',
                 Authorization: 'Bearer ' + token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+                'Content-Type': 'application/json; charset=UTF-8'
             },
         })
             .then(
@@ -260,8 +258,8 @@ fetch("/patients").then(
                         "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Edit patient'>\n" +
                         "                                   edit_square \n" +
                         "                              </span>\n" +
-                        "                             <span type=\"button\" id='delete' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\"; title='Delete patient'>\n" +
-                        "                                   delete \n" +
+                        "                             <span type=\"button\" id='delete' style='color: #CE2020; vertical-align: middle !important; font-size: 33px !important;' class=\"material-symbols-rounded\"; title='Archive patient'>\n" +
+                        "                                   archive \n" +
                         "                             </span>\n" +
                         "                        </td>";
                     temp += "</tr>";
