@@ -16,3 +16,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Override
     List<Patient> findAll(Sort sort);
 }
+
+

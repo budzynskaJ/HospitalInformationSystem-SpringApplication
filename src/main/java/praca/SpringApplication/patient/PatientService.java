@@ -90,7 +90,6 @@ public class PatientService {
             patient.setStatus("active");
         }
         patientRepository.save(patient);
-        //patientRepository.deleteById(Patient_id);
     }
 
 

@@ -3,7 +3,8 @@ $(document).ready(function (){
     let email = "admin@cabolabs.com";
     let password = "admin";
     let organization = "123456";
-    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password + "&organization=" + organization;
+    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password +
+        "&organization=" + organization;
   fetch(url, {
       method: 'POST',
       headers: {
@@ -604,7 +605,13 @@ function queryData() {
                 code_status = "at0146";
             }
             let code_contraceptionType;
-            if (contraceptionType.value == "combination pill") {
+            if (contraceptionType.value == "male condom") {
+                code_contraceptionType = "at0152"
+            } else if (contraceptionType.value == "female condom") {
+                code_contraceptionType = "at0153"
+            } else if (contraceptionType.value == "diaphragm") {
+                code_contraceptionType = "at0154"
+            } else if (contraceptionType.value == "combination pill") {
                 code_contraceptionType = "at0155"
             } else if (contraceptionType.value == "combination skin patch") {
                 code_contraceptionType = "at0156"
@@ -738,7 +745,13 @@ function queryData() {
                 code_status2 = "at0146";
             }
             let code_contraceptionType2;
-            if (contraceptionType2.value == "combination pill") {
+            if (contraceptionType2.value == "male condom") {
+                code_contraceptionType2 = "at0152"
+            } else if (contraceptionType2.value == "female condom") {
+                code_contraceptionType2 = "at0153"
+            } else if (contraceptionType2.value == "diaphragm") {
+                code_contraceptionType2 = "at0154"
+            } else if (contraceptionType2.value == "combination pill") {
                 code_contraceptionType2 = "at0155"
             } else if (contraceptionType2.value == "combination skin patch") {
                 code_contraceptionType2 = "at0156"

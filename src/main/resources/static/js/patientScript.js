@@ -1,26 +1,3 @@
-/**function show() {
-   $('#editPatient').on('click', function () {
-
-        $('#idp').val($(this).parents('tr')[0].firstChild.textContent);
-        $('#fn').val($(this).parents('tr')[0].cells[1].textContent);
-        $('#middlename').val($(this).parents('tr')[0].cells[2].textContent);
-        $('#surname').val($(this).parents('tr')[0].cells[3].textContent);
-        $('#birthdate').val($(this).parents('tr')[0].cells[4].textContent);
-        $('#pesel').val($(this).parents('tr')[0].cells[5].textContent);
-        $('#sex').val($(this).parents('tr')[0].cells[6].textContent);
-        $('#phonenumber').val($(this).parents('tr')[0].cells[7].textContent);
-        $('#uid').val($(this).parents('tr')[0].cells[8].textContent);
-
-        jQuery.noConflict();
-        jQuery('#editPatient').modal('show');
-    })
-
-
-
-           jQuery.noConflict();
-           jQuery('#editPatient').modal('show');
-
-}**/
 let token = "";
 $(document).ready(function (){
     let email = "admin@cabolabs.com";
@@ -252,7 +229,7 @@ fetch("/patients").then(
                         " " + Object.values(p.address)[2] + "/" + Object.values(p.address)[3] + "\n" + Object.values(p.address)[4] + " " +
                         Object.values(p.address)[5] + ", " + Object.values(p.address)[6] + "</td>";
                     temp += "<td id='UID'>" + p.uid + "</td>";
-                    temp += "<td style='align-items: center; vertical-align: center'><icon id='status' style='color: white'>"+ p.status + "</icon></td>";
+                    temp += "<td style='align-items: center; vertical-align: center'><span name = 'status' id='status' style='color: white' class='badge badge-success rounded-pill'>"+ p.status + "</span></td>";
                     temp += "<td class=\"text-right\" style='vertical-align: middle'>\n" +
                         "                             <span type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
                         "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Edit patient'>\n" +
@@ -270,28 +247,29 @@ fetch("/patients").then(
                     document.getElementById("patientsData").innerHTML = await temp;
                     $(document).ready(function () {
                         let tableP = $('.patient-table').DataTable({
+                            pagingType: "simple_numbers",
                             dom: 'Bfrtip',
                             responsive: true,
                             columnDefs: [
-                                { width: "57px", targets: 0 },
-                                { width: "113px", targets: 1 },
-                                { width: "113px", targets: 2 },
-                                { width: "120px", targets: 3 },
-                                { width: "115px", targets: 4 },
-                                { width: "128px", targets: 5 },
-                                { width: "65px", targets: 6 },
-                                { width: "113px", targets: 7 },
-                                { width: "140px", targets: 8 },
-                                { width: "200px", targets: 9 },
-                                { width: "87px", targets: 10 },
-                                { width: "98px", targets: 11 },
+                                {width: "57px", targets: 0},
+                                {width: "113px", targets: 1},
+                                {width: "113px", targets: 2},
+                                {width: "120px", targets: 3},
+                                {width: "115px", targets: 4},
+                                {width: "128px", targets: 5},
+                                {width: "65px", targets: 6},
+                                {width: "113px", targets: 7},
+                                {width: "140px", targets: 8},
+                                {width: "200px", targets: 9},
+                                {width: "87px", targets: 10},
+                                {width: "98px", targets: 11},
                             ],
                             buttons: [
                                 {
                                     text: '<i class="fas fa-plus fa-2x" style="color: #228B22;"></i>',
                                     className: 'bg-transparent border-0',
                                     titleAttr: 'Add new patient',
-                                    action: function ( e, dt, node, config ) {
+                                    action: function (e, dt, node, config) {
                                         jQuery.noConflict();
                                         jQuery('#addPatient').modal('show');
                                         uuid();
@@ -302,16 +280,7 @@ fetch("/patients").then(
 
                         });
 
-                        console.log($('.patient-table tbody tr').length);
-                        for(let i = 1; i<($('.patient-table tbody tr').length)+1; i++) {
-                            let j = $('.patient-table tr').get(i);
-                            if (j.cells[10].querySelector('#status').textContent != "active") {
-                                j.cells[10].querySelector('#status').setAttribute('class', 'badge bg-danger text-wrap');
-                                j.style.color = '#8d9294';
-                            } else {
-                                j.cells[10].querySelector('#status').setAttribute('class', 'badge bg-success text-wrap');
-                            }
-                        }
+
 
                         $('.patient-table').on('click', '#delete', function (e) {
                             e.preventDefault();
@@ -345,8 +314,6 @@ fetch("/patients").then(
 
                                         }
                                     })
-                                } else if(result.isDenied) {
-
                                 }
                             })
 
@@ -404,6 +371,15 @@ fetch("/patients").then(
                         })
                     });
 
+                }
+                for (let i = 0; i < document.getElementsByName('status').length; i++) {
+                    if (document.getElementsByName('status')[i].textContent == "archived") {
+                        document.getElementsByName('status')[i].setAttribute('class', 'badge badge-danger rounded-pill');
+                        console.log(document.getElementsByName('status')[i].parentNode.parentNode);
+                        for (let j = 0; j < document.getElementsByName('status')[i].parentNode.parentNode.childNodes.length; j++) {
+                            document.getElementsByName('status')[i].parentNode.parentNode.childNodes[j].style.color = 'grey';
+                        }
+                    }
                 }
 
             }

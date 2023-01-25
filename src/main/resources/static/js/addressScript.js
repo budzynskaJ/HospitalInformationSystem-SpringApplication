@@ -65,6 +65,18 @@ async function editAddress() {
                     setTimeout(function () {
                         window.location.reload();
                     }, 1600);
+                } else {
+                    Swal.fire({
+                        title: 'You can not update this address!',
+                        text: 'This address is assigned to someone',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        showCloseButton: false,
+                        timer: 2300,
+                    })
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1600);
                 }
                 res.json().then(
 
@@ -214,8 +226,15 @@ fetch("/admin/admin_addresses/addresses").then(
                                         setTimeout(function(){
                                             window.location.reload();
                                         }, 1600);
-                                    } else if (result.isDenied) {
-
+                                    } else {
+                                        Swal.fire({
+                                            title: 'You can not delete this address!',
+                                            text: 'This address is assigned to someone',
+                                            icon: 'error',
+                                            showConfirmButton: false,
+                                            showCloseButton: false,
+                                            timer: 2300,
+                                        })
                                     }
                                 })
                             }

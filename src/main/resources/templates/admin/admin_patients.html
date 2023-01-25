@@ -41,7 +41,6 @@
     text-align: center;
   }
 
-
   .modal-90p {
     width:90%;
   }
@@ -54,7 +53,6 @@
     border: none;
     outline: none;
     border-radius: 5%;
-    /*background-color: #89CFF0;*/
     text-align: center;
     height: 40px;
     width: 150px;
@@ -181,14 +179,16 @@
                       <br>
                       <label for="fn">First name</label>
                       <input type="text" class="form-control" id="fn" pattern="[A-Ża-ż]{1,20}" title="max length: 20, letters only"
-                             required="required" oninvalid="this.setCustomValidity('Please fill in this field with letters only (max length: 20)')">
+                             required="required" oninvalid="this.setCustomValidity('Please fill in this field with letters only (max length: 20)')"
+                             oninput="this.setCustomValidity('')">
                       <br>
                       <label>Middle name</label>
                       <input type="text" class="form-control" pattern="[A-Ża-Ż]{0,20}" title="max length: 20, letters only" id="middlename">
                       <br>
                       <label for="surname">Surname</label>
                       <input type="text" class="form-control" id="surname" pattern="[A-Ża-ż]{1,60}" title="max length: 60, letters only"
-                             required="required" oninvalid="this.setCustomValidity('Please fill in this field with letters only (max length: 60)')">
+                             required="required" oninvalid="this.setCustomValidity('Please fill in this field with letters only (max length: 60)')"
+                             oninput="this.setCustomValidity('')">
                       <br>
                       <label for="birthdate">Birth date</label>
                       <input type="date" class="form-control" required="required" id="birthdate" readonly="readonly"
@@ -208,7 +208,7 @@
                       <label for="phonenumber">Phone number</label>
                       <input type="number" class="form-control" required="required" id="phonenumber" pattern=".{9,15}"
                              title="min length: 9, max length: 15" oninvalid="this.setCustomValidity('Please fill in this field with numbers only' +
-                              '(length: 9-15)')">
+                              '(length: 9-15)')" oninput="this.setCustomValidity('')">
                       <br>
                       <label>UID</label>
                       <input type="text" class="form-control" id="uid" readonly="readonly" name="UID" value=" ">
@@ -286,7 +286,7 @@
                     <label for="newfn">First name</label>
                     <input type="text" class="form-control" pattern="[A-Ża-ż]{1,20}" title="max length: 20, letters only"
                            required="required" id="newfn" oninvalid="this.setCustomValidity('Please fill in this field with letters only' +
-                            '(max length: 20)')">
+                            '(max length: 20)')" oninput="this.setCustomValidity('')">
                     <br>
                     <label>Middle name</label>
                     <input type="text" class="form-control" pattern="[A-Ża-ż]{0,20}" title="max lendth: 20, letters only"
@@ -295,14 +295,15 @@
                     <label for="newsurname">Surname</label>
                     <input type="text" class="form-control" pattern="[A-Ża-ż]{1,60}" title="max length: 60, letters only"
                            required="required" id="newsurname" oninvalid="this.setCustomValidity('Please fill in this field with letters only' +
-                            '(max length: 60)')">
+                            '(max length: 60)')" oninput="this.setCustomValidity('')">
                     <br>
                     <label for="newbirthdate">Birth date</label>
                     <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" required="required" id="newbirthdate" style="width: 180px">
                     <br>
                     <label>PESEL</label>
                     <input type="number" class="form-control" id="newpesel" pattern=".{0}|.{11}" title="length must equal 11"
-                           oninvalid="this.setCustomValidity('Please fill in this field with numbers only (length = 11)')">
+                           oninvalid="this.setCustomValidity('Please fill in this field with numbers only (length = 11)')"
+                           oninput="this.setCustomValidity('')">
                     <br>
                     <label>Sex</label>
                     <br>
@@ -315,7 +316,7 @@
                     <label for="newphonenumber">Phone number</label>
                     <input type="number" class="form-control" required="required" id="newphonenumber" pattern=".{9,15}"
                            title="min length: 9, max length: 15" oninvalid="this.setCustomValidity('Please fill in this field with numbers only' +
-                            'length: 9-15')">
+                            'length: 9-15')" oninput="this.setCustomValidity('')">
                     <br>
                     <label for="newuid">UID</label>
                     <input type="text" class="form-control" required="required" id="newuid" name="newuid" value=" " readonly="readonly">
@@ -332,7 +333,8 @@
                     <p class="lead">Address</p>
                     <label for="newstreet">Street</label>
                     <input type="text" class="form-control" pattern=".{1,60}" title="max length: 60"
-                           required="required" id="newstreet" oninvalid="this.setCustomValidity('Please fill in this field')">
+                           required="required" id="newstreet" oninvalid="this.setCustomValidity('Please fill in this field')"
+                           oninput="this.setCustomValidity('')">
                     <br>
                     <div class="row">
                       <div class="col">
@@ -340,7 +342,8 @@
                         <label for="newhousenumber">House number</label>
                         <input type="text" class="form-control" pattern=".{1,8}" title="max length: 8"
                                required="required" id="newhousenumber" style="width: 120px;"
-                               oninvalid="this.setCustomValidity('Please fill in this field')">
+                               oninvalid="this.setCustomValidity('Please fill in this field')"
+                               oninput="this.setCustomValidity('')">
                       </div>
                       <div class="col">
                         <label for="newapartmentnumber">Apartment number</label>
@@ -353,18 +356,21 @@
                       <div class="col">
                         <label for="newcity">City</label>
                         <input type="text" class="form-control" pattern=".{1,190}" title="max length: 190"
-                               required="required" id="newcity" oninvalid="this.setCustomValidity('Please fill in this field')">
+                               required="required" id="newcity" oninvalid="this.setCustomValidity('Please fill in this field')"
+                               oninput="this.setCustomValidity('')">
                       </div>
                       <div class="col">
                         <label for="newpostcode">Postcode</label>
                         <input type="text" class="form-control" pattern=".{1,12}" title="max length: 12"
-                               required="required" id="newpostcode" style="width: 120px;" oninvalid="this.setCustomValidity('Please fill in this field')">
+                               required="required" id="newpostcode" style="width: 120px;" oninvalid="this.setCustomValidity('Please fill in this field')"
+                               oninput="this.setCustomValidity('')">
                       </div>
                     </div>
                     <br>
                     <label for="newcountry">Country</label>
                     <input type="text" class="form-control" pattern=".{1,50}" title="max length: 50"
-                           required="required" id="newcountry" style="width: 270px;" oninvalid="this.setCustomValidity('Please fill in this field')">
+                           required="required" id="newcountry" style="width: 270px;" oninvalid="this.setCustomValidity('Please fill in this field')"
+                           oninput="this.setCustomValidity('')">
                   </div>
                 </div>
               </div>
@@ -421,26 +427,30 @@
     document.getElementById('street').setAttribute('pattern', '.{1,60}');
     document.getElementById('street').setAttribute('title', 'max length: 60');
     document.getElementById('street').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+    document.getElementById('street').setAttribute('oninput', 'this.setCustomValidity(\'\')');
     document.getElementById('street').required = true;
     document.getElementById('housenumber').setAttribute('pattern', '.{1,8}');
     document.getElementById('housenumber').setAttribute('title', 'max length: 8');
     document.getElementById('housenumber').required = true;
     document.getElementById('housenumber').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+    document.getElementById('housenumber').setAttribute('oninput', 'this.setCustomValidity(\'\')');
     document.getElementById('city').setAttribute('pattern', '.{1,190}');
     document.getElementById('city').setAttribute('title', 'max length: 190');
     document.getElementById('city').required = true;
     document.getElementById('city').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+    document.getElementById('city').setAttribute('oninput', 'this.setCustomValidity(\'\')');
     document.getElementById('postcode').setAttribute('pattern', '.{1,12}');
     document.getElementById('postcode').setAttribute('title', 'max length: 12');
     document.getElementById('postcode').required = true;
     document.getElementById('postcode').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+    document.getElementById('postcode').setAttribute('oninput', 'this.setCustomValidity(\'\')');
     document.getElementById('country').setAttribute('pattern', '.{1,50}');
     document.getElementById('country').setAttribute('title', 'max length: 50');
     document.getElementById('country').required = true;
     document.getElementById('country').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+    document.getElementById('country').setAttribute('oninput', 'this.setCustomValidity(\'\')');
   }
 </script>
-
 
 </body>
 </html>
