@@ -58,7 +58,6 @@ async function editUser() {
             User_data.address.city === "" && User_data.address.country === "") {
             User_data.address.address_ID = document.getElementById('addressID').textContent;
         }
-        console.log(User_data.address.address_ID);
         User_data = JSON.stringify(User_data);
 
         const f = await fetch("/admin/admin_users/users/" + document.getElementById('idu').value, {
