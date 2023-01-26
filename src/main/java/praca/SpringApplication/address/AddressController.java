@@ -46,7 +46,7 @@ public class AddressController {
             try {
                 Address existAddress = addressService.get(address_ID);
                 address.setAddress_ID(address_ID);
-                addressService.save(address);
+                addressService.update(address);
 
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (NoSuchElementException e) {

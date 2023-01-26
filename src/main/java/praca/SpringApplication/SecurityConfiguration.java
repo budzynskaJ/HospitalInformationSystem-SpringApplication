@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Bean
+   /** @Bean
     public AuthenticationProvider authenticationProvider() throws Exception {
         DaoAuthenticationProvider provider
           = new DaoAuthenticationProvider();
@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(new BCryptPasswordEncoder());
 
         return provider;
-    }
+    }**/
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() throws Exception {

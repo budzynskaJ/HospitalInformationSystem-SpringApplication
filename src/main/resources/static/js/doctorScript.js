@@ -1,15 +1,14 @@
 let token = "";
 $(document).ready(function (){
-    let email = "admin%40cabolabs.com";
+    let email = "admin@cabolabs.com";
     let password = "admin";
     let organization = "123456";
-    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password + "&organization=" + organization;
+    let url = "http://localhost:8090/rest/v1/auth?" + "email=" + email +"&password=" + password +
+        "&organization=" + organization;
   fetch(url, {
       method: 'POST',
       headers: {
           'Origin': 'http://localhost:8070/doctor/doctor_patients',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
       },
 
     })
@@ -22,50 +21,8 @@ $(document).ready(function (){
 
     }).catch(err => err);
 })
-/**var gynecologist_uid = "";
-setTimeout(function () {
-    fetch('http://localhost:8090/rest/v1/templates', {
-        method: 'GET',
-        headers: {
-            'Origin': 'http://localhost:8070/main_doctor',
-            Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
-        },
-    }).then(
-        res=> {
-            res.json().then(
-                data => {
-                    gynecologist_uid = data.templates[3].uid
 
-                }
-            ).catch(err => console.log(err))
-        }
-    )
-
-}, 1500);
-
-setTimeout(function () {
-    fetch('http://localhost:8090/rest/v1/templates/' + gynecologist_uid, {
-        method: 'GET',
-        headers: {
-            'Origin': 'http://localhost:8070/main_doctor',
-            Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
-        },
-    }).then(
-    res=> {
-        res.json().then(
-            data => {
-                console.log(data)
-            }
-        ).catch(err => console.log(err))
-    }
-)
-}, 2000);**/
 let uid = "";
-
 function newEHR(subjectUid) {
     let format = "json";
 
@@ -75,8 +32,8 @@ function newEHR(subjectUid) {
         headers: {
             'Origin': 'http://localhost:8070/doctor/doctor_patients',
             Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8'
         },
     })
         .then(
@@ -111,10 +68,18 @@ function showinQuery() {
         var patient_birthday = $(this).parents('tr')[0].cells[4].textContent;
         var subjectUid = $(this).parents('tr')[0].cells[7].textContent;
 
-        let today = new Date().getFullYear();
+        let today = new Date();
+        console.log(today);
+
         let patient_birth_year = patient_birthday.split("-").at(0);
+        let patient_birth_month = patient_birthday.split("-").at(1);
+        let patient_birth_day = patient_birthday.split("-").at(2);
         console.log(patient_birth_year);
-        let age = today - patient_birth_year;
+        let age = today.getFullYear() - patient_birth_year;
+        let m = today.getMonth() - patient_birth_month;
+        if(m < 0 || m === 0 && today.getDate() < patient_birth_day) {
+            age--;
+        }
 
         $('#name').text(patient_firstname + " " + patient_middlename + " " + patient_surname);
         $('#birth').text(patient_birthday);
@@ -129,8 +94,8 @@ function showinQuery() {
             headers: {
                 'Origin': 'http://localhost:8070/doctor/doctor_patients',
                 Authorization: 'Bearer ' + token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+                'Content-Type': 'application/json; charset=UTF-8'
             },
         })
             .then(res => {
@@ -185,8 +150,8 @@ setTimeout(function getEHR() {
         headers: {
             'Origin': 'http://localhost:8070/doctor/doctor_patients',
             Authorization: 'Bearer ' + token,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8'
         },
     }).then(res => {
         res.json().then(
@@ -270,7 +235,6 @@ function queryData() {
     let patientsuid = uid;
 
         let format = "json";
-
         let current_doctor = document.getElementById('doctorsData').textContent;
         let name = current_doctor.split(" ").at(1);
         let surname = current_doctor.split(" ").at(2);
@@ -281,9 +245,18 @@ function queryData() {
         let lmp = document.getElementById('lmp').value;
         let description = document.getElementById('description').value;
         let contraception = document.getElementById('contraception').value;
+        let code_contraception;
+        if(contraception == "never used") {
+            code_contraception = "at0006";
+        } else if (contraception == "current user") {
+            code_contraception = "at0003";
+        } else if (contraception == "not current user") {
+            code_contraception = "at0005";
+        }
 
-        const letters     = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż'];
-        const replacement = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z'];
+
+        const letters     = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż']; //nie zamienia Ż na Z
+        const replacement = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z', 'A', 'C', 'E', 'L', 'N', 'O', 'S', 'Z', 'Z'];
         current_doctor = current_doctor.toLowerCase();
         name = name.toLowerCase();
         surname = surname.toLowerCase();
@@ -300,9 +273,13 @@ function queryData() {
         name = name.charAt(0).toUpperCase() + name.slice(1);
         surname = surname.charAt(0).toUpperCase() + surname.slice(1);
 
+        for (let d = 0; d<description.length; ++d) {
+          description = description.replaceAll(letters[d], replacement[d]);
+        }
 
 
-    weight = parseFloat(weight);
+
+        weight = parseFloat(weight);
         height = parseFloat(height);
         height = height.toFixed(2);
         weight = weight.toFixed(2);
@@ -551,7 +528,7 @@ function queryData() {
                                 "@archetype_node_id" : "openEHR-EHR-EVALUATION.contraceptive_summary.v1",
                                 "name" : {
                                     "@xsi:type": "DV_TEXT",
-                                    "value" : "Summary and persistent information about the use of methods to prevent pregnancy."
+                                    "value" : "Summary and persistent information about the use of methods to prevent pregnancy"
                                 },
                                 "language" : {
                                     "terminology_id" : {
@@ -580,16 +557,16 @@ function queryData() {
                                         "@archetype_node_id": "at0089",
                                         "name": {
                                             "@xsi:type": "DV_TEXT",
-                                            "value": "Statement about regular use of any type of contraception."
+                                            "value": "Statement about regular use of any type of contraception"
                                         },
                                         "value": {
                                             "@xsi:type": "DV_CODED_TEXT",
-                                            "value":contraception,
+                                            "value": contraception,
                                             "defining_code":{
                                                 "terminology_id":{
                                                     "value":"local"
                                                 },
-                                                "code_string":"at0003"
+                                                "code_string": code_contraception
                                             }
                                         }
                                     }
@@ -618,8 +595,53 @@ function queryData() {
     let status = document.getElementById('status');
     let dateContraception = document.getElementById('dateContraception');
     let dateLast = document.getElementById('dateLast');
+
         let contr;
         if (contraception !== "never used") {
+            let code_status;
+            if (status.value == "current user") {
+                code_status = "at0145";
+            } else if (status.value == "not current user") {
+                code_status = "at0146";
+            }
+            let code_contraceptionType;
+            if (contraceptionType.value == "male condom") {
+                code_contraceptionType = "at0152"
+            } else if (contraceptionType.value == "female condom") {
+                code_contraceptionType = "at0153"
+            } else if (contraceptionType.value == "diaphragm") {
+                code_contraceptionType = "at0154"
+            } else if (contraceptionType.value == "combination pill") {
+                code_contraceptionType = "at0155"
+            } else if (contraceptionType.value == "combination skin patch") {
+                code_contraceptionType = "at0156"
+            } else if (contraceptionType.value == "progestogen-only pill") {
+                code_contraceptionType = "at0157"
+            } else if(contraceptionType.value == "depot progestogen injection") {
+                code_contraceptionType = "at0158"
+            } else if (contraceptionType.value == "hormone implant") {
+                code_contraceptionType = "at0159"
+            } else if (contraceptionType.value == "vaginal ring") {
+                code_contraceptionType = "at0160"
+            } else if (contraceptionType.value == "female sterilisation") {
+                code_contraceptionType = "at0161"
+            } else if (contraceptionType.value == "male sterilisation") {
+                code_contraceptionType = "at0162"
+            } else if (contraceptionType.value == "IUD without hormone") {
+                code_contraceptionType = "at0163"
+            } else if (contraceptionType.value == "withdrawal") {
+                code_contraceptionType = "at0164"
+            } else if (contraceptionType.value == "fertility awereness method") {
+                code_contraceptionType = "at0165"
+            } else if (contraceptionType.value == "abstinence") {
+                code_contraceptionType = "at0166"
+            } else if (contraceptionType.value == "vaginal douching") {
+                code_contraceptionType = "at0167"
+            } else if (contraceptionType.value == "clinical indication") {
+                code_contraceptionType = "at0168"
+            } else if (contraceptionType.value == "IUD with hormone") {
+                code_contraceptionType = "at0169"
+            }
             contraceptionType = contraceptionType.value;
             status = status.value;
             dateContraception = dateContraception.value;
@@ -637,7 +659,7 @@ function queryData() {
                         "@archetype_node_id": "at0151",
                         "name": {
                             "@xsi:type": "DV_TEXT",
-                            "value": "The type of contraception used by the individual."
+                            "value": "The type of contraception used by the individual"
                         },
                         "value": [{
                             "@xsi:type": "DV_CODED_TEXT",
@@ -646,7 +668,7 @@ function queryData() {
                                 "terminology_id": {
                                     "value": "local"
                                 },
-                                "code_string": "at0155"
+                                "code_string": code_contraceptionType
                             }
                         }
                         ]
@@ -665,7 +687,7 @@ function queryData() {
                                     "terminology_id": {
                                         "value": "local"
                                     },
-                                    "code_string": "at0145"
+                                    "code_string": code_status
                                 }
                             }
                         },
@@ -716,6 +738,50 @@ function queryData() {
         dateLast2 = document.getElementById('dateLast' + i);
 
         if (contraceptionType2!==null && status2!==null && dateContraception2!==null && dateLast2!==null) {
+            let code_status2;
+            if (status2.value == "current user") {
+                code_status2 = "at0145";
+            } else if (status2.value == "not current user") {
+                code_status2 = "at0146";
+            }
+            let code_contraceptionType2;
+            if (contraceptionType2.value == "male condom") {
+                code_contraceptionType2 = "at0152"
+            } else if (contraceptionType2.value == "female condom") {
+                code_contraceptionType2 = "at0153"
+            } else if (contraceptionType2.value == "diaphragm") {
+                code_contraceptionType2 = "at0154"
+            } else if (contraceptionType2.value == "combination pill") {
+                code_contraceptionType2 = "at0155"
+            } else if (contraceptionType2.value == "combination skin patch") {
+                code_contraceptionType2 = "at0156"
+            } else if (contraceptionType2.value == "progestogen-only pill") {
+                code_contraceptionType2 = "at0157"
+            } else if(contraceptionType2.value == "depot progestogen injection") {
+                code_contraceptionType2 = "at0158"
+            } else if (contraceptionType2.value == "hormone implant") {
+                code_contraceptionType2 = "at0159"
+            } else if (contraceptionType2.value == "vaginal ring") {
+                code_contraceptionType2 = "at0160"
+            } else if (contraceptionType2.value == "female sterilisation") {
+                code_contraceptionType2 = "at0161"
+            } else if (contraceptionType2.value == "male sterilisation") {
+                code_contraceptionType2 = "at0162"
+            } else if (contraceptionType2.value == "IUD without hormone") {
+                code_contraceptionType2 = "at0163"
+            } else if (contraceptionType2.value == "withdrawal") {
+                code_contraceptionType2 = "at0164"
+            } else if (contraceptionType2.value == "fertility awereness method") {
+                code_contraceptionType2 = "at0165"
+            } else if (contraceptionType2.value == "abstinence") {
+                code_contraceptionType2 = "at0166"
+            } else if (contraceptionType2.value == "vaginal douching") {
+                code_contraceptionType2 = "at0167"
+            } else if (contraceptionType2.value == "clinical indication") {
+                code_contraceptionType2 = "at0168"
+            } else if (contraceptionType2.value == "IUD with hormone") {
+                code_contraceptionType2 = "at0169"
+            }
             contraceptionType2 = contraceptionType2.value;
             status2 = status2.value;
             dateContraception2 = dateContraception2.value;
@@ -733,7 +799,7 @@ function queryData() {
                         "@archetype_node_id": "at0151",
                         "name": {
                             "@xsi:type": "DV_TEXT",
-                            "value": "The type of contraception used by the individual."
+                            "value": "The type of contraception used by the individual"
                         },
                         "value": [{
 
@@ -743,7 +809,7 @@ function queryData() {
                                 "terminology_id":{
                                     "value":"local"
                                 },
-                                "code_string":"at0155"
+                                "code_string": code_contraceptionType2
                             }
                         }
 
@@ -764,7 +830,7 @@ function queryData() {
                                     "terminology_id":{
                                         "value":"local"
                                     },
-                                    "code_string":"at0145"
+                                    "code_string": code_status2
                                 }
                             }
                         },
@@ -809,7 +875,8 @@ function queryData() {
             headers: {
                 'Origin': 'http://localhost:8070/doctor/doctor_patients',
                 Authorization: 'Bearer ' + token,
-                'Accept': 'application/json',
+                'Accept': 'text/plain; charset=UTF-8',
+                'Accept-Language': 'pl',
                 'Content-Type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(json)

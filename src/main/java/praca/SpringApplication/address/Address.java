@@ -3,13 +3,12 @@ package praca.SpringApplication.address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Data;
-import praca.SpringApplication.patient.Patient;
+
 import praca.SpringApplication.user.User;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 import java.util.Set;
 
 @Entity

@@ -74,7 +74,7 @@
                     <a class="nav-link" title="Check your profile" th:inline="text" th:href="@{doctor/doctor_profile}">
                         <img src="../doctor.png" alt="" style="height: 30px;">
                         <b style="text-transform:capitalize; padding: 10px 10px;
-                            vertical-align: middle; margin-left: 0">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
+                            vertical-align: middle; margin-left: 0" id="doctorsData">Dr [[${#httpServletRequest.userPrincipal.principal.firstname}]] [[${#httpServletRequest.userPrincipal.principal.surname}]]</b></a>
                 </li>
 
                 <li class="nav-item">
@@ -297,6 +297,7 @@
             span.innerHTML = 'add';
             a.append(span);
             a.innerHTML = 'Add another type';
+            a.style.color = '#228B22';
             controlsDiv.append(a);
             newDiv.append(controlsDiv);
 
@@ -314,14 +315,14 @@
             cP.value = "combination pill";
             cP.innerHTML = "Combination pill";
             var progestrogenOnlyP = document.createElement("option");
-            progestrogenOnlyP.value = "progestrogen-only pill";
-            progestrogenOnlyP.innerHTML = "Progestrogen-only pill";
+            progestrogenOnlyP.value = "progestogen-only pill";
+            progestrogenOnlyP.innerHTML = "Progestogen-only pill";
             var patch = document.createElement("option");
             patch.value = "combination skin patch";
             patch.innerHTML = "Combination skin patch";
             var depot = document.createElement("option");
-            depot.value = "depot progesstrogen";
-            depot.innerHTML = "Depot progesstrogen";
+            depot.value = "depot progestogen";
+            depot.innerHTML = "Depot progestogen";
             var implant = document.createElement("option");
             implant.value = "hormone implant";
             implant.innerHTML = "Hormone implant";

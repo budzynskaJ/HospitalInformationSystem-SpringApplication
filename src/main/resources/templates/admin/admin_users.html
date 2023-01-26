@@ -199,16 +199,23 @@
                                         style="width: 100px">
 
                                         <label for="fnu">First name</label>
-                                        <input type="text" class="form-control" required="required" id="fnu">
+                                        <input type="text" class="form-control" pattern="[A-Ża-ż]{1,20}" title="max length: 20, letters only"
+                                               required="required" id="fnu" oninvalid="this.setCustomValidity('Please fill in this field with letters only' +
+                            '(max length: 20)')" oninput="this.setCustomValidity('')">
                                         <br>
                                         <label>Middle name</label>
-                                        <input type="text" class="form-control" id="middlenameu">
+                                        <input type="text" class="form-control" id="middlenameu" pattern="[A-Ża-ż]{0,20}"
+                                        title="max length: 20, letters only">
                                         <br>
                                         <label for="surnameu">Surname</label>
-                                        <input type="text" class="form-control" required="required" id="surnameu">
+                                        <input type="text" class="form-control" pattern="[A-Ża-ż]{1,60}" title="max length: 60, letters only"
+                                               required="required" id="surnameu" oninvalid="this.setCustomValidity('Please fill in this field with letters only' +
+                            '(max length: 60)')" oninput="this.setCustomValidity('')">
                                         <br>
                                         <label>Username</label>
-                                        <input type="text" class="form-control" required="required" id="username" readonly="readonly">
+                                        <input type="text" class="form-control" pattern=".{1,60}" title="max length: 60"
+                                               required="required" id="username" readonly="readonly" oninvalid="this.setCustomValidity('Please fill in this field' +
+                            '(max length: 60)')" oninput="this.setCustomValidity('')">
                                         <br>
                                         <label>E-mail</label>
                                         <input type="email" class="form-control" required="required" id="email" readonly="readonly">
@@ -239,7 +246,8 @@
                                                 </div>
                                                 <div class="col">
                                                     <label for="apartmentnumberu">Apartment number</label>
-                                                    <input type="text" class="form-control" id="apartmentnumberu" style="width: 120px;">
+                                                    <input type="text" class="form-control" pattern=".{0,8}" title="max length: 8"
+                                                           id="apartmentnumberu" style="width: 120px;">
                                                 </div>
                                             </div>
                                             <br>
@@ -287,16 +295,23 @@
                                     <div class="col-sm-12">
                                         <p class="lead">User data</p>
                                         <label for="newfnu">First name</label>
-                                        <input type="text" class="form-control" required="required" id="newfnu">
+                                        <input type="text" class="form-control" pattern="[A-Ża-ż]{1,20}" title="max length: 20, letters only"
+                                               required="required" id="newfnu" oninvalid="this.setCustomValidity('Please fill in this field with letters only' +
+                            '(max length: 20)')" oninput="this.setCustomValidity('')">
                                         <br>
                                         <label>Middle name</label>
-                                        <input type="text" class="form-control" id="newmiddlenameu">
+                                        <input type="text" class="form-control" pattern="[A-Ża-ż]{0,20}" title="max length: 20, letters only"
+                                               id="newmiddlenameu">
                                         <br>
                                         <label for="newsurnameu">Surname</label>
-                                        <input type="text" class="form-control" required="required" id="newsurnameu">
+                                        <input type="text" class="form-control" pattern="[A-Ża-ż]{1,60}" title="max length: 60, letters only"
+                                               required="required" id="newsurnameu" oninvalid="this.setCustomValidity('Please fill in this field with letters only' +
+                            '(max length: 60)')" oninput="this.setCustomValidity('')">
                                         <br>
                                         <label for="newusername">Username</label>
-                                        <input type="text" class="form-control" required="required" id="newusername">
+                                        <input type="text" class="form-control" pattern=".{1,60}" title="max length: 60"
+                                               required="required" id="newusername" oninvalid="this.setCustomValidity('Please fill in this field' +
+                            '(max length: 60)')" oninput="this.setCustomValidity('')">
                                         <br>
                                         <label for="newemail">E-mail</label>
                                         <input type="email" class="form-control" id="newemail">
@@ -318,34 +333,46 @@
                                     <div class="col-sm-12">
                                         <p class="lead">Address</p>
                                         <label for="newstreetu">Street</label>
-                                        <input type="text" class="form-control" required="required" id="newstreetu">
+                                        <input type="text" class="form-control" pattern=".{1,60}" title="max length: 60"
+                                               required="required" id="newstreetu" oninvalid="this.setCustomValidity('Please fill in this field')"
+                                               oninput="this.setCustomValidity('')">
                                         <br>
                                         <div class="row">
                                             <div class="col">
                                                 <br>
                                                 <label for="newhousenumberu">House number</label>
-                                                <input type="text" class="form-control" required="required" id="newhousenumberu" style="width: 120px;">
+                                                <input type="text" class="form-control" pattern=".{1,8}" title="max length: 8"
+                                                       required="required" id="newhousenumberu" style="width: 120px;"
+                                                       oninvalid="this.setCustomValidity('Please fill in this field')"
+                                                       oninput="this.setCustomValidity('')">
                                             </div>
                                             <div class="col">
                                                 <label for="newapartmentnumberu">Apartment number</label>
-                                                <input type="text" class="form-control" id="newapartmentnumberu" style="width: 120px">
+                                                <input type="text" class="form-control" pattern=".{0,8}" title="max length: 8"
+                                                       id="newapartmentnumberu" style="width: 120px">
                                             </div>
                                         </div>
                                         <br>
                                         <div class="row">
                                             <div class="col">
                                                 <label for="newcityu">City</label>
-                                                <input type="text" class="form-control" required="required" id="newcityu">
+                                                <input type="text" class="form-control" pattern=".{1,190}" title="max length: 190"
+                                                       required="required" id="newcityu" oninvalid="this.setCustomValidity('Please fill in this field')"
+                                                       oninput="this.setCustomValidity('')">
                                             </div>
                                             <div class="col">
                                                 <label for="newpostcodeu">Postcode</label>
-                                                <input type="text" class="form-control" required="required" id="newpostcodeu"
-                                                style="width: 120px;">
+                                                <input type="text" class="form-control" pattern=".{1,12}" title="max length: 12"
+                                                       required="required" id="newpostcodeu"
+                                                style="width: 120px;" oninvalid="this.setCustomValidity('Please fill in this field')"
+                                                       oninput="this.setCustomValidity('')">
                                             </div>
                                         </div>
                                         <br>
                                         <label for="newcountryu">Country</label>
-                                        <input type="text" class="form-control" required="required" id="newcountryu" style="width: 270px">
+                                        <input type="text" class="form-control" pattern=".{1,50}" title="max length: 50"
+                                               required="required" id="newcountryu" style="width: 270px" oninvalid="this.setCustomValidity('Please fill in this field')"
+                                               oninput="this.setCustomValidity('')">
                                     </div>
                                 </div>
                             </div>
@@ -378,11 +405,31 @@
 <script>
     function showUserAddress() {
         document.getElementById('addressForm').style.visibility = "visible";
+        document.getElementById('streetu').setAttribute('pattern', '.{1,60}');
+        document.getElementById('streetu').setAttribute('title', 'max length: 60');
+        document.getElementById('streetu').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+        document.getElementById('streetu').setAttribute('oninput', 'this.setCustomValidity(\'\')');
         document.getElementById('streetu').required = true;
+        document.getElementById('housenumberu').setAttribute('pattern', '.{1,8}');
+        document.getElementById('housenumberu').setAttribute('title', 'max length: 8');
         document.getElementById('housenumberu').required = true;
+        document.getElementById('housenumberu').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+        document.getElementById('housenumberu').setAttribute('oninput', 'this.setCustomValidity(\'\')');
+        document.getElementById('cityu').setAttribute('pattern', '.{1,190}');
+        document.getElementById('cityu').setAttribute('title', 'max length: 190');
         document.getElementById('cityu').required = true;
+        document.getElementById('cityu').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+        document.getElementById('cityu').setAttribute('oninput', 'this.setCustomValidity(\'\')');
+        document.getElementById('postcodeu').setAttribute('pattern', '.{1,12}');
+        document.getElementById('postcodeu').setAttribute('title', 'max length: 12');
         document.getElementById('postcodeu').required = true;
+        document.getElementById('postcodeu').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+        document.getElementById('postcodeu').setAttribute('oninput', 'this.setCustomValidity(\'\')');
+        document.getElementById('countryu').setAttribute('pattern', '.{1,50}');
+        document.getElementById('countryu').setAttribute('title', 'max length: 50');
         document.getElementById('countryu').required = true;
+        document.getElementById('countryu').setAttribute('oninvalid', 'this.setCustomValidity(\'Please fill in this field\')');
+        document.getElementById('countryu').setAttribute('oninput', 'this.setCustomValidity(\'\')');
     }
 </script>
 

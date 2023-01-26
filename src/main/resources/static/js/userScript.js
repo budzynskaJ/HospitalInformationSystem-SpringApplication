@@ -116,8 +116,6 @@ function newUser() {
                 country: document.getElementById("newcountryu").value,
             }
         }
-
-        console.log(newUSerData);
         return fetch("/admin/admin_users/adduser", {
             method: 'post',
             credentials: 'include',
