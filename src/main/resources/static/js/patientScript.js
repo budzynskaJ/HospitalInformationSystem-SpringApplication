@@ -265,7 +265,7 @@ fetch("/patients").then(
                             ],
                             buttons: [
                                 {
-                                    text: '<i class="fas fa-plus fa-2x" style="color: #228B22;"></i>',
+                                    text: '<i class="fas fa-plus fa-2x" style="display: flex; color: #228B22;"></i>',
                                     className: 'bg-transparent border-0',
                                     titleAttr: 'Add new patient',
                                     action: function (e, dt, node, config) {

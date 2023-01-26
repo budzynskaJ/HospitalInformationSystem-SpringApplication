@@ -1,11 +1,26 @@
-@media screen and(max-width: 500px) {
+@media screen and(max-width: 768px) {
     .navbar-brand {
         float: none;
         display: block;
     }
     #nav2 a {
         float: none;
+        display: flex;
+    }
+    .sidebar {
+        float: left;
+        display: flex;
+    }
+    .container {
+        float: none;
         display: block;
+    }
+    .table {
+        display: flex;
+    }
+    #check{
+        float: none;
+        display: flex;
     }
 }
 *{
