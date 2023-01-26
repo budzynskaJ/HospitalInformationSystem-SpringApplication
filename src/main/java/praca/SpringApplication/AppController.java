@@ -1,25 +1,13 @@
 package praca.SpringApplication;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import praca.SpringApplication.patient.PatientRepository;
-import praca.SpringApplication.user.UserRepository;
 
-import java.util.List;
 
 
 @RestController
 public class AppController implements WebMvcConfigurer {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PatientRepository patientRepository;
 
 
     public AppController(){
@@ -39,13 +27,6 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/doctor/doctor_profile").setViewName("doctor/doctor_profile");
         registry.addViewController("/doctor/doctor_patients").setViewName("doctor/doctor_patients");
         registry.addViewController("/doctor/doctor_appointments").setViewName("doctor/doctor_appointments");
-        //registry.addViewController("/main_doctor").setViewName("doctor/main_admin/patient/{Patient_id}");
     }
 
-    @Controller
-    public class DashboardController {
-        public DashboardController() {
-        }
-
-    }
 }

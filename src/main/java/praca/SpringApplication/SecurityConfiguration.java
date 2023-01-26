@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,17 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-   /** @Bean
-    public AuthenticationProvider authenticationProvider() throws Exception {
-        DaoAuthenticationProvider provider
-          = new DaoAuthenticationProvider();
-
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(new BCryptPasswordEncoder());
-
-        return provider;
-    }**/
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() throws Exception {
@@ -106,9 +93,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           .antMatchers("**/patient/{Patient_id}").hasAnyAuthority("ADMIN")
           .antMatchers("**/patients/{Patient_id}").hasAnyAuthority("ADMIN")
           .antMatchers("**/updatePassword**").hasAnyAuthority("ADMIN", "USER")
-          //.anyRequest().authenticated()
-          //.and()
-          //.httpBasic()
           .and()
           .formLogin(formLogin -> formLogin
                                   .successHandler(new CustomAuthenticationSuccessHandler())

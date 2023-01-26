@@ -51,8 +51,6 @@ function editData() {
         Patient_data.address.city === "" && Patient_data.address.country === "") {
             Patient_data.address.address_ID = document.getElementById('addressID').textContent;
         }
-        console.log(Patient_data.address.address_ID);
-        console.log(Patient_data);
 
 
         return fetch("/patients/" + document.getElementById('idp').value, {
@@ -217,7 +215,7 @@ fetch("/patients").then(
                 let numb = 1;
                 patientsData.forEach((p) => {
                     temp += "<tr id=" + numb + " class='tabrow editing'>";
-                    temp += "<td id = 'patient'>" + p.patient_ID + "</td>";
+                    temp += "<td id = 'patient' >" + p.patient_ID + "</td>";
                     temp += "<td id='first'>" + p.firstname + "</td>";
                     temp += "<td id='middle'>" + p.middlename + "</td>";
                     temp += "<td id='sur'>" + p.surname + "</td>";
@@ -229,7 +227,8 @@ fetch("/patients").then(
                         " " + Object.values(p.address)[2] + "/" + Object.values(p.address)[3] + "\n" + Object.values(p.address)[4] + " " +
                         Object.values(p.address)[5] + ", " + Object.values(p.address)[6] + "</td>";
                     temp += "<td id='UID'>" + p.uid + "</td>";
-                    temp += "<td style='align-items: center; vertical-align: center'><span name = 'status' id='status' style='color: white' class='badge badge-success rounded-pill'>"+ p.status + "</span></td>";
+                    temp += "<td style='align-items: center; vertical-align: middle'><span name = 'status' id='status' style='color: white' " +
+                        "class='badge badge-success rounded-pill'>"+ p.status + "</span></td>";
                     temp += "<td class=\"text-right\" style='vertical-align: middle'>\n" +
                         "                             <span type=\"button\" data-toggle='modal' data-target='#editPatient' id='edit' \n" +
                         "                               style='color: rgba(24,31,151,0.93); vertical-align: middle !important; font-size: 32px !important;' class=\"material-symbols-rounded\"; title='Edit patient'>\n" +
@@ -375,7 +374,6 @@ fetch("/patients").then(
                 for (let i = 0; i < document.getElementsByName('status').length; i++) {
                     if (document.getElementsByName('status')[i].textContent == "archived") {
                         document.getElementsByName('status')[i].setAttribute('class', 'badge badge-danger rounded-pill');
-                        console.log(document.getElementsByName('status')[i].parentNode.parentNode);
                         for (let j = 0; j < document.getElementsByName('status')[i].parentNode.parentNode.childNodes.length; j++) {
                             document.getElementsByName('status')[i].parentNode.parentNode.childNodes[j].style.color = 'grey';
                         }

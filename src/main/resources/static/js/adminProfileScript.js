@@ -1,25 +1,3 @@
-function showModal() {
-    $('.card-body').on('click', '#editprofile', function () {
-        let firstu = document.getElementById('myname').textContent;
-
-
-        document.getElementById('#fnu');
-        $('#middlenameu').val(middleu);
-        $('#surnameu').val(suru);
-        $('#username').val(user);
-        $('#email').val(email);
-        $('#role').val(role);
-        $('#streetu').val(street);
-        $('#housenumberu').val(house_number);
-
-        jQuery.noConflict();
-        jQuery('#editMe').modal('show');
-    });
-
-
-
-}
-
 function password() {
     let nP1 = document.getElementById("newpass").value;
     let nP2 = document.getElementById("newpass2").value;

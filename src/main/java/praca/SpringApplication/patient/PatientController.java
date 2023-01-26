@@ -2,17 +2,12 @@ package praca.SpringApplication.patient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.core.parameters.P;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import praca.SpringApplication.address.Address;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 
